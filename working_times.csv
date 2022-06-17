@@ -1,0 +1,621 @@
+start_time;end_time;day_ratio;project;task;descr
+2020-09-01T09:00:00;2020-09-01T16:12:00;0.9;interne;formation;début contrat CDI
+2020-09-01T16:12:00;2020-09-01T17:00:00;0.1;interne;reunion;
+2020-09-02T09:00:00;2020-09-02T13:00:00;0.5;interne;formation;
+2020-09-02T13:00:00;2020-09-02T17:00:00;0.5;vr2-a7;dev;
+2020-09-03T09:00:00;2020-09-03T13:00:00;0.5;interne;dev;
+2020-09-03T13:00:00;2020-09-03T17:00:00;0.5;vr2-a7;dev;
+2020-09-04T09:00:00;2020-09-04T12:12:00;0.4;vr2-a7;dev;
+2020-09-04T12:12:00;2020-09-04T17:00:00;0.6;rouen tgm;dev;
+2020-09-07T09:00:00;2020-09-07T13:00:00;0.5;vr2-a7;dev;
+2020-09-07T13:00:00;2020-09-07T17:00:00;0.5;rouen tgm;dev;
+2020-09-08T09:00:00;2020-09-08T10:36:00;0.2;interne;admin;
+2020-09-08T10:36:00;2020-09-08T13:00:00;0.3;vr2-a7;dev;
+2020-09-08T13:00:00;2020-09-08T17:00:00;0.5;rouen tgm;dev;
+2020-09-09T09:00:00;2020-09-09T13:00:00;0.5;vr2-a7;dev;
+2020-09-09T13:00:00;2020-09-09T17:00:00;0.5;rouen tgm;dev;
+2020-09-10T09:00:00;2020-09-10T13:00:00;0.5;vr2-a7;dev;seminaire stagiaires entpe
+2020-09-10T13:00:00;2020-09-10T17:00:00;0.5;interne;seminaire;
+2020-09-11T09:00:00;2020-09-11T10:36:00;0.2;vr2-a7;dev;
+2020-09-11T10:36:00;2020-09-11T17:00:00;0.8;rouen tgm;dev;
+2020-09-14T09:00:00;2020-09-14T17:00:00;1.0;rouen tgm;dev;
+2020-09-15T09:00:00;2020-09-15T15:24:00;0.8;rouen tgm;dev;
+2020-09-15T15:24:00;2020-09-15T17:00:00;0.2;interne;dev;
+2020-09-16T09:00:00;2020-09-16T13:48:00;0.6;rouen tgm;dev;
+2020-09-16T13:48:00;2020-09-16T17:00:00;0.4;vr2-a7;formation;
+2020-09-17T09:00:00;2020-09-17T17:00:00;1.0;vr2-a7;etude;
+2020-09-18T09:00:00;2020-09-18T12:12:00;0.4;vr2-a7;reunion;reunion PAIS a7
+2020-09-18T12:12:00;2020-09-18T17:00:00;0.6;vr2-a7;etude;
+2020-09-21T09:00:00;2020-09-21T12:12:00;0.4;interne;dev;todo : start calibration vr2-a7
+2020-09-21T12:12:00;2020-09-21T17:00:00;0.6;interne;formation;
+2020-09-22T09:00:00;2020-09-22T17:00:00;1.0;rouen tgm;dev;todo : bokeh script pour rouen tgm
+2020-09-23T09:00:00;2020-09-23T13:48:00;0.6;rouen tgm;dev;(affichage chemin/OD, calc SP, etc)
+2020-09-23T13:48:00;2020-09-23T15:24:00;0.2;rouen tgm;dev;
+2020-09-23T15:24:00;2020-09-23T17:00:00;0.2;rouen tgm;reunion;
+2020-09-24T09:00:00;2020-09-24T17:00:00;1.0;rouen tgm;dev;todo : change link id of loops (rouen)
+2020-09-25T09:00:00;2020-09-25T16:12:00;0.9;rouen tgm;r&d;
+2020-09-25T16:12:00;2020-09-25T17:00:00;0.1;vr2-a7;dev;
+2020-09-28T09:00:00;2020-09-28T17:00:00;1.0;rouen tgm;r&d;todo : check and correct find SP scr
+2020-09-29T09:00:00;2020-09-29T17:00:00;1.0;rouen tgm;r&d;todo : chaeck and correct assign scr
+2020-09-30T09:00:00;2020-09-30T17:00:00;1.0;rouen tgm;r&d;todo : bokeh of paths per OD
+2020-10-01T09:00:00;2020-10-01T17:00:00;1.0;rouen tgm;r&d;
+2020-10-02T09:00:00;2020-10-02T17:00:00;1.0;rouen tgm;dev;
+2020-10-05T09:00:00;2020-10-05T17:00:00;1.0;rouen tgm;dev;
+2020-10-06T09:00:00;2020-10-06T17:00:00;1.0;rouen tgm;dev;
+2020-10-07T08:00:00;2020-10-07T12:00:00;0.5;congés;RTT;
+2020-10-07T14:00:00;2020-10-07T18:00:00;0.5;congés;RTT;
+2020-10-08T09:00:00;2020-10-08T17:00:00;1.0;rouen tgm;dev;
+2020-10-09T09:00:00;2020-10-09T17:00:00;1.0;rouen tgm;dev;
+2020-10-12T09:00:00;2020-10-12T17:00:00;1.0;rouen tgm;dev;import données métropole
+2020-10-13T09:00:00;2020-10-13T17:00:00;1.0;rouen tgm;dev;idem
+2020-10-14T09:00:00;2020-10-14T17:00:00;1.0;rouen tgm;dev;idem
+2020-10-15T08:00:00;2020-10-15T12:00:00;0.5;congés;CA;
+2020-10-15T14:00:00;2020-10-15T18:00:00;0.5;congés;CA;
+2020-10-16T08:00:00;2020-10-16T12:00:00;0.5;congés;CA;
+2020-10-16T14:00:00;2020-10-16T18:00:00;0.5;congés;CA;
+2020-10-19T09:00:00;2020-10-19T17:00:00;1.0;rouen tgm;etude;
+2020-10-20T09:00:00;2020-10-20T13:48:00;0.6;rouen tgm;etude;réunion Cerema Rouen
+2020-10-20T13:48:00;2020-10-20T17:00:00;0.4;rouen tgm;reunion;
+2020-10-21T09:00:00;2020-10-21T17:00:00;1.0;rouen tgm;r&d;
+2020-10-22T09:00:00;2020-10-22T17:00:00;1.0;rouen tgm;dev;bokeh comparaison dem/flux loops
+2020-10-23T09:00:00;2020-10-23T17:00:00;1.0;rouen tgm;etude;correction demand.py EH
+2020-10-26T09:00:00;2020-10-26T17:00:00;1.0;rouen tgm;r&d;affectation par périodes
+2020-10-27T09:00:00;2020-10-27T17:00:00;1.0;rouen tgm;etude;
+2020-10-28T09:00:00;2020-10-28T13:00:00;0.5;rouen tgm;etude;modèle C-logit
+2020-10-28T13:00:00;2020-10-28T17:00:00;0.5;rouen tgm;r&d;
+2020-10-29T09:00:00;2020-10-29T17:00:00;1.0;rouen tgm;dev;Issue 156 affectation par périodes
+2020-10-30T08:00:00;2020-10-30T12:00:00;0.5;congés;RTT;
+2020-10-30T14:00:00;2020-10-30T18:00:00;0.5;congés;RTT;
+2020-11-02T09:00:00;2020-11-02T17:00:00;1.0;rouen tgm;etude;rentrée des classes / confinement
+2020-11-03T09:00:00;2020-11-03T17:00:00;1.0;rouen tgm;etude;problème données métro / DIRNO
+2020-11-04T09:00:00;2020-11-04T17:00:00;1.0;rouen tgm;etude;PPM mars 2019
+2020-11-05T09:00:00;2020-11-05T16:12:00;0.9;rouen tgm;etude;point AD
+2020-11-05T16:12:00;2020-11-05T17:00:00;0.1;rouen tgm;reunion;
+2020-11-06T09:00:00;2020-11-06T17:00:00;1.0;rouen tgm;etude;
+2020-11-09T09:00:00;2020-11-09T15:24:00;0.8;rouen tgm;dev;point AD / correction horodatage
+2020-11-09T15:24:00;2020-11-09T17:00:00;0.2;rouen tgm;reunion;
+2020-11-10T09:00:00;2020-11-10T13:00:00;0.5;rouen tgm;dev;point EH / PPM 2019
+2020-11-10T13:00:00;2020-11-10T17:00:00;0.5;rouen tgm;etude;
+2020-11-11T08:00:00;2020-11-11T12:00:00;0.5;congés;Ferie;
+2020-11-11T14:00:00;2020-11-11T18:00:00;0.5;congés;Ferie;
+2020-11-12T09:00:00;2020-11-12T17:00:00;1.0;rouen tgm;r&d;affectation dyn avec FastMacro
+2020-11-13T09:00:00;2020-11-13T17:00:00;1.0;rouen tgm;r&d;idem
+2020-11-16T09:00:00;2020-11-16T17:00:00;1.0;rouen tgm;etude;arrivée Ludovic
+2020-11-17T09:00:00;2020-11-17T11:24:00;0.3;rouen tgm;reunion;réunion Cerema DIRNO / point LB
+2020-11-17T11:24:00;2020-11-17T15:24:00;0.5;rouen tgm;etude;
+2020-11-17T15:24:00;2020-11-17T17:00:00;0.2;interne;reunion;
+2020-11-18T09:00:00;2020-11-18T17:00:00;1.0;rouen tgm;dev;modif Bokeh affectation
+2020-11-19T09:00:00;2020-11-19T17:00:00;1.0;rouen tgm;etude;
+2020-11-20T09:00:00;2020-11-20T17:00:00;1.0;rouen tgm;etude;
+2020-11-23T09:00:00;2020-11-23T17:00:00;1.0;rouen tgm;etude;point AD
+2020-11-24T09:00:00;2020-11-24T09:48:00;0.1;interne;admin;
+2020-11-24T09:48:00;2020-11-24T13:00:00;0.4;rouen tgm;dev;
+2020-11-24T13:00:00;2020-11-24T17:00:00;0.5;rouen tgm;etude;
+2020-11-25T09:00:00;2020-11-25T12:12:00;0.4;rouen tgm;etude;point AD
+2020-11-25T12:12:00;2020-11-25T16:12:00;0.5;rouen tgm;dev;
+2020-11-25T16:12:00;2020-11-25T17:00:00;0.1;rouen tgm;reunion;
+2020-11-26T09:00:00;2020-11-26T17:00:00;1.0;rouen tgm;etude;mise en place scénarios
+2020-11-27T09:00:00;2020-11-27T17:00:00;1.0;rouen tgm;etude;
+2020-11-30T09:00:00;2020-11-30T17:00:00;1.0;rouen tgm;etude;
+2020-12-01T09:00:00;2020-12-01T12:12:00;0.4;rouen tgm;reunion;réunion Cerema
+2020-12-01T12:12:00;2020-12-01T13:48:00;0.2;rouen tgm;dev;
+2020-12-01T13:48:00;2020-12-01T17:00:00;0.4;rouen tgm;etude;
+2020-12-02T09:00:00;2020-12-02T13:00:00;0.5;rouen tgm;etude;modif Bokeh aff (time slider)
+2020-12-02T13:00:00;2020-12-02T17:00:00;0.5;rouen tgm;dev;
+2020-12-03T09:00:00;2020-12-03T13:00:00;0.5;rouen tgm;etude;add link cost to demand.csv
+2020-12-03T13:00:00;2020-12-03T17:00:00;0.5;rouen tgm;dev;
+2020-12-04T09:00:00;2020-12-04T14:36:00;0.7;rouen tgm;etude;add OD static (with no transit)
+2020-12-04T14:36:00;2020-12-04T17:00:00;0.3;rouen tgm;dev;
+2020-12-07T09:00:00;2020-12-07T13:00:00;0.5;rouen tgm;reunion;réunion Cerema DIRNO
+2020-12-07T13:00:00;2020-12-07T17:00:00;0.5;rouen tgm;etude;
+2020-12-08T09:00:00;2020-12-08T17:00:00;1.0;rouen tgm;r&d;amélioration fonctions coûts ?
+2020-12-09T09:00:00;2020-12-09T13:00:00;0.5;rouen tgm;etude;issue global macro
+2020-12-09T13:00:00;2020-12-09T17:00:00;0.5;rouen tgm;dev;
+2020-12-10T09:00:00;2020-12-10T14:36:00;0.7;rouen tgm;dev;tableaux de bord
+2020-12-10T14:36:00;2020-12-10T17:00:00;0.3;rouen tgm;etude;
+2020-12-11T09:00:00;2020-12-11T17:00:00;1.0;rouen tgm;dev;Indicateurs + tableaux
+2020-12-14T09:00:00;2020-12-14T17:00:00;1.0;rouen tgm;dev;Indicateurs + tableaux
+2020-12-15T09:00:00;2020-12-15T13:00:00;0.5;interne;seminaire;séminaire Neovya
+2020-12-15T13:00:00;2020-12-15T17:00:00;0.5;rouen tgm;dev;
+2020-12-16T09:00:00;2020-12-16T12:12:00;0.4;interne;r&d;Discussion EH / visite LICIT
+2020-12-16T12:12:00;2020-12-16T17:00:00;0.6;rouen tgm;etude;
+2020-12-17T09:00:00;2020-12-17T13:00:00;0.5;rouen tgm;dev;intégration mat OD HPS
+2020-12-17T13:00:00;2020-12-17T17:00:00;0.5;rouen tgm;etude;
+2020-12-18T09:00:00;2020-12-18T13:00:00;0.5;rouen tgm;etude;calage HPS / biblio COPERT
+2020-12-18T13:00:00;2020-12-18T17:00:00;0.5;interne;r&d;
+2020-12-21T08:00:00;2020-12-21T12:00:00;0.5;congés;RTT;
+2020-12-21T14:00:00;2020-12-21T18:00:00;0.5;congés;RTT;
+2020-12-22T08:00:00;2020-12-22T12:00:00;0.5;congés;RTT;
+2020-12-22T14:00:00;2020-12-22T18:00:00;0.5;congés;RTT;
+2020-12-23T08:00:00;2020-12-23T12:00:00;0.5;congés;CA;
+2020-12-23T14:00:00;2020-12-23T18:00:00;0.5;congés;CA;
+2020-12-24T08:00:00;2020-12-24T12:00:00;0.5;congés;CA;
+2020-12-24T14:00:00;2020-12-24T18:00:00;0.5;congés;CA;
+2020-12-25T08:00:00;2020-12-25T12:00:00;0.5;congés;Ferie;
+2020-12-25T14:00:00;2020-12-25T18:00:00;0.5;congés;Ferie;
+2020-12-28T09:00:00;2020-12-28T15:24:00;0.8;interne;r&d;biblio emission bruit
+2020-12-28T15:24:00;2020-12-28T17:00:00;0.2;rouen tgm;etude;
+2020-12-29T09:00:00;2020-12-29T13:00:00;0.5;rouen tgm;etude;modif Bokeh tableaux de bord
+2020-12-29T13:00:00;2020-12-29T17:00:00;0.5;rouen tgm;dev;
+2020-12-30T09:00:00;2020-12-30T13:00:00;0.5;rouen tgm;etude;debug
+2020-12-30T13:00:00;2020-12-30T17:00:00;0.5;rouen tgm;dev;
+2020-12-31T09:00:00;2020-12-31T13:00:00;0.5;rouen tgm;etude;Debug + notice
+2020-12-31T13:00:00;2020-12-31T17:00:00;0.5;rouen tgm;dev;
+2021-01-01T08:00:00;2021-01-01T12:00:00;0.5;congés;ferie;
+2021-01-01T14:00:00;2021-01-01T18:00:00;0.5;congés;ferie;
+2021-01-04T09:00:00;2021-01-04T10:36:00;0.2;interne;reunion;Réunion rentrée / modif dashboard
+2021-01-04T10:36:00;2021-01-04T17:00:00;0.8;rouen tgm;dev;
+2021-01-05T09:00:00;2021-01-05T13:00:00;0.5;rouen tgm;etude;modif dashboard / ppt calage
+2021-01-05T13:00:00;2021-01-05T17:00:00;0.5;rouen tgm;dev;
+2021-01-06T09:00:00;2021-01-06T11:24:00;0.3;interne;reunion;entretien annuel AD
+2021-01-06T11:24:00;2021-01-06T17:00:00;0.7;rouen tgm;etude;
+2021-01-07T09:00:00;2021-01-07T15:24:00;0.8;rouen tgm;etude;ppt calage
+2021-01-07T15:24:00;2021-01-07T17:00:00;0.2;interne;admin;
+2021-01-08T09:00:00;2021-01-08T13:00:00;0.5;rouen tgm;etude;ppt calage / bokeh mat OD stat
+2021-01-08T13:00:00;2021-01-08T17:00:00;0.5;interne;dev;
+2021-01-11T09:00:00;2021-01-11T10:36:00;0.2;rouen tgm;etude;recherches COPERT
+2021-01-11T10:36:00;2021-01-11T16:12:00;0.7;interne;r&d;
+2021-01-11T16:12:00;2021-01-11T17:00:00;0.1;interne;reunion;
+2021-01-12T09:00:00;2021-01-12T17:00:00;1.0;interne;dev;bokeh indic map
+2021-01-13T09:00:00;2021-01-13T17:00:00;1.0;interne;seminaire;séminaire Neovya
+2021-01-14T09:00:00;2021-01-14T09:48:00;0.1;rouen tgm;etude;modèle bruit NMPB
+2021-01-14T09:48:00;2021-01-14T17:00:00;0.9;interne;r&d;
+2021-01-15T09:00:00;2021-01-15T17:00:00;1.0;interne;dev;bokeh OD mat
+2021-01-18T09:00:00;2021-01-18T11:24:00;0.3;interne;dev;bokeh OD mat / algo modèle depl.
+2021-01-18T11:24:00;2021-01-18T16:12:00;0.6;interne;r&d;
+2021-01-18T16:12:00;2021-01-18T17:00:00;0.1;interne;reunion;
+2021-01-19T09:00:00;2021-01-19T15:24:00;0.8;interne;r&d;algo modèle depl / formation Arnaud
+2021-01-19T15:24:00;2021-01-19T17:00:00;0.2;rouen tgm;etude;
+2021-01-20T09:00:00;2021-01-20T13:00:00;0.5;interne;dev;Lyon peri urb / réu Cerema
+2021-01-20T13:00:00;2021-01-20T17:00:00;0.5;rouen tgm;reunion;
+2021-01-21T09:00:00;2021-01-21T15:24:00;0.8;rouen tgm;etude;Maj scénarios / bokeh OD mat
+2021-01-21T15:24:00;2021-01-21T17:00:00;0.2;interne;dev;
+2021-01-22T09:00:00;2021-01-22T13:00:00;0.5;interne;veille;discussion Delphine COPERT
+2021-01-22T13:00:00;2021-01-22T17:00:00;0.5;interne;r&d;
+2021-01-25T09:00:00;2021-01-25T13:00:00;0.5;interne;dev;corr Lyon peri urb / bokeh OD mat
+2021-01-25T13:00:00;2021-01-25T16:12:00;0.4;interne;dev;
+2021-01-25T16:12:00;2021-01-25T17:00:00;0.1;interne;reunion;
+2021-01-26T09:00:00;2021-01-26T13:00:00;0.5;interne;dev;corr bokeh / integration indic
+2021-01-26T13:00:00;2021-01-26T17:00:00;0.5;interne;r&d;
+2021-01-27T09:00:00;2021-01-27T13:00:00;0.5;interne;dev;corr bokeh / Lyon peri urb
+2021-01-27T13:00:00;2021-01-27T17:00:00;0.5;interne;dev;
+2021-01-28T09:00:00;2021-01-28T17:00:00;1.0;interne;dev;simplification Lyon peri urb / test SP
+2021-01-29T09:00:00;2021-01-29T12:12:00;0.4;interne;dev;calc A* / centrality / réu DIRNO
+2021-01-29T12:12:00;2021-01-29T13:48:00;0.2;interne;r&d;
+2021-01-29T13:48:00;2021-01-29T17:00:00;0.4;rouen tgm;reunion;
+2021-02-01T09:00:00;2021-02-01T12:12:00;0.4;interne;dev;corr bokeh indic / calc SP A*
+2021-02-01T12:12:00;2021-02-01T16:12:00;0.5;interne;r&d;
+2021-02-01T16:12:00;2021-02-01T17:00:00;0.1;interne;reunion;
+2021-02-02T09:00:00;2021-02-02T13:00:00;0.5;interne;veille;discussion A. Can bruit / bokeh indic
+2021-02-02T13:00:00;2021-02-02T17:00:00;0.5;interne;r&d;
+2021-02-03T09:00:00;2021-02-03T12:12:00;0.4;interne;dev;bokeh indic / corr scénarios vac
+2021-02-03T12:12:00;2021-02-03T17:00:00;0.6;rouen tgm;etude;
+2021-02-04T09:00:00;2021-02-04T15:24:00;0.8;rouen tgm;etude;scén vac / ppt hubsim / bokeh dash
+2021-02-04T15:24:00;2021-02-04T17:00:00;0.2;interne;dev;
+2021-02-05T09:00:00;2021-02-05T12:12:00;0.4;interne;dev;bokeh dashboard / scénarios vac
+2021-02-05T12:12:00;2021-02-05T17:00:00;0.6;rouen tgm;etude;
+2021-02-08T09:00:00;2021-02-08T12:12:00;0.4;interne;dev;bokeh dash tab / test java NM
+2021-02-08T12:12:00;2021-02-08T16:12:00;0.5;interne;r&d;
+2021-02-08T16:12:00;2021-02-08T17:00:00;0.1;interne;reunion;
+2021-02-09T09:00:00;2021-02-09T14:36:00;0.7;interne;r&d;test NoiseModelling / export indic
+2021-02-09T14:36:00;2021-02-09T17:00:00;0.3;interne;dev;
+2021-02-10T09:00:00;2021-02-10T15:24:00;0.8;interne;r&d;modèle dispersion / OD stat dev PL
+2021-02-10T15:24:00;2021-02-10T17:00:00;0.2;rouen tgm;etude;
+2021-02-11T09:00:00;2021-02-11T13:00:00;0.5;rouen tgm;etude;point Arnaud / trad bokeh
+2021-02-11T13:00:00;2021-02-11T17:00:00;0.5;interne;dev;
+2021-02-12T09:00:00;2021-02-12T17:00:00;1.0;interne;r&d;pollu dispersion
+2021-02-15T09:00:00;2021-02-15T10:36:00;0.2;interne;dev;corr bokeh indic / pollu dispersion
+2021-02-15T10:36:00;2021-02-15T16:12:00;0.7;interne;r&d;
+2021-02-15T16:12:00;2021-02-15T17:00:00;0.1;interne;reunion;
+2021-02-16T09:00:00;2021-02-16T13:48:00;0.6;interne;dev;test hubsim bokeh / test java
+2021-02-16T13:48:00;2021-02-16T17:00:00;0.4;interne;r&d;
+2021-02-17T09:00:00;2021-02-17T17:00:00;1.0;interne;r&d;test java NM
+2021-02-18T09:00:00;2021-02-18T17:00:00;1.0;interne;r&d;test NM
+2021-02-19T09:00:00;2021-02-19T10:36:00;0.2;interne;r&d;test NM geojson / CNOSSOS
+2021-02-19T10:36:00;2021-02-19T17:00:00;0.8;interne;r&d;
+2021-02-22T09:00:00;2021-02-22T16:12:00;0.9;interne;r&d;test NM / CNOSSOS
+2021-02-22T16:12:00;2021-02-22T17:00:00;0.1;interne;reunion;
+2021-02-23T09:00:00;2021-02-23T17:00:00;1.0;interne;r&d;input NM / triangulation / elevation
+2021-02-24T09:00:00;2021-02-24T17:00:00;1.0;interne;r&d;input NM buildings
+2021-02-25T09:00:00;2021-02-25T15:24:00;0.8;interne;r&d;java python / html design
+2021-02-25T15:24:00;2021-02-25T17:00:00;0.2;interne;dev;
+2021-02-26T09:00:00;2021-02-26T17:00:00;1.0;interne;r&d;tricontour elevation
+2021-03-01T09:00:00;2021-03-01T16:12:00;0.9;interne;r&d;test NM receivers
+2021-03-01T16:12:00;2021-03-01T17:00:00;0.1;interne;reunion;
+2021-03-02T09:00:00;2021-03-02T13:00:00;0.5;interne;r&d;meteo data / parc Ifsttar COPERT
+2021-03-02T13:00:00;2021-03-02T17:00:00;0.5;interne;r&d;
+2021-03-03T09:00:00;2021-03-03T14:36:00;0.7;interne;r&d;test logiciel COPERT / meteo data
+2021-03-03T14:36:00;2021-03-03T17:00:00;0.3;interne;r&d;
+2021-03-04T09:00:00;2021-03-04T16:12:00;0.9;interne;r&d;export COPERT / mail Arnaud
+2021-03-04T16:12:00;2021-03-04T17:00:00;0.1;rouen tgm;etude;
+2021-03-05T09:00:00;2021-03-05T13:48:00;0.6;interne;r&d;
+2021-03-05T13:48:00;2021-03-05T17:00:00;0.4;interne;veille;
+2021-03-08T09:00:00;2021-03-08T14:36:00;0.7;interne;r&d;COPERT types veh / corr OD stat
+2021-03-08T14:36:00;2021-03-08T16:12:00;0.2;rouen tgm;etude;
+2021-03-08T16:12:00;2021-03-08T17:00:00;0.1;interne;reunion;
+2021-03-09T09:00:00;2021-03-09T11:24:00;0.3;rouen tgm;etude;mail Arnaud / courbes COPERT
+2021-03-09T11:24:00;2021-03-09T17:00:00;0.7;interne;r&d;
+2021-03-10T08:00:00;2021-03-10T12:00:00;0.5;congés;RTT;
+2021-03-10T14:00:00;2021-03-10T18:00:00;0.5;interne;r&d;Plume model
+2021-03-11T09:00:00;2021-03-11T17:00:00;1.0;interne;r&d;STEMS air / solar radiance
+2021-03-12T09:00:00;2021-03-12T17:00:00;1.0;interne;r&d;STEMS air / test folium
+2021-03-15T09:00:00;2021-03-15T14:36:00;0.7;interne;r&d;STEMS air / article blog
+2021-03-15T14:36:00;2021-03-15T16:12:00;0.2;interne;com;
+2021-03-15T16:12:00;2021-03-15T17:00:00;0.1;interne;reunion;
+2021-03-16T09:00:00;2021-03-16T17:00:00;1.0;interne;r&d;courbes COPERT
+2021-03-17T09:00:00;2021-03-17T17:00:00;1.0;interne;r&d;bokeh courbes emissions
+2021-03-18T09:00:00;2021-03-18T17:00:00;1.0;interne;r&d;bokeh courbes emissions
+2021-03-19T09:00:00;2021-03-19T09:48:00;0.1;rouen tgm;etude;mail Arnaud / map folium
+2021-03-19T09:48:00;2021-03-19T17:00:00;0.9;interne;r&d;
+2021-03-22T09:00:00;2021-03-22T10:36:00;0.2;interne;r&d;bokeh courbes / article blog
+2021-03-22T10:36:00;2021-03-22T16:12:00;0.7;interne;com;
+2021-03-22T16:12:00;2021-03-22T17:00:00;0.1;interne;reunion;
+2021-03-23T09:00:00;2021-03-23T17:00:00;1.0;interne;r&d;COPERT crit’air / types moteurs
+2021-03-24T09:00:00;2021-03-24T13:48:00;0.6;interne;r&d;parc Citepa / crit’air / retours scén
+2021-03-24T13:48:00;2021-03-24T17:00:00;0.4;rouen tgm;etude;
+2021-03-25T09:00:00;2021-03-25T17:00:00;1.0;interne;r&d;bokeh courbes / test folium
+2021-03-26T09:00:00;2021-03-26T17:00:00;1.0;interne;r&d;corr dispersion / COPERT crit’air
+2021-03-29T09:00:00;2021-03-29T09:48:00;0.1;rouen tgm;etude;mail Arnaud / test noise pollu map
+2021-03-29T09:48:00;2021-03-29T16:12:00;0.8;interne;r&d;
+2021-03-29T16:12:00;2021-03-29T17:00:00;0.1;interne;reunion;
+2021-03-30T09:00:00;2021-03-30T11:24:00;0.3;rouen tgm;etude;point Arnaud / test noise pollu
+2021-03-30T11:24:00;2021-03-30T17:00:00;0.7;interne;r&d;
+2021-03-31T09:00:00;2021-03-31T17:00:00;1.0;interne;r&d;corr bokeh courbes / crit’air
+2021-04-01T14:00:00;2021-04-01T18:00:00;0.5;congés;RTT;
+2021-04-01T09:00:00;2021-04-01T11:24:00;0.3;interne;r&d;STEMS air / crit’air / nouveaux scén
+2021-04-01T11:24:00;2021-04-01T13:00:00;0.2;rouen tgm;etude;
+2021-04-02T09:00:00;2021-04-02T17:00:00;1.0;interne;r&d;map meteo / discussions IHM
+2021-04-05T08:00:00;2021-04-05T12:00:00;0.5;congés;ferie;
+2021-04-05T14:00:00;2021-04-05T18:00:00;0.5;congés;ferie;
+2021-04-06T09:00:00;2021-04-06T17:00:00;1.0;interne;r&d;map meteo / design IHM
+2021-04-07T09:00:00;2021-04-07T17:00:00;1.0;interne;r&d;map meteo / ajout meteo data
+2021-04-08T08:00:00;2021-04-08T12:00:00;0.5;congés;CA;
+2021-04-08T14:00:00;2021-04-08T18:00:00;0.5;congés;CA;
+2021-04-09T09:00:00;2021-04-09T17:00:00;1.0;interne;r&d;corr crit’air data et map
+2021-04-12T09:00:00;2021-04-12T13:00:00;0.5;rouen tgm;etude;corr et new scén / réseau Lafayette
+2021-04-12T13:00:00;2021-04-12T15:24:00;0.3;interne;r&d;
+2021-04-12T15:24:00;2021-04-12T17:00:00;0.2;interne;reunion;
+2021-04-13T09:00:00;2021-04-13T17:00:00;1.0;interne;r&d;test receivers Lafayette
+2021-04-14T09:00:00;2021-04-14T17:00:00;1.0;interne;r&d;test buildings / clean codes
+2021-04-15T08:00:00;2021-04-15T12:00:00;0.5;congés;CA;
+2021-04-15T14:00:00;2021-04-15T18:00:00;0.5;congés;CA;
+2021-04-16T09:00:00;2021-04-16T15:24:00;0.8;interne;r&d;Buildings / comp scén
+2021-04-16T15:24:00;2021-04-16T17:00:00;0.2;rouen tgm;etude;
+2021-04-19T09:00:00;2021-04-19T11:24:00;0.3;interne;dev;courbes à Delphine / download scén
+2021-04-19T11:24:00;2021-04-19T15:24:00;0.5;rouen tgm;etude;
+2021-04-19T15:24:00;2021-04-19T17:00:00;0.2;interne;reunion;
+2021-04-20T09:00:00;2021-04-20T13:00:00;0.5;interne;dev;corr assign / comp indic à Arnaud
+2021-04-20T13:00:00;2021-04-20T17:00:00;0.5;rouen tgm;etude;
+2021-04-21T08:00:00;2021-04-21T12:00:00;0.5;congés;CA;
+2021-04-21T14:00:00;2021-04-21T18:00:00;0.5;congés;CA;
+2021-04-22T09:00:00;2021-04-22T17:00:00;1.0;interne;r&d;test receivers
+2021-04-23T09:00:00;2021-04-23T10:36:00;0.2;rouen tgm;etude;Maj comp indic / dyn map
+2021-04-23T10:36:00;2021-04-23T17:00:00;0.8;interne;r&d;
+2021-04-26T09:00:00;2021-04-26T15:24:00;0.8;interne;r&d;test pollu noise map, new options
+2021-04-26T15:24:00;2021-04-26T17:00:00;0.2;interne;reunion;
+2021-04-27T09:00:00;2021-04-27T17:00:00;1.0;interne;r&d;corr triangle mesh
+2021-04-28T09:00:00;2021-04-28T15:24:00;0.8;interne;veille;guide Cerema GES / retours ppt
+2021-04-28T15:24:00;2021-04-28T17:00:00;0.2;rouen tgm;etude;
+2021-04-29T09:00:00;2021-04-29T13:00:00;0.5;interne;dev;bokeh n simu / réu DIRNO
+2021-04-29T13:00:00;2021-04-29T17:00:00;0.5;rouen tgm;reunion;
+2021-04-30T09:00:00;2021-04-30T13:00:00;0.5;interne;veille;discussion Fouad / bokeh n simu
+2021-04-30T13:00:00;2021-04-30T17:00:00;0.5;interne;dev;
+2021-05-03T09:00:00;2021-05-03T15:24:00;0.8;interne;r&d;corr STEMS air / bokeh indic
+2021-05-03T15:24:00;2021-05-03T17:00:00;0.2;interne;reunion;
+2021-05-04T09:00:00;2021-05-04T12:12:00;0.4;interne;veille;réu Cerema enviro / receivers mesh
+2021-05-04T12:12:00;2021-05-04T17:00:00;0.6;interne;r&d;
+2021-05-05T09:00:00;2021-05-05T17:00:00;1.0;interne;r&d;Receivers / lib triangle
+2021-05-06T09:00:00;2021-05-06T13:48:00;0.6;interne;r&d;corr STEMS air / indic / demo Rouen
+2021-05-06T13:48:00;2021-05-06T17:00:00;0.4;interne;dev;
+2021-05-07T09:00:00;2021-05-07T17:00:00;1.0;interne;r&d;test pydeck
+2021-05-10T09:00:00;2021-05-10T15:24:00;0.8;interne;dev;bokeh n simu
+2021-05-10T15:24:00;2021-05-10T17:00:00;0.2;interne;reunion;
+2021-05-11T09:00:00;2021-05-11T13:00:00;0.5;interne;r&d;test pydeck / bokeh n simu
+2021-05-11T13:00:00;2021-05-11T17:00:00;0.5;interne;dev;
+2021-05-12T09:00:00;2021-05-12T13:00:00;0.5;interne;r&d;test pydeck / bokeh n simu
+2021-05-12T13:00:00;2021-05-12T17:00:00;0.5;interne;dev;
+2021-05-13T08:00:00;2021-05-13T12:00:00;0.5;congés;ferie;
+2021-05-13T14:00:00;2021-05-13T18:00:00;0.5;congés;ferie;
+2021-05-14T08:00:00;2021-05-14T12:00:00;0.5;congés;RTT;
+2021-05-14T14:00:00;2021-05-14T18:00:00;0.5;congés;RTT;
+2021-05-17T09:00:00;2021-05-17T15:24:00;0.8;interne;r&d;test emission facility
+2021-05-17T15:24:00;2021-05-17T17:00:00;0.2;interne;reunion;
+2021-05-18T09:00:00;2021-05-18T15:24:00;0.8;interne;veille;prep Openflexmob / test enviro
+2021-05-18T15:24:00;2021-05-18T17:00:00;0.2;interne;r&d;
+2021-05-19T09:00:00;2021-05-19T13:00:00;0.5;interne;dev;bokeh n simu / comp indic / ppt env
+2021-05-19T13:00:00;2021-05-19T17:00:00;0.5;interne;r&d;
+2021-05-20T09:00:00;2021-05-20T17:00:00;1.0;interne;seminaire;Séminaire Neovya
+2021-05-21T09:00:00;2021-05-21T17:00:00;1.0;interne;dev;folium flow labels
+2021-05-24T08:00:00;2021-05-24T12:00:00;0.5;congés;RTT;
+2021-05-24T14:00:00;2021-05-24T18:00:00;0.5;congés;RTT;
+2021-05-25T09:00:00;2021-05-25T13:48:00;0.6;interne;veille;pollu station data / check COPERT
+2021-05-25T13:48:00;2021-05-25T17:00:00;0.4;interne;r&d;
+2021-05-26T09:00:00;2021-05-26T17:00:00;1.0;interne;dev;folium isochrones
+2021-05-27T08:00:00;2021-05-27T12:00:00;0.5;congés;RTT;
+2021-05-27T14:00:00;2021-05-27T18:00:00;0.5;congés;RTT;
+2021-05-28T09:00:00;2021-05-28T17:00:00;1.0;interne;dev;folium isochrones
+2021-05-31T09:00:00;2021-05-31T15:24:00;0.8;interne;dev;corr folium flow labels isochrones
+2021-05-31T15:24:00;2021-05-31T17:00:00;0.2;interne;reunion;
+2021-06-01T09:00:00;2021-06-01T17:00:00;1.0;interne;dev;bokeh sensor speed
+2021-06-02T09:00:00;2021-06-02T17:00:00;1.0;interne;dev;bokeh survey coeff dir
+2021-06-03T09:00:00;2021-06-03T17:00:00;1.0;interne;dev;bokeh survey coeff dir
+2021-06-04T09:00:00;2021-06-04T17:00:00;1.0;licit elise;etude;Lyon add Criter loop
+2021-06-07T09:00:00;2021-06-07T12:12:00;0.4;interne;dev;corr bokeh speed / Lyon simu
+2021-06-07T12:12:00;2021-06-07T15:24:00;0.4;licit elise;etude;
+2021-06-07T15:24:00;2021-06-07T17:00:00;0.2;interne;reunion;
+2021-06-08T09:00:00;2021-06-08T14:36:00;0.7;interne;dev;bokeh speed / ppt NM / Lyon simu
+2021-06-08T14:36:00;2021-06-08T17:00:00;0.3;licit elise;etude;
+2021-06-09T09:00:00;2021-06-09T17:00:00;1.0;interne;veille;NoiseModelling Day UMRAE
+2021-06-10T09:00:00;2021-06-10T17:00:00;1.0;interne;dev;bokeh survey coeff dir
+2021-06-11T09:00:00;2021-06-11T14:36:00;0.7;interne;dev;corr bokeh / ajout comp indic
+2021-06-11T14:36:00;2021-06-11T17:00:00;0.3;rouen tgm;etude;
+2021-06-14T09:00:00;2021-06-14T11:24:00;0.3;interne;r&d;courbes COPERT / revue MATSim
+2021-06-14T11:24:00;2021-06-14T15:24:00;0.5;interne;veille;
+2021-06-14T15:24:00;2021-06-14T17:00:00;0.2;interne;reunion;
+2021-06-15T09:00:00;2021-06-15T13:48:00;0.6;vinci facilities;dev;veh emission / MATSim, Tellae
+2021-06-15T13:48:00;2021-06-15T17:00:00;0.4;interne;veille;
+2021-06-16T09:00:00;2021-06-16T17:00:00;1.0;interne;r&d;NM ground data
+2021-06-17T09:00:00;2021-06-17T14:36:00;0.7;interne;r&d;NM ground data / test MATSim
+2021-06-17T14:36:00;2021-06-17T17:00:00;0.3;interne;r&d;
+2021-06-18T09:00:00;2021-06-18T17:00:00;1.0;interne;r&d;test MATSim
+2021-06-21T09:00:00;2021-06-21T15:24:00;0.8;interne;r&d;MATSim input data
+2021-06-21T15:24:00;2021-06-21T17:00:00;0.2;interne;reunion;
+2021-06-22T09:00:00;2021-06-22T10:36:00;0.2;interne;reunion;réu IFPEN / dossiers / MATSim
+2021-06-22T10:36:00;2021-06-22T12:12:00;0.2;rouen tgm;etude;
+2021-06-22T12:12:00;2021-06-22T17:00:00;0.6;interne;r&d;
+2021-06-23T09:00:00;2021-06-23T17:00:00;1.0;interne;r&d;MATSim IFPEN data
+2021-06-24T09:00:00;2021-06-24T10:36:00;0.2;abidjan;etude;instal Emme / MATSim pydeck
+2021-06-24T10:36:00;2021-06-24T17:00:00;0.8;interne;r&d;
+2021-06-25T09:00:00;2021-06-25T17:00:00;1.0;vinci facilities;dev;emission conso carburant
+2021-06-28T09:00:00;2021-06-28T15:24:00;0.8;interne;r&d;MATSim data OD mat
+2021-06-28T15:24:00;2021-06-28T17:00:00;0.2;interne;reunion;
+2021-06-29T09:00:00;2021-06-29T10:36:00;0.2;abidjan;etude;reinstal Emme / MATSim demand
+2021-06-29T10:36:00;2021-06-29T17:00:00;0.8;interne;r&d;
+2021-06-30T09:00:00;2021-06-30T13:48:00;0.6;abidjan;etude;lecture rapport / réu Logiroad
+2021-06-30T13:48:00;2021-06-30T17:00:00;0.4;abidjan;reunion;
+2021-07-01T09:00:00;2021-07-01T17:00:00;1.0;vinci facilities;dev;check COPERT large SUV
+2021-07-02T09:00:00;2021-07-02T17:00:00;1.0;interne;r&d;COPERT auto export
+2021-07-05T09:00:00;2021-07-05T15:24:00;0.8;interne;r&d;MATSim test artif net
+2021-07-05T15:24:00;2021-07-05T17:00:00;0.2;interne;reunion;
+2021-07-06T08:00:00;2021-07-06T12:00:00;0.5;congés;RTT;
+2021-07-06T14:00:00;2021-07-06T16:24:00;0.3;interne;r&d;MATSim compil / equiv CO2
+2021-07-06T16:24:00;2021-07-06T18:00:00;0.2;vinci facilities;dev;
+2021-07-07T09:00:00;2021-07-07T12:12:00;0.4;interne;r&d;MATSim / design IHM / réu ITlink
+2021-07-07T12:12:00;2021-07-07T14:36:00;0.3;interne;dev;
+2021-07-07T14:36:00;2021-07-07T17:00:00;0.3;openflexmob;reunion;
+2021-07-08T09:00:00;2021-07-08T10:36:00;0.2;rouen tgm;etude;retour ATEC / réu lancement / rech
+2021-07-08T10:36:00;2021-07-08T14:36:00;0.5;openflexmob;reunion;
+2021-07-08T14:36:00;2021-07-08T17:00:00;0.3;openflexmob;etude;
+2021-07-09T09:00:00;2021-07-09T17:00:00;1.0;openflexmob;etude;rech SimMob, MATSim
+2021-07-12T09:00:00;2021-07-12T13:48:00;0.6;openflexmob;etude;SimMob, MATSim / réu kickoff
+2021-07-12T13:48:00;2021-07-12T15:24:00;0.2;openflexmob;reunion;
+2021-07-12T15:24:00;2021-07-12T17:00:00;0.2;interne;reunion;
+2021-07-13T09:00:00;2021-07-13T17:00:00;1.0;openflexmob;etude;SimMob, POLARIS
+2021-07-14T08:00:00;2021-07-14T12:00:00;0.5;congés;ferie;
+2021-07-15T09:00:00;2021-07-15T15:24:00;0.8;openflexmob;etude;SimMob, POLARIS / réu Licit
+2021-07-15T15:24:00;2021-07-15T17:00:00;0.2;openflexmob;reunion;
+2021-07-16T08:00:00;2021-07-16T12:00:00;0.5;congés;CA;
+2021-07-16T14:00:00;2021-07-16T18:00:00;0.5;congés;CA;
+2021-07-19T08:00:00;2021-07-19T12:00:00;0.5;congés;CA;
+2021-07-19T14:00:00;2021-07-19T18:00:00;0.5;congés;CA;
+2021-07-20T08:00:00;2021-07-20T12:00:00;0.5;congés;CA;
+2021-07-20T14:00:00;2021-07-20T18:00:00;0.5;congés;CA;
+2021-07-21T08:00:00;2021-07-21T12:00:00;0.5;congés;CA;
+2021-07-21T14:00:00;2021-07-21T18:00:00;0.5;congés;CA;
+2021-07-22T08:00:00;2021-07-22T12:00:00;0.5;congés;CA;
+2021-07-22T14:00:00;2021-07-22T18:00:00;0.5;congés;CA;
+2021-07-23T08:00:00;2021-07-23T12:00:00;0.5;congés;CA;
+2021-07-23T14:00:00;2021-07-23T18:00:00;0.5;congés;CA;
+2021-07-26T09:00:00;2021-07-26T15:24:00;0.8;openflexmob;etude;POLARIS
+2021-07-26T15:24:00;2021-07-26T17:00:00;0.2;interne;reunion;
+2021-07-27T09:00:00;2021-07-27T15:24:00;0.8;openflexmob;etude;POLARIS / réu Licit
+2021-07-27T15:24:00;2021-07-27T17:00:00;0.2;openflexmob;reunion;
+2021-07-28T09:00:00;2021-07-28T14:36:00;0.7;openflexmob;etude;POLARIS / Emme / mail Arnaud
+2021-07-28T14:36:00;2021-07-28T16:12:00;0.2;abidjan;etude;
+2021-07-28T16:12:00;2021-07-28T17:00:00;0.1;rouen tgm;etude;
+2021-07-29T09:00:00;2021-07-29T13:00:00;0.5;interne;veille;open data / test Emme
+2021-07-29T13:00:00;2021-07-29T17:00:00;0.5;abidjan;etude;
+2021-07-30T09:00:00;2021-07-30T17:00:00;1.0;abidjan;etude;test Emme
+2021-08-02T08:00:00;2021-08-02T12:00:00;0.5;congés;CA;
+2021-08-02T14:00:00;2021-08-02T18:00:00;0.5;congés;CA;
+2021-08-03T08:00:00;2021-08-03T12:00:00;0.5;congés;CA;
+2021-08-03T14:00:00;2021-08-03T18:00:00;0.5;congés;CA;
+2021-08-04T08:00:00;2021-08-04T12:00:00;0.5;congés;CA;
+2021-08-04T14:00:00;2021-08-04T18:00:00;0.5;congés;CA;
+2021-08-05T08:00:00;2021-08-05T12:00:00;0.5;congés;CA;
+2021-08-05T14:00:00;2021-08-05T18:00:00;0.5;congés;CA;
+2021-08-06T08:00:00;2021-08-06T12:00:00;0.5;congés;CA;
+2021-08-06T14:00:00;2021-08-06T18:00:00;0.5;congés;CA;
+2021-08-09T08:00:00;2021-08-09T12:00:00;0.5;congés;CA;
+2021-08-09T14:00:00;2021-08-09T18:00:00;0.5;congés;CA;
+2021-08-10T08:00:00;2021-08-10T12:00:00;0.5;congés;CA;
+2021-08-10T14:00:00;2021-08-10T18:00:00;0.5;congés;CA;
+2021-08-11T08:00:00;2021-08-11T12:00:00;0.5;congés;RTT;
+2021-08-11T14:00:00;2021-08-11T18:00:00;0.5;congés;RTT;
+2021-08-12T08:00:00;2021-08-12T12:00:00;0.5;congés;RTT;
+2021-08-12T14:00:00;2021-08-12T18:00:00;0.5;congés;RTT;
+2021-08-13T08:00:00;2021-08-13T12:00:00;0.5;congés;RTT;
+2021-08-13T14:00:00;2021-08-13T18:00:00;0.5;congés;RTT;
+2021-08-16T09:00:00;2021-08-16T11:24:00;0.3;rouen tgm;etude;scén travaux / maj tps passés
+2021-08-16T11:24:00;2021-08-16T15:24:00;0.5;interne;admin;
+2021-08-16T15:24:00;2021-08-16T17:00:00;0.2;interne;reunion;
+2021-08-17T09:00:00;2021-08-17T17:00:00;1.0;openflexmob;etude;PolarisGUI, SimMob
+2021-08-18T09:00:00;2021-08-18T14:36:00;0.7;openflexmob;etude;PolarisGUI / tests Emme
+2021-08-18T14:36:00;2021-08-18T17:00:00;0.3;abidjan;etude;
+2021-08-19T09:00:00;2021-08-19T17:00:00;1.0;abidjan;etude;scénarios Emme
+2021-08-20T09:00:00;2021-08-20T17:00:00;1.0;abidjan;etude;sc. Emme, modèle Hubsim
+2021-08-23T09:00:00;2021-08-23T12:12:00;0.4;abidjan;etude;Hubsim abidjan / ajout param SP
+2021-08-23T12:12:00;2021-08-23T16:12:00;0.5;interne;r&d;
+2021-08-23T16:12:00;2021-08-23T17:00:00;0.1;interne;reunion;
+2021-08-24T09:00:00;2021-08-24T16:12:00;0.9;abidjan;etude;Hubsim abidjan / modif param logit
+2021-08-24T16:12:00;2021-08-24T17:00:00;0.1;interne;r&d;
+2021-08-25T09:00:00;2021-08-25T15:24:00;0.8;openflexmob;etude;PolarisGUI / Emme OD mat
+2021-08-25T15:24:00;2021-08-25T17:00:00;0.2;abidjan;etude;
+2021-08-26T09:00:00;2021-08-26T09:48:00;0.1;openflexmob;etude;PolarisGUI / Emme / réu Logiroad
+2021-08-26T09:48:00;2021-08-26T13:48:00;0.5;abidjan;etude;
+2021-08-26T13:48:00;2021-08-26T17:00:00;0.4;abidjan;reunion;
+2021-08-27T09:00:00;2021-08-27T17:00:00;1.0;abidjan;etude;sc. Emme mat OD, export shp
+2021-08-30T09:00:00;2021-08-30T16:12:00;0.9;abidjan;etude;export shp, note attributs liens
+2021-08-30T16:12:00;2021-08-30T17:00:00;0.1;interne;reunion;
+2021-08-31T09:00:00;2021-08-31T11:24:00;0.3;openflexmob;etude;PolarisGUI / note shp / réu Cécile
+2021-08-31T11:24:00;2021-08-31T16:12:00;0.6;abidjan;etude;
+2021-08-31T16:12:00;2021-08-31T17:00:00;0.1;openflexmob;reunion;
+2021-09-01T09:00:00;2021-09-01T17:00:00;1.0;openflexmob;etude;redac rapport
+2021-09-02T09:00:00;2021-09-02T17:00:00;1.0;openflexmob;etude;redac rapport
+2021-09-03T09:00:00;2021-09-03T13:48:00;0.6;openflexmob;etude;redac rapport / proj réseau
+2021-09-03T13:48:00;2021-09-03T17:00:00;0.4;abidjan;etude;
+2021-09-06T09:00:00;2021-09-06T13:00:00;0.5;rouen tgm;etude;Relecture rapport / redac rapport
+2021-09-06T13:00:00;2021-09-06T16:12:00;0.4;openflexmob;etude;
+2021-09-06T16:12:00;2021-09-06T17:00:00;0.1;interne;reunion;
+2021-09-07T09:00:00;2021-09-07T17:00:00;1.0;openflexmob;etude;rapport
+2021-09-08T14:00:00;2021-09-08T18:00:00;0.5;congés;RTT;
+2021-09-08T09:00:00;2021-09-08T13:00:00;0.5;openflexmob;etude;fin rapport, envoi v0.1
+2021-09-09T09:00:00;2021-09-09T12:12:00;0.4;openflexmob;etude;plugin Qgis / import shp / reu Itlink
+2021-09-09T12:12:00;2021-09-09T15:24:00;0.4;abidjan;etude;
+2021-09-09T15:24:00;2021-09-09T17:00:00;0.2;openflexmob;reunion;
+2021-09-10T09:00:00;2021-09-10T11:24:00;0.3;openflexmob;reunion;reu bilan UGE / import shp
+2021-09-10T11:24:00;2021-09-10T17:00:00;0.7;abidjan;etude;
+2021-09-13T09:00:00;2021-09-13T16:12:00;0.9;abidjan;etude;import shp, export OD mat
+2021-09-13T16:12:00;2021-09-13T17:00:00;0.1;interne;reunion;
+2021-09-14T09:00:00;2021-09-14T17:00:00;1.0;abidjan;etude;calc sh path Emme, redac ppt 1
+2021-09-15T09:00:00;2021-09-15T17:00:00;1.0;abidjan;etude;redac ppt 1
+2021-09-16T09:00:00;2021-09-16T17:00:00;1.0;abidjan;etude;ppt 1 prep cartes
+2021-09-17T08:00:00;2021-09-17T12:00:00;0.5;congés;RTT;
+2021-09-17T14:00:00;2021-09-17T15:36:00;0.2;abidjan;etude;prep cartes / reu specs UGE
+2021-09-17T15:36:00;2021-09-17T18:00:00;0.3;openflexmob;reunion;
+2021-09-20T09:00:00;2021-09-20T16:12:00;0.9;abidjan;etude;arrivée Magalie / lecture livrable 5
+2021-09-20T16:12:00;2021-09-20T17:00:00;0.1;interne;reunion;
+2021-09-21T09:00:00;2021-09-21T17:00:00;1.0;abidjan;etude;modèle TC, sc ligne BRT, sc dem+
+2021-09-22T09:00:00;2021-09-22T17:00:00;1.0;abidjan;etude;modèle routier, ppt 1
+2021-09-23T09:00:00;2021-09-23T17:00:00;1.0;abidjan;etude;envoi ppt 1, redac ppt 2
+2021-09-24T09:00:00;2021-09-24T15:24:00;0.8;abidjan;etude;ppt 2 + envoi / reu bilan Logiroad
+2021-09-24T15:24:00;2021-09-24T17:00:00;0.2;abidjan;reunion;
+2021-09-27T09:00:00;2021-09-27T16:12:00;0.9;interne;admin;chiffrage Verdi, cartes trello
+2021-09-27T16:12:00;2021-09-27T17:00:00;0.1;interne;reunion;
+2021-09-28T09:00:00;2021-09-28T17:00:00;1.0;interne;r&d;module enviro IHM, techno
+2021-09-29T09:00:00;2021-09-29T16:12:00;0.9;interne;r&d;test correc techno, mail Arnaud
+2021-09-29T16:12:00;2021-09-29T17:00:00;0.1;rouen sagt;etude;
+2021-09-30T09:00:00;2021-09-30T17:00:00;1.0;interne;dev;folium flow labels bar
+2021-10-01T09:00:00;2021-10-01T17:00:00;1.0;interne;dev;corr flow labels
+2021-10-04T09:00:00;2021-10-04T15:24:00;0.8;interne;dev;comp simu flow labels / café Tuba
+2021-10-04T15:24:00;2021-10-04T17:00:00;0.2;interne;reunion;
+2021-10-05T09:00:00;2021-10-05T17:00:00;1.0;interne;dev;comp simu flow labels
+2021-10-06T09:00:00;2021-10-06T17:00:00;1.0;interne;r&d;Matsim veh types
+2021-10-07T09:00:00;2021-10-07T17:00:00;1.0;rouen tgm;etude;sc fermeture de tunnel
+2021-10-08T09:00:00;2021-10-08T15:24:00;0.8;interne;dev;corr bokeh odmat dyn / discussion
+2021-10-08T15:24:00;2021-10-08T16:12:00;0.1;rouen tgm;etude;
+2021-10-08T16:12:00;2021-10-08T17:00:00;0.1;abidjan;etude;
+2021-10-11T09:00:00;2021-10-11T17:00:00;1.0;interne;r&d;add network params to route calc
+2021-10-12T09:00:00;2021-10-12T10:36:00;0.2;rouen tgm;reunion;reu Cerema / modif sc / test Matsim
+2021-10-12T10:36:00;2021-10-12T12:12:00;0.2;rouen sagt;reunion;
+2021-10-12T12:12:00;2021-10-12T13:48:00;0.2;rouen tgm;etude;
+2021-10-12T13:48:00;2021-10-12T17:00:00;0.4;ifpen;r&d;
+2021-10-13T09:00:00;2021-10-13T17:00:00;1.0;ifpen;r&d;test Matsim IFPEN
+2021-10-14T09:00:00;2021-10-14T17:00:00;1.0;ifpen;r&d;Matsim sub network
+2021-10-15T09:00:00;2021-10-15T17:00:00;1.0;ifpen;r&d;Matsim sub network
+2021-10-18T09:00:00;2021-10-18T15:24:00;0.8;ifpen;r&d;test Matsim sub net / facturation
+2021-10-18T15:24:00;2021-10-18T16:12:00;0.1;rouen tgm;admin;
+2021-10-18T16:12:00;2021-10-18T17:00:00;0.1;interne;reunion;
+2021-10-19T09:00:00;2021-10-19T11:24:00;0.3;ifpen;r&d;test Matsim / modif bokeh dem tree
+2021-10-19T11:24:00;2021-10-19T14:36:00;0.4;interne;dev;
+2021-10-19T14:36:00;2021-10-19T17:00:00;0.3;interne;veille;
+2021-10-20T09:00:00;2021-10-20T14:36:00;0.7;interne;veille;veille techno / Matsim Lyon63V
+2021-10-20T14:36:00;2021-10-20T17:00:00;0.3;ifpen;r&d;
+2021-10-21T09:00:00;2021-10-21T10:36:00;0.2;ifpen;r&d;test Lyon63V / folium OD flow lines
+2021-10-21T10:36:00;2021-10-21T17:00:00;0.8;interne;dev;
+2021-10-22T09:00:00;2021-10-22T11:24:00;0.3;interne;admin;Déménagement / corr OD flow
+2021-10-22T11:24:00;2021-10-22T17:00:00;0.7;interne;dev;
+2021-10-25T09:00:00;2021-10-25T13:00:00;0.5;interne;dev;corr foliums / install Ubuntu
+2021-10-25T13:00:00;2021-10-25T16:12:00;0.4;interne;admin;
+2021-10-25T16:12:00;2021-10-25T17:00:00;0.1;interne;reunion;
+2021-10-26T09:00:00;2021-10-26T17:00:00;1.0;interne;formation;Hubsim db front back celery
+2021-10-27T09:00:00;2021-10-27T13:00:00;0.5;interne;dev;hubsim button / reu IFPEN
+2021-10-27T13:00:00;2021-10-27T15:24:00;0.3;ifpen;reunion;
+2021-10-27T15:24:00;2021-10-27T17:00:00;0.2;ifpen;r&d;
+2021-10-28T09:00:00;2021-10-28T17:00:00;1.0;interne;dev;hubsim button / trad EN
+2021-10-29T09:00:00;2021-10-29T17:00:00;1.0;interne;dev;lib js visu 3D
+2021-11-01T08:00:00;2021-11-01T12:00:00;0.5;congés;ferie;
+2021-11-01T14:00:00;2021-11-01T18:00:00;0.5;congés;ferie;
+2021-11-02T09:00:00;2021-11-02T17:00:00;1.0;interne;dev;ajour RAM / hubsim button
+2021-11-03T09:00:00;2021-11-03T17:00:00;1.0;interne;dev;corr techno speed paths
+2021-11-04T08:00:00;2021-11-04T12:00:00;0.5;congés;RTT;
+2021-11-04T14:00:00;2021-11-04T18:00:00;0.5;congés;RTT;
+2021-11-05T09:00:00;2021-11-05T17:00:00;1.0;interne;dev;hubsim speed paths
+2021-11-08T09:00:00;2021-11-08T17:00:00;1.0;interne;dev;hubsim speed paths / corr indic
+2021-11-09T09:00:00;2021-11-09T13:48:00;0.6;interne;dev;corr speed paths / exam réseau
+2021-11-09T13:48:00;2021-11-09T17:00:00;0.4;rouen sagt;etude;
+2021-11-10T09:00:00;2021-11-10T17:00:00;1.0;interne;dev;corr speed paths / tests fct hubsim
+2021-11-11T08:00:00;2021-11-11T12:00:00;0.5;congés;ferie;
+2021-11-11T14:00:00;2021-11-11T18:00:00;0.5;congés;ferie;
+2021-11-12T08:00:00;2021-11-12T12:00:00;0.5;congés;RTT;
+2021-11-12T14:00:00;2021-11-12T18:00:00;0.5;congés;RTT;
+2021-11-15T09:00:00;2021-11-15T13:00:00;0.5;rouen sagt;reunion;reu lancement / envoi réseau v2
+2021-11-15T13:00:00;2021-11-15T17:00:00;0.5;rouen sagt;etude;
+2021-11-16T09:00:00;2021-11-16T15:24:00;0.8;interne;dev;hubsim route calc / corr CR + rés
+2021-11-16T15:24:00;2021-11-16T17:00:00;0.2;rouen sagt;etude;
+2021-11-17T09:00:00;2021-11-17T17:00:00;1.0;interne;dev;corr speed paths, indic cong length
+2021-11-18T09:00:00;2021-11-18T17:00:00;1.0;interne;dev;modif all folium flow bar
+2021-11-19T09:00:00;2021-11-19T17:00:00;1.0;interne;dev;reorg assignment / route calc inval
+2021-11-22T09:00:00;2021-11-22T16:12:00;0.9;interne;r&d;modif assignment dict to array
+2021-11-22T16:12:00;2021-11-22T17:00:00;0.1;rouen sagt;etude;
+2021-11-23T09:00:00;2021-11-23T17:00:00;1.0;interne;r&d;modif assignment fct
+2021-11-24T09:00:00;2021-11-24T17:00:00;1.0;interne;r&d;debug assignment numba
+2021-11-25T09:00:00;2021-11-25T12:12:00;0.4;interne;r&d;tests numba / création réseau
+2021-11-25T12:12:00;2021-11-25T15:24:00;0.4;rouen sagt;etude;
+2021-11-25T15:24:00;2021-11-25T17:00:00;0.2;interne;admin;
+2021-11-26T09:00:00;2021-11-26T13:00:00;0.5;interne;r&d;tests numba / simpl réseau
+2021-11-26T13:00:00;2021-11-26T17:00:00;0.5;rouen sagt;etude;
+2021-11-29T09:00:00;2021-11-29T13:00:00;0.5;interne;dev;export net shp / simpl réseau
+2021-11-29T13:00:00;2021-11-29T16:12:00;0.4;rouen sagt;etude;
+2021-11-29T16:12:00;2021-11-29T17:00:00;0.1;interne;reunion;
+2021-11-30T09:00:00;2021-11-30T13:48:00;0.6;interne;r&d;bokeh assignment / correc net
+2021-11-30T13:48:00;2021-11-30T17:00:00;0.4;rouen sagt;etude;
+2021-12-01T09:00:00;2021-12-01T12:12:00;0.4;rouen sagt;etude;correc net / bokeh assignment
+2021-12-01T12:12:00;2021-12-01T17:00:00;0.6;interne;r&d;
+2021-12-02T09:00:00;2021-12-02T12:12:00;0.4;rouen sagt;reunion;point Cerema / correc net
+2021-12-02T12:12:00;2021-12-02T17:00:00;0.6;rouen sagt;etude;
+2021-12-03T09:00:00;2021-12-03T10:36:00;0.2;rouen sagt;etude;mail Cerema / assign major OD
+2021-12-03T10:36:00;2021-12-03T17:00:00;0.8;interne;r&d;
+2021-12-06T09:00:00;2021-12-06T16:12:00;0.9;interne;r&d;debug assign major OD
+2021-12-06T16:12:00;2021-12-06T17:00:00;0.1;interne;reunion;
+2021-12-07T09:00:00;2021-12-07T17:00:00;1.0;interne;dev;hubsim net layer, bokeh page
+2021-12-08T09:00:00;2021-12-08T17:00:00;1.0;interne;dev;hubsim download shp
+2021-12-09T09:00:00;2021-12-09T17:00:00;1.0;interne;dev;modif flow intersection, debug
+2021-12-10T09:00:00;2021-12-10T17:00:00;1.0;interne;r&d;hubsim assign major OD, simpl net
+2021-12-13T09:00:00;2021-12-13T16:12:00;0.9;rouen sagt;etude;table corres mat OD
+2021-12-13T16:12:00;2021-12-13T17:00:00;0.1;interne;reunion;
+2021-12-14T09:00:00;2021-12-14T13:48:00;0.6;interne;admin;rapport Inov / discussion AC enviro
+2021-12-14T13:48:00;2021-12-14T17:00:00;0.4;interne;reunion;
+2021-12-15T09:00:00;2021-12-15T17:00:00;1.0;interne;admin;rapport Inov / maj trello
+2021-12-16T09:00:00;2021-12-16T17:00:00;1.0;interne;seminaire;séminaire Neovya
+2021-12-17T09:00:00;2021-12-17T14:36:00;0.7;interne;dev;bokeh sensor flow net / ppt Vincent
+2021-12-17T14:36:00;2021-12-17T17:00:00;0.3;abidjan;etude;
+2021-12-20T08:00:00;2021-12-20T12:00:00;0.5;congés;RTT;
+2021-12-20T14:00:00;2021-12-20T18:00:00;0.5;congés;RTT;
+2021-12-21T08:00:00;2021-12-21T12:00:00;0.5;congés;CA;
+2021-12-21T14:00:00;2021-12-21T18:00:00;0.5;congés;CA;
+2021-12-22T08:00:00;2021-12-22T12:00:00;0.5;congés;CA;
+2021-12-22T14:00:00;2021-12-22T18:00:00;0.5;congés;CA;
+2021-12-23T08:00:00;2021-12-23T12:00:00;0.5;congés;CA;
+2021-12-23T14:00:00;2021-12-23T18:00:00;0.5;congés;CA;
+2021-12-24T08:00:00;2021-12-24T12:00:00;0.5;congés;CA;
+2021-12-24T14:00:00;2021-12-24T18:00:00;0.5;congés;CA;
+2021-12-27T08:00:00;2021-12-27T12:00:00;0.5;congés;CA;
+2021-12-27T14:00:00;2021-12-27T18:00:00;0.5;congés;CA;
+2021-12-28T08:00:00;2021-12-28T12:00:00;0.5;congés;CA;
+2021-12-28T14:00:00;2021-12-28T18:00:00;0.5;congés;CA;
+2021-12-29T08:00:00;2021-12-29T12:00:00;0.5;congés;CA;
+2021-12-29T14:00:00;2021-12-29T18:00:00;0.5;congés;CA;
+2021-12-30T08:00:00;2021-12-30T12:00:00;0.5;congés;CA;
+2021-12-30T14:00:00;2021-12-30T18:00:00;0.5;congés;CA;
+2021-12-31T08:00:00;2021-12-31T12:00:00;0.5;congés;CA;
+2021-12-31T14:00:00;2021-12-31T18:00:00;0.5;congés;CA;
+2022-01-03T09:00:00;2022-01-03T13:48:00;0.6;rouen sagt;etude;import boucles DIRNO / debug
+2022-01-03T13:48:00;2022-01-03T16:12:00;0.3;interne;r&d;
+2022-01-03T16:12:00;2022-01-03T17:00:00;0.1;interne;reunion;
+2022-01-04T09:00:00;2022-01-04T17:00:00;1.0;rouen sagt;etude;table corres mat OD, boucles MRN
+2022-01-05T09:00:00;2022-01-05T17:00:00;1.0;rouen sagt;etude;aggreg boucles DIRNO
+2022-01-06T09:00:00;2022-01-06T17:00:00;1.0;rouen sagt;etude;aggreg + correc boucles
+2022-01-07T09:00:00;2022-01-07T11:24:00;0.3;rouen sagt;etude;check data / PR hubsim-techno
+2022-01-07T11:24:00;2022-01-07T17:00:00;0.7;interne;r&d;
+2022-01-10T09:00:00;2022-01-10T13:00:00;0.5;interne;r&d;bokeh flow intersection
