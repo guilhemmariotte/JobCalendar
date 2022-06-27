@@ -38,6 +38,8 @@ var calendar = [];
 var groups = [];
 var items = [];
 var selected_date = null;
+var selected_itemid = null;
+var selected_groupid = null;
 
 var data_timeline = [];
 var data_timeline_add = [];
@@ -55,8 +57,8 @@ var droppedfiles = [];
 
 
 //-----------------------------------------------------------------------------------
-// Convert from CSV formatted timeline data to a list of items (for DataVis data)
-function convertTimelineData(data) {
+// Convert from CSV formatted timeline data to a list of items
+function convertTimelineData0(data) {
 	var group_names = [];
 	var data_groups = [];
 	var data_item_groupids = [];
@@ -100,6 +102,31 @@ function convertTimelineData(data) {
 	return [data_items, data_groups];
 }
 
+function convertTimelineData(data, groups) {
+	var items = [];
+	for (var i = 0; i < data.length; i++) {
+		var groupid = "0";
+		for (var j = 0; j < groups.length; j++) {
+			if (groups[j].title == data[i]["project"]) {
+				groupid = groups[j].id;
+			}
+		}
+		var item = {
+			id: String(i),
+			resourceId: groupid,
+			textColor: "#000000",
+			start: data[i]["start_time"],
+			end: data[i]["end_time"],
+			title: data[i]["project"],
+			task: data[i]["task"],
+			description: data[i]["descr"],
+			day_ratio: data[i]["day_ratio"]
+		};
+		items.push(item);
+	}
+	return items
+}
+
 
 
 //-----------------------------------------------------------------------------------
@@ -119,11 +146,14 @@ function loadTimeline() {
 		download: true,
 		complete: function(results) {
 			
-			// Timeline data
+			// Calendar data
 			data_calendar = results.data;
+
+			// Calendar groups
+			groups = setTimelineGroups(data_calendar, []);
 			
-			// Create the timeline
-			createTimeline(data_calendar);
+			// Create the Calendar
+			createTimeline(data_calendar, groups);
 		}
 	});
 }
@@ -131,21 +161,205 @@ function loadTimeline() {
 
 
 
+//-----------------------------------------------------------------------------------
+// Set the groups
+function setTimelineGroups(data_calendar, group_names) {
+	// Calendar groups
+	// var default_colors = ['#3CA25B', '#CB7179', '#cad750', '#7850a1', '#a1ca5a', '#f2273b', '#f2ca5a', '#78a1d7', '#a1a15a', '#ca5aca', '#ca783b', '#3b3b5a'];
+	var groups = [];
+	var ind = 0;
+	for (var i = 0; i < data_calendar.length; i++) {
+		var group_name = data_calendar[i]["project"];
+		if (data_calendar[i]["start_time"] != "") {
+			if (data_calendar[i]["start_time"] == "group") { // groups must be at the top in data_calendar
+				if (!group_names.includes(group_name)) {
+					var groupid = String(ind);
+					var group = {
+						id: groupid,
+						title: group_name,
+						eventColor: data_calendar[i]["task"], // group colors are stored in the task column
+						visible: true
+					};
+					groups.push(group);
+					group_names.push(group_name);
+					ind++;
+				}
+			} else {
+				if (!group_names.includes(group_name)) {
+					var groupid = String(ind);
+					var group = {
+						id: groupid,
+						title: group_name,
+						eventColor: '#cccccc',
+						visible: true
+					};
+					groups.push(group);
+					group_names.push(group_name);
+					// add the group info to the timeline data
+					// var item = {
+					// 	start_time: "group",
+					// 	end_time: "",
+					// 	project: group.title,
+					// 	task: group.eventColor,
+					// 	descr: "",
+					// 	day_ratio: 0
+					// };
+					// results_data0.splice(ind, 0, item); // insert at the top
+					ind++;
+				}
+			}
+		}
+	}
+	return groups;
+}
+
+
+// Set group options
+function setGroupOptions(groups) {
+	// Clear containers
+	while (showhidediv.hasChildNodes()) {
+		showhidediv.removeChild(showhidediv.lastChild);
+	}
+	while (colordiv.hasChildNodes()) {
+		colordiv.removeChild(colordiv.lastChild);
+	}
+	
+	// Checkboxes to hide/show groups
+	for (var i = 0; i < groups.length; i++) {
+		var group = groups[i];
+		var groupdiv = document.createElement("div");
+		var checkbox = document.createElement("input");
+		checkbox.type = "checkbox";
+		checkbox.name = "showhide";
+		checkbox.value = group.id;
+		checkbox.className = "w3-check";
+		checkbox.id = "cb " + group.id;
+		checkbox.checked = group.visible;
+		// add event on change function
+		checkbox.addEventListener("change", function () {
+			// get items of current group
+			var groupid = this.id.split(" ")[1];
+			var group = calendar.getResourceById(groupid);
+			var items_filtered = group.getEvents();
+			if (this.checked) {
+				// show the group and its corresponding items
+				group.setExtendedProp("visible", true);
+				for (var j = 0; j < items_filtered.length; j++) {
+					//items_filtered[j].setProp("textColor", "#000000");
+					items_filtered[j].setProp("display", "auto");
+				}
+			} else {
+				// hide the group and its corresponding items
+				group.setExtendedProp("visible", false);
+				for (var j = 0; j < items_filtered.length; j++) {
+					//items_filtered[j].setProp("textColor", "#cccccc");
+					items_filtered[j].setProp("display", "none");
+				}
+			}
+		});
+		groupdiv.insertAdjacentElement("afterBegin", checkbox);
+		var label = document.createElement("label");
+		label.innerHTML = " " + group.title;
+		label.for = checkbox.id;
+		groupdiv.insertAdjacentElement("beforeEnd", label);
+		showhidediv.appendChild(groupdiv);
+	}
+	
+	// Check/uncheck all
+	var groupdiv = document.createElement("div");
+	var checkbox = document.createElement("input");
+	checkbox.type = "checkbox";
+	checkbox.name = "checkall";
+	checkbox.value = "checkall";
+	checkbox.className = "w3-check";
+	checkbox.id = "cb checkall";
+	checkbox.checked = false;
+	// add event on change function
+	checkbox.addEventListener("change", function () {
+		const cbs = document.querySelectorAll('input[name="showhide"]');
+		if (this.checked) {
+			cbs.forEach((cb) => {
+				cb.checked = true;
+				triggerEvent(cb, "change");
+			});
+		} else {
+			cbs.forEach((cb) => {
+				cb.checked = false;
+				triggerEvent(cb, "change");
+			});
+		}
+	});
+	groupdiv.insertAdjacentElement("afterBegin", checkbox);
+	var label = document.createElement("label");
+	label.innerHTML = " (tout sélectionner)";
+	label.for = checkbox.id;
+	groupdiv.insertAdjacentElement("beforeEnd", label);
+	showhidediv.appendChild(groupdiv);
+	
+	function triggerEvent(element, eventName) {
+		var event = document.createEvent("HTMLEvents");
+		event.initEvent(eventName, false, true);
+		element.dispatchEvent(event);
+	}
+	
+	
+	// Color picker for groups
+	for (var i = 0; i < groups.length; i++) {
+		var group = groups[i];
+		var groupdiv = document.createElement("div");
+		var colorpicker = document.createElement("input");
+		colorpicker.type = "color";
+		colorpicker.name = "colorpicker";
+		colorpicker.value = group.eventColor;
+		colorpicker.className = "classic-color";
+		colorpicker.id = "cp " + group.id;
+		// add event on change function
+		colorpicker.addEventListener("change", function () {
+			var groupid = this.id.split(" ")[1];
+			var color = this.value;
+			var color0 = hex2rgb(color, 0.5);
+			var group = calendar.getResourceById(groupid);
+			group.setProp("eventColor", color);
+			//group.setProp("eventBackgroundColor", color);
+			//group.setProp("eventBorderColor", color);
+			var items_filtered = group.getEvents();
+			for (var j = 0; j < items_filtered.length; j++) {
+				items_filtered[j].setProp("backgroundColor", color0);
+				items_filtered[j].setProp("borderColor", color);
+			}
+		});
+		groupdiv.insertAdjacentElement("afterBegin", colorpicker);
+		
+		var label = document.createElement("label");
+		label.innerHTML = " " + group.title;
+		label.for = colorpicker.id;
+		groupdiv.insertAdjacentElement("beforeEnd", label);
+		colordiv.appendChild(groupdiv);
+	}
+}
+
+
+// Set item options
+function setItemOptions() {
+	items = calendar.getEvents();
+	for (var j = 0; items.length; j++) {
+		items[j].setProp("textColor", "#000000");
+	}
+}
+
+
+
 
 //-----------------------------------------------------------------------------------
 // Create the timeline
-function createTimeline(data_calendar) {
+function createTimeline(data_calendar, groups) {
 	// Clear container
 	while (container.hasChildNodes()) {
 		container.removeChild(container.lastChild);
 	}
 	
 	// Calendar data
-	var data = convertTimelineData(data_calendar);
-	var data_items = data[0];
-	var data_groups = data[1];
-	items = data_items;
-	groups = data_groups;
+	items = convertTimelineData(data_calendar, groups);
 	
 	var options = {
 		schedulerLicenseKey: "CC-Attribution-NonCommercial-NoDerivatives",
@@ -167,17 +381,23 @@ function createTimeline(data_calendar) {
 		},
 		//dayMinWidth: 200,
 		headerToolbar: {
-			left: "addEventButton today prev,next",
+			left: "addEventButton addResourceButton today prev,next",
 			center: "title",
 			right: "resourceTimeGridDay,timeGridWeek,dayGridMonth,listWeek"
 		},
 		customButtons: {
 			addEventButton: {
-				text: "+",
+				text: "+ tâche",
 				click: function() {
 					document.getElementById("add_item_form").style.display = "block";
 					//calendar.addEvent({title: 'dynamic event', start: date, allDay: true});
 					//calendar.addResource({ title: title });
+				}
+			},
+			addResourceButton: {
+				text: "+ projet",
+				click: function() {
+					document.getElementById("add_resource_form").style.display = "block";
 				}
 			}
 		},
@@ -206,35 +426,42 @@ function createTimeline(data_calendar) {
 			}
 		},
 		expandRows: true,
-		resourceAreaHeaderContent: "Rooms",
+		resourceAreaHeaderContent: "Affaires/projets/congés",
 		resourceLabelDidMount: function(arg) {
 		  	var resource = arg.resource;
 		  	arg.el.addEventListener('click', function() {
-				if (confirm('Are you sure you want to delete ' + resource.title + '?')) {
-			  		resource.remove();
-				}
+				// if (confirm('Are you sure you want to delete ' + resource.title + '?')) {
+			  	// 	resource.remove();
+				// }
+				document.getElementById("add_resource_form").style.display = "block";
+				document.getElementById("new_project_input").value = resource.title;
+				selected_groupid = resource.id;
 		  	});
 		},
-		eventDidMount: function(info) {
-			// var tooltip = new Tooltip(info.el, {
-			//   	title: info.event.extendedProps.description,
-			//   	placement: 'top',
-			//   	trigger: 'hover',
-			//   	container: 'body'
-			// });
+		eventDidMount: function(arg) {
+			arg.el.classList.add("tooltip");
+			var tooltip_content = document.createElement("p");
+			var tooltip_text = arg.event.extendedProps.task;
+			tooltip_text = tooltip_text + "</br>" + String(arg.event.extendedProps.day_ratio);
+			tooltip_text = tooltip_text + "</br>" + breaklines(arg.event.extendedProps.description, 10);
+			tooltip_content.innerHTML = tooltip_text;
+			tooltip_content.className = "w3-padding-small tooltiptext";
+			arg.el.appendChild(tooltip_content);
 		},
-		eventClick: function(info) {
-			console.log('Event: ' + info.event.title);
-			console.log('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-			console.log('View: ' + info.view.type);
+		eventClick: function(arg) {
+			//console.log('Event: ' + arg.event.title);
+			//console.log('Coordinates: ' + arg.jsEvent.pageX + ',' + arg.jsEvent.pageY);
+			//console.log('View: ' + arg.view.type);
+			document.getElementById("add_item_form").style.display = "block";
+			document.getElementById("date_input").value = getISODate(arg.event.start);
+			document.getElementById("start_input").value = getISOTime(arg.event.start);
+			document.getElementById("end_input").value = getISOTime(arg.event.end);
+			document.getElementById("project_input").value = arg.event.title;
+			document.getElementById("task_input").value = arg.event.extendedProps.task;
+			document.getElementById("descr_input").value = arg.event.extendedProps.description;
+			selected_itemid = arg.event.id;
 		},
 		select: function(arg) {
-			console.log(
-			  	'select',
-			  	arg.startStr,
-			  	arg.endStr,
-			  	arg.resource ? arg.resource.id : '(no resource)'
-			);
 			document.getElementById("add_item_form").style.display = "block";
 			document.getElementById("date_input").value = getISODate(arg.start);
 			document.getElementById("start_input").value = getISOTime(arg.start);
@@ -252,7 +479,6 @@ function createTimeline(data_calendar) {
 			if (arg.resource) {
 				document.getElementById("project_input").value = arg.resource.title;
 			}
-			//addItem(arg.dateStr);
 		},
 		eventReceive: function(arg) { // called when a proper external event is dropped
 			console.log('eventReceive', arg.event);
@@ -260,17 +486,20 @@ function createTimeline(data_calendar) {
 		eventDrop: function(arg) { // called when an event (already on the calendar) is moved
 			console.log('eventDrop', arg.event);
 		},
-		resources: data_groups,
-		events: data_items
+		resources: groups,
+		events: items
 	};
 	
 	// Create a Calendar
 	calendar = new FullCalendar.Calendar(container, options);
 	calendar.setOption('locale', 'fr');
 	calendar.render();
-	
-	// add event listener
-	//timeline.on('rangechanged', onRangeChanged);
+
+	// Render item options
+	//setItemOptions()
+
+	// Render group options
+	setGroupOptions(groups);
 	
 	console.log("Loading calendar complete!");
 }

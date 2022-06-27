@@ -32,7 +32,7 @@
 			<!-- Tab links: Menu -->
 			<div class="w3-top w3-bar w3-black tab" id="navbar" style="overflow:visible; z-index:20">
 				
-				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Timeline')" id="tab_timeline">Frise</button>
+				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Timeline')" id="tab_timeline">Calendrier</button>
 				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Options')" id="tab_options">Options</button>
 				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Add')" id="tab_add">Ajouter</button>
 				
@@ -42,13 +42,7 @@
 				<label class="tooltip" for="load"><i class="fa fa-folder-open w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Choisir un fichier (.csv)</p></label>
 				
 				<input type="button" id="save" name="timeline_data">
-				<label class="tooltip" for="save"><i class="fa fa-cloud-download w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Enregistrer la frise (.csv)</p></label>
-				
-				<input type="button" id="load_default" name="timeline_data">
-				<label class="tooltip" for="load_default"><i class="fa fa-file w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Charger la frise par défaut</p></label>
-				
-				<input type="button" id="export_pdf" name="timeline_data">
-				<label class="tooltip" for="export_pdf"><i class="fa fa-file-pdf-o w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Exporter en PDF</p></label>
+				<label class="tooltip" for="save"><i class="fa fa-cloud-download w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Enregistrer le calendrier (.csv)</p></label>
 				
 			</div>
 			
@@ -68,7 +62,7 @@
 						<div class="w3-container w3-pale-green">
 							<span onclick="document.getElementById('add_item_form').style.display='none'"
 							class="w3-button w3-display-topright">&times;</span>
-							<h2>Ajouter une tâche</h2>
+							<h2>Ajouter/modifier une tâche</h2>
 						</div>
 						<form class="w3-container w3-card-4">
 							<p>
@@ -101,7 +95,31 @@
 								<label class="w3-text-grey">Description</label>
 								<textarea class="w3-input w3-border" id="descr_input" style="resize:none"></textarea>
 							</p>
-							<p><button type="button" id="add_item_btn" class="w3-btn w3-padding w3-pale-green" style="width:120px">Ajouter &nbsp; &#10095;</button></p>
+							<p>
+								<button type="button" id="add_item_btn" class="w3-btn w3-padding w3-pale-green" style="width:200px">Ajouter/modifier &nbsp; &#10095;</button>
+								<button type="button" id="remove_item_btn" class="w3-btn w3-padding w3-pale-red" style="width:120px">Supprimer &nbsp; &times;</button>
+							</p>
+						</form>
+					</div>
+				</div>
+
+				<!-- Add new resource form -->
+				<div id="add_resource_form" class="w3-modal">
+					<div class="w3-modal-content">
+						<div class="w3-container w3-pale-green">
+							<span onclick="document.getElementById('add_resource_form').style.display='none'"
+							class="w3-button w3-display-topright">&times;</span>
+							<h2>Ajouter/modifier un projet</h2>
+						</div>
+						<form class="w3-container w3-card-4">
+							<p>
+								<label class="w3-text-grey">Affaire/Projet interne/Congés</label>
+								<input class="w3-input w3-border" id="new_project_input" type="text" required>
+							</p>
+							<p>
+								<button type="button" id="add_resource_btn" class="w3-btn w3-padding w3-pale-green" style="width:200px">Ajouter/modifier &nbsp; &#10095;</button>
+								<button type="button" id="remove_resource_btn" class="w3-btn w3-padding w3-pale-red" style="width:120px">Supprimer &nbsp; &times;</button>
+							</p>
 						</form>
 					</div>
 				</div>

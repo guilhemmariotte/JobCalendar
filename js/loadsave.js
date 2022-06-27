@@ -22,22 +22,10 @@ input.addEventListener('change', loadTimeline);
 //document.addEventListener("DOMContentLoaded", updateTimeline);
 
 
-// Load default
-const load_default = document.getElementById("load_default");
-
-load_default.addEventListener('click', loadTimeline);
-
-
 // Save file
 const save = document.getElementById("save");
 
 save.addEventListener('click', saveTimeline);
-
-
-// Export PDF
-const export_pdf = document.getElementById("export_pdf");
-
-export_pdf.addEventListener('click', exportTimeline);
 
 
 // Drag and drop
@@ -74,16 +62,36 @@ timelinediv.addEventListener("drop", drop, false);
 //-----------------------------------------------------------------------------------
 // Download data
 function saveTimeline() {
-	if (data_timeline.length > 0) {
-		groups.forEach(function (group) {
-			for (var i = 0; i < data_timeline.length; i++) {
-				if (data_timeline[i]["start date"] == "group" & data_timeline[i]["subject"] == group.id) {
-					data_timeline[i]["color"] = group.color;
-				}
-			}
-		});
-		var filecontents = Papa.unparse(data_timeline, {delimiter:";"});
-		var filename = "frise_chrono.csv";
+	if (items.length > 0) {
+		var groups = calendar.getResources();
+		var items = calendar.getEvents();
+		var data_items = [];
+		for (var i = 0; i < groups.length; i++) {
+			var item = {
+				start_time: "group",
+				end_time: "",
+				project: groups[i].title,
+				task: groups[i].eventBackgroundColor,
+				descr: "",
+				day_ratio: 0
+			};
+			data_items.push(item);
+		}
+		for (var i = 0; i < items.length; i++) {
+			var start_time = getISODate(items[i].start) + "T" + getISOTime(items[i].start);
+			var end_time = getISODate(items[i].end) + "T" + getISOTime(items[i].end);
+			var item = {
+				start_time: start_time,
+				end_time: end_time,
+				project: items[i].title,
+				task: items[i].extendedProps.task,
+				descr: items[i].extendedProps.description,
+				day_ratio: items[i].extendedProps.day_ratio
+			};
+			data_items.push(item);
+		}
+		var filecontents = Papa.unparse(data_items, {delimiter:";"});
+		var filename = "working_times.csv";
 		savefile(filecontents, filename, 'text/plain;charset=utf-8');
 	}
 }

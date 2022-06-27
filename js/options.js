@@ -34,38 +34,6 @@ function openTab(evt, tabId) {
 
 
 //-----------------------------------------------------------------------------------
-// Callback on zoom change (not used)
-function onRangeChanged(props) {
-	const num_items_max = 20;
-	var minyear = props.start.getUTCFullYear();
-	var maxyear = props.end.getUTCFullYear();
-	var items_filtered = items.get({
-		filter: function (item) {
-			return getYear(item.start) < maxyear & getYear(item.end) > minyear & item.groupVisible & item.countryVisible & item.type != "background";
-		}
-	});
-	var num_items = 0;
-	for (var i = 0; i < items_filtered.length; i++) {
-		if (num_items < num_items_max) {
-			if (!items_updated.getIds().includes(items_filtered[i].id)) {
-				items_updated.add(items_filtered[i]);
-			}
-		} else {
-			if (items_updated.getIds().includes(items_filtered[i].id)) {
-				items_updated.remove(items_filtered[i]);
-			}
-		}
-		num_items = num_items + 1;
-	}
-	timeline.setItems(items_updated);
-	refreshTimeline();
-	
-	//var items_visible = timeline.getVisibleItems();
-	//console.log(items_visible)
-}
-
-
-//-----------------------------------------------------------------------------------
 // Options
 function refreshTimeline() {
 	const enableGroupsBtn = document.getElementById("enable_groups");
