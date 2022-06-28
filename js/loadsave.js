@@ -62,16 +62,17 @@ timelinediv.addEventListener("drop", drop, false);
 //-----------------------------------------------------------------------------------
 // Download data
 function saveTimeline() {
-	if (items.length > 0) {
+	if (calendar) {
 		var groups = calendar.getResources();
 		var items = calendar.getEvents();
 		var data_items = [];
+		console.log(groups)
 		for (var i = 0; i < groups.length; i++) {
 			var item = {
 				start_time: "group",
 				end_time: "",
 				project: groups[i].title,
-				task: groups[i].eventBackgroundColor,
+				task: groups[i].extendedProps.color,
 				descr: "",
 				day_ratio: 0
 			};

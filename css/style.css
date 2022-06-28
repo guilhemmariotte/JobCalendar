@@ -176,7 +176,7 @@ tr:nth-child(even) {
 	
 	--overflowtype: visible;
 	
-	--itemfontsize: 13px;
+	--itemfontsize: 12px;
 }
 
 
@@ -390,6 +390,12 @@ tr:nth-child(even) {
 	display : block;
 	height : 100%;
 	/* padding-top : 150px; */
+}
+
+.item-font
+{
+	font-size : var(--itemfontsize);
+	/* font-size: 150%; */
 }
 
 #Timeline:hover

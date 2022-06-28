@@ -9,7 +9,7 @@
 		<!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-		<!-- <link rel="icon" type="image/x-icon" href="favicon.png"> -->
+		<link rel="icon" type="image/x-icon" href="favicon.png">
 		<link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
 		<link rel="stylesheet" href="css/w3.css" media="all" type="text/css" />
 		<link rel="stylesheet" href="css/toggle-switchy.css" media="all" type="text/css" />
@@ -30,11 +30,12 @@
 		<div class="contents" name="maincontent">
 			
 			<!-- Tab links: Menu -->
+			<!-- ------------------------------------------------------------------------------------------------------ -->
 			<div class="w3-top w3-bar w3-black tab" id="navbar" style="overflow:visible; z-index:20">
 				
 				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Timeline')" id="tab_timeline">Calendrier</button>
 				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Options')" id="tab_options">Options</button>
-				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Add')" id="tab_add">Ajouter</button>
+				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Add')" id="tab_add">Synthèse</button>
 				
 				<div class="w3-bar-item">|</div>
 				
@@ -48,6 +49,7 @@
 			
 			
 			<!-- Tab content: Calendar -->
+			<!-- ------------------------------------------------------------------------------------------------------ -->
 			<div id="Timeline" class="w3-display-container tabcontent w3-animate-opacity">
 				
 				<div id="visualization">
@@ -60,14 +62,13 @@
 				<div id="add_item_form" class="w3-modal">
 					<div class="w3-modal-content">
 						<div class="w3-container w3-pale-green">
-							<span onclick="document.getElementById('add_item_form').style.display='none'"
-							class="w3-button w3-display-topright">&times;</span>
+							<span onclick="reinitForm()" class="w3-button w3-display-topright">&times;</span>
 							<h2>Ajouter/modifier une tâche</h2>
 						</div>
 						<form class="w3-container w3-card-4">
 							<p>
 								<label class="w3-text-grey">Date</label>
-								<input class="w3-input w3-border" id="date_input" type="text" type="date" placeholder="YYYY-MM-DD" required>
+								<input class="w3-input w3-border" id="date_input" type="date" placeholder="YYYY-MM-DD" required>
 							</p>
 							<div class="w3-row">
 								<div class="w3-half">
@@ -107,8 +108,7 @@
 				<div id="add_resource_form" class="w3-modal">
 					<div class="w3-modal-content">
 						<div class="w3-container w3-pale-green">
-							<span onclick="document.getElementById('add_resource_form').style.display='none'"
-							class="w3-button w3-display-topright">&times;</span>
+							<span onclick="reinitForm()" class="w3-button w3-display-topright">&times;</span>
 							<h2>Ajouter/modifier un projet</h2>
 						</div>
 						<form class="w3-container w3-card-4">
@@ -126,7 +126,9 @@
 				
 			</div>
 			
+
 			<!-- Tab content: Options -->
+			<!-- ------------------------------------------------------------------------------------------------------ -->
 			<div id="Options" class="w3-display-container tabcontent w3-animate-opacity">
 				
 				<div class="w3-cell-row w3-row-padding w3-margin-top">
@@ -136,24 +138,10 @@
 						
 						<div class="w3-container w3-padding-16 w3-border">
 							
-							<label class="toggle-switchy" for="enable_groups" data-size="sm" data-style="rounded">
-								<input checked type="checkbox" id="enable_groups" onchange="enableGroups(event)">
-								<span class="toggle"><span class="switch"></span></span>
-								<span class="label">Classer les éléments par groupe</span>
-							</label>
-							
-							</br></br>
-							<label class="toggle-switchy" for="enable_clusters" data-size="sm" data-style="rounded">
-								<input type="checkbox" id="enable_clusters" onchange="enableClusters(event)">
-								<span class="toggle"><span class="switch"></span></span>
-								<span class="label">Limiter le nombre d'éléments affichés</span>
-							</label>
-							
-							</br></br>
 							<label class="toggle-switchy" for="item_edit" data-size="sm" data-style="rounded">
 								<input checked type="checkbox" id="item_edit" onchange="enableEdition(event)">
 								<span class="toggle"><span class="switch"></span></span>
-								<span class="label">Autoriser l'édition les éléments (suppression)</span>
+								<span class="label">Autoriser l'édition les éléments</span>
 							</label>
 							
 							</br></br>
@@ -161,20 +149,6 @@
 								<input checked type="checkbox" id="enable_popup" onchange="enablePopup(event)">
 								<span class="toggle"><span class="switch"></span></span>
 								<span class="label">Afficher la description des éléments</span>
-							</label>
-							
-							</br></br>
-							<label class="toggle-switchy" for="enable_stack" data-size="sm" data-style="rounded">
-								<input checked type="checkbox" id="enable_stack" onchange="enableStack(event)">
-								<span class="toggle"><span class="switch"></span></span>
-								<span class="label">Positionnement vertical auto</span>
-							</label>
-							
-							</br></br>
-							<label class="toggle-switchy" for="enable_overflow" data-size="sm" data-style="rounded">
-								<input checked type="checkbox" id="enable_overflow" onchange="enableOverflow(event)">
-								<span class="toggle"><span class="switch"></span></span>
-								<span class="label">Débordement du texte</span>
 							</label>
 							
 							</br></br>
@@ -194,18 +168,13 @@
 						
 						<div class="w3-container w3-padding-16 w3-border" id="color_div">
 						</div>
-						
-						<div class="w3-container w3-gray"><h4>Afficher/masquer des pays</h4></div>
-						
-						<div class="w3-container w3-padding-16 w3-border" id="showhide_countries_div">
-						</div>
 					</div>
 					
 				</div>
 				
 				<div class="w3-container w3-center w3-small">
 					<p>
-					2021. Guilhem Mariotte
+					2022. Guilhem Mariotte
 					</br>
 					Calender by <a href="https://fullcalendar.io/" target="_blank">fullcalendar.io</a> &#124;
 					
@@ -215,76 +184,57 @@
 				
 			</div>
 			
-			<!-- Tab content: Add -->
+
+			<!-- Tab content: Synthesis -->
+			<!-- ------------------------------------------------------------------------------------------------------ -->
 			<div id="Add" class="w3-display-container tabcontent w3-animate-opacity">
 				
 				<form class="w3-container" style="width:60%">
 					<div class="w3-section">
-						<label><b>Rechercher sur Wikipedia</b></label>
-						<div class="w3-cell-row">
-							<input class="w3-input w3-cell w3-border" type="text" required name="Request" id="txt_request" placeholder="Entrer un ou plusieurs mots-clés">
-							<button type="submit" id="submit_request" class="w3-button w3-cell w3-dark-grey" onclick="submitRequest(event)">Rechercher</button>
-							<div class="w3-dropdown-hover">
-								<button class="w3-button" id="selected_lang">FR</button>
-								<div class="w3-dropdown-content w3-bar-block w3-card-4">
-									<button class="w3-bar-item w3-button" onclick="selectLang(event)">FR</button>
-									<button class="w3-bar-item w3-button" onclick="selectLang(event)">EN</button>
-									<button class="w3-bar-item w3-button" onclick="selectLang(event)">DE</button>
-									<button class="w3-bar-item w3-button" onclick="selectLang(event)">ES</button>
-									<button class="w3-bar-item w3-button" onclick="selectLang(event)">IT</button>
-									<button class="w3-bar-item w3-button" onclick="selectLang(event)">ZH</button>
-									<button class="w3-bar-item w3-button" onclick="selectLang(event)">RU</button>
-								</div>
+						<label><b>Synthèse des temps passés</b></label>
+						<div class="w3-row">
+							<div class="w3-half">
+								<p>
+									<label class="w3-text-grey">Début</label>
+									<input class="w3-input w3-border" id="startrange_input" type="text" value="" placeholder="YYYY or YYYY-MM" required>
+								</p>
 							</div>
+							<div class="w3-half">
+								<p>
+									<label class="w3-text-grey">Fin</label>
+									<input class="w3-input w3-border" id="endrange_input" type="text" value="" placeholder="YYYY or YYYY-MM" required>
+								</p>
+							</div>
+						</div>
+						<div class="w3-cell-row">
+							<button type="button" id="submit_timerange" class="w3-button w3-cell w3-dark-grey" onclick="refreshTables()">Mettre à jour</button>
 						</div>
 					</div>
 				</form>
 				
 				<div class="w3-container">
-					<h2>Résultats</h2>
+					<h2>Temps passés par affaires/projets</h2>
 					
-					<p id="results_msg">Aucune recherche effectuée</p>
-					
-					<ul id="results_list">
-					</ul>
-				</div>
-				
-				<div class="w3-container" style="visibility:hidden">
-					<h2>Eléments à ajouter</h2>
-					
-					<table id="results_table">
-						<tr>
-							<th>Début</br>naissance</th>
-							<th>Fin</br>mort</th>
-							<th>Nom</th>
-							<th>Description</th>
-							<th>Domaine</th>
-							<th>Pays</th>
-							<th></th>
-							<th></th>
-						</tr>
+					<table id="table_projects">
 					</table>
 					
-					<button id="add_items" class="w3-button w3-cell w3-dark-grey" onclick="addTableItems(event)">Ajouter les éléments</button>
-					<button id="clear_table" class="w3-button w3-cell w3-dark-grey" onclick="clearTable(event)">Effacer le tableau</button>
 				</div>
 
-				<div id="add_confirm" class="w3-panel w3-pale-green w3-border w3-animate-opacity" style="display: none;">
-					<h4>Les éléments ont bien été ajoutés à la frise !</h4>
+				<div class="w3-container">
+					<h2>Temps passés par tâches</h2>
+					
+					<table id="table_tasks">
+					</table>
+					
 				</div>
 				
-				<div class="w3-container w3-center w3-small ">
+				<div class="w3-container w3-center w3-small">
 					<p>
-					2021. Guilhem Mariotte
+					2022. Guilhem Mariotte
 					</br>
-					Timeline by <a href="https://visjs.org/" target="_blank">vis.js</a> &#124;
-					
-					PDF LaTeX compiler by <a href="https://latexonline.cc/" target="_blank">latexonline.cc</a> &#124;
+					Calender by <a href="https://fullcalendar.io/" target="_blank">fullcalendar.io</a> &#124;
 					
 					Style by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> &#124; <a href="https://fontawesome.com/v4.7/icons/" target="_blank">fontawesome.com</a>
-					</br>
-					Data from <a href="https://www.wikipedia.org/" target="_blank">wikipedia.org</a> &#124; <a href="https://www.dbpedia.org/" target="_blank">dbpedia.org</a>
-					
 					</p>
 				</div>
 				

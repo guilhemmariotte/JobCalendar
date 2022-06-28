@@ -12,12 +12,22 @@
 
 // Get ISO date and time
 function getISODate(date) {
-	var iso_date = date.getFullYear() + "-" + addLeadingZeros(date.getMonth() + 1) + "-" + addLeadingZeros(date.getDate());
+	var iso_date = "";
+	if (date) {
+		if (Object.prototype.toString.call(date) == "[object Date]") {
+			var iso_date = date.getFullYear() + "-" + addLeadingZeros(date.getMonth() + 1) + "-" + addLeadingZeros(date.getDate());
+		}
+	}
 	return iso_date
 }
 
 function getISOTime(date) {
-	var iso_time = addLeadingZeros(date.getHours()) + ":" + addLeadingZeros(date.getMinutes()) + ":" + addLeadingZeros(date.getSeconds());
+	var iso_time = "";
+	if (date) {
+		if (Object.prototype.toString.call(date) == "[object Date]") {
+			var iso_time = addLeadingZeros(date.getHours()) + ":" + addLeadingZeros(date.getMinutes()) + ":" + addLeadingZeros(date.getSeconds());
+		}
+	}
 	return iso_time
 }
 

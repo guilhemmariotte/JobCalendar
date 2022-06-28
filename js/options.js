@@ -94,17 +94,20 @@ function enableOrdering(evt) { // not used yet
 
 function enableEdition(evt) {
 	if (evt.currentTarget.checked) {
-		timeline.setOptions({editable: {remove: true}, selectable: true});
+		calendar.setOption('editable', true);
+		calendar.setOption('selectable', true);
 	} else {
-		timeline.setOptions({editable: false, selectable: false});
+		calendar.setOption('editable', false);
+		calendar.setOption('selectable', false);
 	}
+	calendar.render();
 }
 
 function enablePopup(evt) {
 	if (evt.currentTarget.checked) {
-		timeline.setOptions({showTooltips: true});
+		calendar.setOption('eventDidMount', function(arg){setTooltip(arg)});
 	} else {
-		timeline.setOptions({showTooltips: false});
+		calendar.setOption('eventDidMount', function(arg){});
 	}
 }
 
@@ -127,6 +130,18 @@ function enableOverflow(evt) {
 function changeFontsize(evt) {
 	var fontsize = String(evt.currentTarget.value) + "px";
 	root_css.style.setProperty("--itemfontsize", fontsize);
-	refreshTimeline();
+	calendar.render();
 }
 
+
+// Set tooltip
+function setTooltip(arg) {
+	arg.el.classList.add("tooltip");
+	var tooltip_content = document.createElement("p");
+	var tooltip_text = arg.event.extendedProps.task;
+	tooltip_text = tooltip_text + "</br>" + String(arg.event.extendedProps.day_ratio);
+	tooltip_text = tooltip_text + "</br>" + breaklines(arg.event.extendedProps.description, 10);
+	tooltip_content.innerHTML = tooltip_text;
+	tooltip_content.className = "w3-padding-small tooltiptext";
+	arg.el.appendChild(tooltip_content);
+}

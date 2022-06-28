@@ -106,15 +106,20 @@ function convertTimelineData(data, groups) {
 	var items = [];
 	for (var i = 0; i < data.length; i++) {
 		var groupid = "0";
+		var color = "#cccccc";
 		for (var j = 0; j < groups.length; j++) {
 			if (groups[j].title == data[i]["project"]) {
 				groupid = groups[j].id;
+				color = groups[j].color;
 			}
 		}
+		var color0 = hex2rgb(color, 0.5);
 		var item = {
 			id: String(i),
 			resourceId: groupid,
 			textColor: "#000000",
+			backgroundColor: color0,
+			borderColor: color,
 			start: data[i]["start_time"],
 			end: data[i]["end_time"],
 			title: data[i]["project"],
@@ -177,7 +182,7 @@ function setTimelineGroups(data_calendar, group_names) {
 					var group = {
 						id: groupid,
 						title: group_name,
-						eventColor: data_calendar[i]["task"], // group colors are stored in the task column
+						color: data_calendar[i]["task"], // group colors are stored in the task column
 						visible: true
 					};
 					groups.push(group);
@@ -190,7 +195,7 @@ function setTimelineGroups(data_calendar, group_names) {
 					var group = {
 						id: groupid,
 						title: group_name,
-						eventColor: '#cccccc',
+						color: '#cccccc',
 						visible: true
 					};
 					groups.push(group);
@@ -226,15 +231,20 @@ function setGroupOptions(groups) {
 	
 	// Checkboxes to hide/show groups
 	for (var i = 0; i < groups.length; i++) {
-		var group = groups[i];
+		var groupid = groups[i].id;
+		if (groups[i].visible) {
+			var visible = groups[i].visible;
+		} else {
+			var visible = groups[i].extendedProps.visible;
+		}
 		var groupdiv = document.createElement("div");
 		var checkbox = document.createElement("input");
 		checkbox.type = "checkbox";
 		checkbox.name = "showhide";
-		checkbox.value = group.id;
+		checkbox.value = groupid;
 		checkbox.className = "w3-check";
-		checkbox.id = "cb " + group.id;
-		checkbox.checked = group.visible;
+		checkbox.id = "cb " + groupid;
+		checkbox.checked = visible;
 		// add event on change function
 		checkbox.addEventListener("change", function () {
 			// get items of current group
@@ -259,7 +269,7 @@ function setGroupOptions(groups) {
 		});
 		groupdiv.insertAdjacentElement("afterBegin", checkbox);
 		var label = document.createElement("label");
-		label.innerHTML = " " + group.title;
+		label.innerHTML = " " + groups[i].title;
 		label.for = checkbox.id;
 		groupdiv.insertAdjacentElement("beforeEnd", label);
 		showhidediv.appendChild(groupdiv);
@@ -305,21 +315,36 @@ function setGroupOptions(groups) {
 	
 	// Color picker for groups
 	for (var i = 0; i < groups.length; i++) {
-		var group = groups[i];
+		var groupid = groups[i].id;
+		if (groups[i].color) {
+			var color = groups[i].color;
+		} else {
+			var color = groups[i].extendedProps.color;
+		}
 		var groupdiv = document.createElement("div");
 		var colorpicker = document.createElement("input");
 		colorpicker.type = "color";
 		colorpicker.name = "colorpicker";
-		colorpicker.value = group.eventColor;
+		colorpicker.value = color;
 		colorpicker.className = "classic-color";
-		colorpicker.id = "cp " + group.id;
+		colorpicker.id = "cp " + groupid;
+		// set item colors
+		// var color = group.color;
+		// var color0 = hex2rgb(color, 0.5);
+		// var group = calendar.getResourceById(group.id);
+		// group.setExtendedProp("color", color);
+		// var items_filtered = group.getEvents();
+		// for (var j = 0; j < items_filtered.length; j++) {
+		// 	items_filtered[j].setProp("backgroundColor", color0);
+		// 	items_filtered[j].setProp("borderColor", color);
+		// }
 		// add event on change function
 		colorpicker.addEventListener("change", function () {
 			var groupid = this.id.split(" ")[1];
 			var color = this.value;
 			var color0 = hex2rgb(color, 0.5);
 			var group = calendar.getResourceById(groupid);
-			group.setProp("eventColor", color);
+			group.setExtendedProp("color", color);
 			//group.setProp("eventBackgroundColor", color);
 			//group.setProp("eventBorderColor", color);
 			var items_filtered = group.getEvents();
@@ -331,7 +356,7 @@ function setGroupOptions(groups) {
 		groupdiv.insertAdjacentElement("afterBegin", colorpicker);
 		
 		var label = document.createElement("label");
-		label.innerHTML = " " + group.title;
+		label.innerHTML = " " + groups[i].title;
 		label.for = colorpicker.id;
 		groupdiv.insertAdjacentElement("beforeEnd", label);
 		colordiv.appendChild(groupdiv);
@@ -349,6 +374,18 @@ function setItemOptions() {
 
 
 
+// Set table result time range
+function setDefaultTimeRange(items) {
+	var date_curr = items[items.length - 1].start.split("T")[0];
+	var date = new Date(date_curr);
+	//var date = new Date(); // now
+	var range_start = String(date.getFullYear());
+	var range_end = String(date.getFullYear());
+	document.getElementById("startrange_input").value = range_start;
+	document.getElementById("endrange_input").value = range_end;
+}
+
+
 
 //-----------------------------------------------------------------------------------
 // Create the timeline
@@ -360,14 +397,17 @@ function createTimeline(data_calendar, groups) {
 	
 	// Calendar data
 	items = convertTimelineData(data_calendar, groups);
+
+	// Current date
+	var date_curr = items[items.length - 1].start.split("T")[0];
 	
 	var options = {
 		schedulerLicenseKey: "CC-Attribution-NonCommercial-NoDerivatives",
-		//now: "2022-01-01",
+		now: date_curr,
 		editable: true, // enable draggable events
       	droppable: true, // this allows things to be dropped onto the calendar
 		selectable: true,
-		dayMaxEvents: true, // allow "more" link when too many events
+		dayMaxEvents: true, // allow the "more" link when too many events
 		height: "100%",
 		aspectRatio: 1.8,
 		scrollTime: "08:00", // undo default 6am scrollTime
@@ -390,8 +430,6 @@ function createTimeline(data_calendar, groups) {
 				text: "+ tâche",
 				click: function() {
 					document.getElementById("add_item_form").style.display = "block";
-					//calendar.addEvent({title: 'dynamic event', start: date, allDay: true});
-					//calendar.addResource({ title: title });
 				}
 			},
 			addResourceButton: {
@@ -425,6 +463,7 @@ function createTimeline(data_calendar, groups) {
 				buttonText: "liste"
 			}
 		},
+		eventClassNames:["item-font"],
 		expandRows: true,
 		resourceAreaHeaderContent: "Affaires/projets/congés",
 		resourceLabelDidMount: function(arg) {
@@ -438,20 +477,11 @@ function createTimeline(data_calendar, groups) {
 				selected_groupid = resource.id;
 		  	});
 		},
-		eventDidMount: function(arg) {
-			arg.el.classList.add("tooltip");
-			var tooltip_content = document.createElement("p");
-			var tooltip_text = arg.event.extendedProps.task;
-			tooltip_text = tooltip_text + "</br>" + String(arg.event.extendedProps.day_ratio);
-			tooltip_text = tooltip_text + "</br>" + breaklines(arg.event.extendedProps.description, 10);
-			tooltip_content.innerHTML = tooltip_text;
-			tooltip_content.className = "w3-padding-small tooltiptext";
-			arg.el.appendChild(tooltip_content);
+		eventDidMount: function(arg) { // called when the current event page is rendered
+			setTooltip(arg);
 		},
-		eventClick: function(arg) {
-			//console.log('Event: ' + arg.event.title);
-			//console.log('Coordinates: ' + arg.jsEvent.pageX + ',' + arg.jsEvent.pageY);
-			//console.log('View: ' + arg.view.type);
+		eventClick: function(arg) { // called when an existing event is clicked
+			console.log('eventClick', arg)
 			document.getElementById("add_item_form").style.display = "block";
 			document.getElementById("date_input").value = getISODate(arg.event.start);
 			document.getElementById("start_input").value = getISOTime(arg.event.start);
@@ -461,30 +491,61 @@ function createTimeline(data_calendar, groups) {
 			document.getElementById("descr_input").value = arg.event.extendedProps.description;
 			selected_itemid = arg.event.id;
 		},
-		select: function(arg) {
-			document.getElementById("add_item_form").style.display = "block";
-			document.getElementById("date_input").value = getISODate(arg.start);
-			document.getElementById("start_input").value = getISOTime(arg.start);
-			document.getElementById("end_input").value = getISOTime(arg.end);
-			if (arg.resource) {
-				document.getElementById("project_input").value = arg.resource.title;
+		select: function(arg) { // called when a selection is made on a date (no existing event selected)
+			console.log('select', arg)
+			if (getISOTime(arg.start) != "00:00:00") { // only for a selection within a day (disabled in dayGridMonth view)
+				document.getElementById("add_item_form").style.display = "block";
+				document.getElementById("date_input").value = getISODate(arg.start);
+				document.getElementById("start_input").value = getISOTime(arg.start);
+				document.getElementById("end_input").value = getISOTime(arg.end);
+				if (arg.resource) {
+					document.getElementById("project_input").value = arg.resource.title;
+				}
 			}
 		},
-		dateClick: function(arg) {
-			document.getElementById("add_item_form").style.display = "block";
-			document.getElementById("date_input").value = getISODate(arg.date);
-			if (arg.date.getHours() > 8) {
-				document.getElementById("start_input").value = getISOTime(arg.date);
-			}
-			if (arg.resource) {
-				document.getElementById("project_input").value = arg.resource.title;
-			}
+		dateClick: function(arg) { // called when a date is clicked (no existing event clicked)
+			console.log('dateClick', arg)
+			var date = getISODate(arg.date);
+			calendar.changeView("resourceTimeGridDay", date);
+			// document.getElementById("add_item_form").style.display = "block";
+			// document.getElementById("date_input").value = getISODate(arg.date);
+			// if (arg.date.getHours() > 8) {
+			// 	document.getElementById("start_input").value = getISOTime(arg.date);
+			// }
+			// if (arg.resource) {
+			// 	document.getElementById("project_input").value = arg.resource.title;
+			// }
 		},
 		eventReceive: function(arg) { // called when a proper external event is dropped
-			console.log('eventReceive', arg.event);
+			console.log('eventReceive', arg)
 		},
 		eventDrop: function(arg) { // called when an event (already on the calendar) is moved
-			console.log('eventDrop', arg.event);
+			console.log('eventDrop', arg)
+			document.getElementById("add_item_form").style.display = "block";
+			document.getElementById("date_input").value = getISODate(arg.event.start);
+			document.getElementById("start_input").value = getISOTime(arg.event.start);
+			document.getElementById("end_input").value = getISOTime(arg.event.end);
+			document.getElementById("task_input").value = arg.event.extendedProps.task;
+			document.getElementById("descr_input").value = arg.event.extendedProps.description;
+			if (arg.newResource) {
+				document.getElementById("project_input").value = arg.newResource.title;
+			} else {
+				document.getElementById("project_input").value = arg.event.title;
+			}
+			selected_itemid = arg.event.id;
+			addItem();
+		},
+		eventResize: function(arg) { // called when an existing event is resized
+			console.log('eventResize', arg)
+			document.getElementById("add_item_form").style.display = "block";
+			document.getElementById("date_input").value = getISODate(arg.event.start);
+			document.getElementById("start_input").value = getISOTime(arg.event.start);
+			document.getElementById("end_input").value = getISOTime(arg.event.end);
+			document.getElementById("task_input").value = arg.event.extendedProps.task;
+			document.getElementById("descr_input").value = arg.event.extendedProps.description;
+			document.getElementById("project_input").value = arg.event.title;
+			selected_itemid = arg.event.id;
+			addItem();
 		},
 		resources: groups,
 		events: items
@@ -500,6 +561,9 @@ function createTimeline(data_calendar, groups) {
 
 	// Render group options
 	setGroupOptions(groups);
+
+	// Set default time range for synthesis
+	setDefaultTimeRange(items);
 	
 	console.log("Loading calendar complete!");
 }

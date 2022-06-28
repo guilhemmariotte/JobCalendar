@@ -23,10 +23,12 @@ const projectinput = document.getElementById("project_input");
 const newprojectinput = document.getElementById("new_project_input");
 const taskinput = document.getElementById("task_input");
 const descrinput = document.getElementById("descr_input");
+const startrangeinput = document.getElementById("startrange_input");
+const endrangeinput = document.getElementById("endrange_input");
+
 
 const requesttext = document.getElementById("txt_request");
 const selectedlangbtn = document.getElementById("selected_lang");
-const resultstable = document.getElementById("results_table");
 const resultslist = document.getElementById("results_list");
 const resultsmsg = document.getElementById("results_msg");
 const submitbtn = document.getElementById("submit_request");
@@ -65,11 +67,16 @@ function addItem() {
 		var group = {
 			id: groupid,
 			title: project,
-			eventColor: '#cccccc',
+			color: '#cccccc',
 			visible: true
 		};
 		calendar.addResource(group);
+		groups = calendar.getResources();
+		setGroupOptions(groups);
 	}
+	var group = calendar.getResourceById(groupid);
+	var color = group.extendedProps.color;
+	var color0 = hex2rgb(color, 0.5);
 	// Add item
 	if (selected_itemid) {
 		// Modify existing item
@@ -78,6 +85,8 @@ function addItem() {
 		item.setEnd(end_time);
 		item.setResources([groupid]);
 		item.setProp("title", project);
+		item.setProp("backgroundColor", color0);
+		item.setProp("borderColor", color);
 		item.setExtendedProp("task", task);
 		item.setExtendedProp("description", descr);
 		item.setExtendedProp("day_ratio", ratio);
@@ -87,6 +96,9 @@ function addItem() {
 		var item = {
 			id: itemid,
 			resourceId: groupid,
+			textColor: "#000000",
+			backgroundColor: color0,
+			borderColor: color,
 			start: start_time,
 			end: end_time,
 			title: project,
@@ -96,17 +108,8 @@ function addItem() {
 		};
 		calendar.addEvent(item);
 	}
-	console.log(calendar.getEvents())
-	console.log(calendar.getResources())
 	// Close form and reinit values
-	additemform.style.display = "none";
-	dateinput.value = "";
-	startinput.value = "";
-	endinput.value = "";
-	projectinput.value = "";
-	taskinput.value = "";
-	descrinput.value = "";
-	selected_itemid = null;
+	reinitForm();
 }
 
 // Remove item
@@ -116,14 +119,7 @@ function removeItem() {
 		item.remove();
 	}
 	// Close form and reinit values
-	additemform.style.display = "none";
-	dateinput.value = "";
-	startinput.value = "";
-	endinput.value = "";
-	projectinput.value = "";
-	taskinput.value = "";
-	descrinput.value = "";
-	selected_itemid = null;
+	reinitForm();
 }
 
 // Set new item ID
@@ -135,6 +131,23 @@ function setNewItemId() {
 	}
 	var itemid = String(Math.max(...item_ids) + 1);
 	return itemid
+}
+
+// Reinit values when closing form
+function reinitForm() {
+	// Item form
+	additemform.style.display = "none";
+	dateinput.value = "";
+	startinput.value = "";
+	endinput.value = "";
+	projectinput.value = "";
+	taskinput.value = "";
+	descrinput.value = "";
+	selected_itemid = null;
+	// Group form
+	addresourceform.style.display = "none";
+	newprojectinput.value = "";
+	selected_groupid = null;
 }
 
 
@@ -157,15 +170,15 @@ function addResource() {
 		var group = {
 			id: groupid,
 			title: project,
-			eventColor: '#cccccc',
+			color: '#cccccc',
 			visible: true
 		};
 		calendar.addResource(group);
 	}
+	groups = calendar.getResources();
+	setGroupOptions(groups);
 	// Close form and reinit values
-	addresourceform.style.display = "none";
-	newprojectinput.value = "";
-	selected_groupid = null;
+	reinitForm();
 }
 
 // Remove resource
@@ -174,10 +187,10 @@ function removeResource() {
 		var group = calendar.getResourceById(selected_groupid);
 		group.remove();
 	}
+	groups = calendar.getResources();
+	setGroupOptions(groups);
 	// Close form and reinit values
-	addresourceform.style.display = "none";
-	newprojectinput.value = "";
-	selected_groupid = null;
+	reinitForm();
 }
 
 // Set new resource ID
@@ -202,295 +215,160 @@ function setDate () {
 
 
 //-----------------------------------------------------------------------------------
-// Wikipedia request
-function submitRequest(evt) {
-	evt.preventDefault(); // Prevent default behavior of submit button
-	submitbtn.disabled = "disabled";
-	submitbtn.style.cursor = "wait";
-	
-	// Launch request
-	var request = new XMLHttpRequest();
-	var lang = selectedlangbtn.innerHTML.toLowerCase();
-	//var url = "https://fr.wikipedia.org/w/api.php?action=query&origin=*&format=json&generator=search&gsrnamespace=0&gsrlimit=5&gsrsearch='" + requesttext.value + "'";
-	var url = "https://api.wikimedia.org/core/v1/wikipedia/" + lang + "/search/page?q='" + requesttext.value + "'&limit=5";
-	request.open('GET', url, true);
-	
-	// Once request has loaded...
-	request.onload = function() {
-		submitbtn.disabled = "";
-		submitbtn.style.cursor = "pointer";
-		resultstable.parentNode.style.visibility = "visible";
-		// Results of the request
-		var data = JSON.parse(this.response);
-		data_request = [...data["pages"]];
-		// Clear list of results
-		while (resultslist.hasChildNodes()) {
-			resultslist.removeChild(resultslist.lastChild);
+// Fill table
+function refreshTable(attr, table_id) {
+
+	// get table container
+	var resultstable = document.getElementById(table_id);
+
+	// clear existing table
+	clearTable(resultstable);
+
+	// get time range: columns
+	var range_start = startrangeinput.value;
+	var range_end = endrangeinput.value;
+	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var col_names = [];
+	if (range_start.includes("-")) {
+		// sequence of months
+		range_start = new Date(range_start);
+		range_end = new Date(range_end);
+		var num_cols = Math.ceil((range_end.getTime() - range_start.getTime() + 1) / (24*3600*1000*29));
+		var start_year = range_start.getFullYear();
+		var start_month = range_start.getMonth();
+		var columns = [];
+		for (var i = 0 ; i < num_cols ; i++) {
+			var date = new Date(start_year, start_month + i, 1);
+			columns.push(date);
+			col_names.push(months[date.getMonth()] + " " + String(date.getFullYear()));
 		}
-		
-		// Check if results
-		if (data_request.length == 0 | requesttext.value == "") {
-			resultsmsg.innerHTML = "Aucun résultat trouvé";
+		var date = new Date(start_year, start_month + num_cols, 1);
+		var col_ranges = [...columns, date];
+	} else {
+		// sequence of years
+		range_start = new Date(range_start);
+		range_end = new Date(range_end);
+		var num_cols = Math.ceil((range_end.getTime() - range_start.getTime()  + 1) / (24*3600*1000*365));
+		var start_year = range_start.getFullYear();
+		var columns = [];
+		for (var i = 0 ; i < num_cols ; i++) {
+			var date = new Date(start_year + i, 0, 1);
+			columns.push(date);
+			col_names.push(" " + String(date.getFullYear()));
+		}
+		var date = new Date(start_year + num_cols, 0, 1);
+		var col_ranges = [...columns, date];
+	}
+
+	// get different attributes: rows
+	var items = calendar.getEvents();
+	var rows = [];
+	// var item_rows = [];
+	// for (var i = 0 ; i < items.length ; i++) {
+	// 	if (items[i][attr]) {
+	// 		var attr_val = items[i][attr];
+	// 	} else {
+	// 		var attr_val = items[i].extendedProps[attr];
+	// 	}
+	// 	if (!rows.includes(attr_val)) {
+	// 		rows.push(attr_val);
+	// 		item_rows.push([i]);
+	// 	} else {
+	// 		for (var j = 0 ; j < rows.length ; j++) {
+	// 			if (rows[j] == attr_val) {
+	// 				item_rows[j].push(i);
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	// get the table contents
+	var tabcontents = []
+	for (var j = 0 ; j < columns.length ; j++) {
+		tabcontents[col_names[j]] = [];
+	}
+	//var tabcontents = new Array(columns.length).fill([]);
+	for (var i = 0 ; i < items.length ; i++) {
+		var start_time = items[i].start;
+		var end_time = items[i].end;
+		if (items[i][attr]) {
+			var attr_val = items[i][attr];
 		} else {
-			resultsmsg.innerHTML = "Cliquer sur un résultat pour l'ajouter au tableau";
-			// Append list of results
-			for (var i = 0 ; i < data_request.length; i++) {
-				var listitem = document.createElement("li");
-				listitem.id = "item_" + String(i);
-				listitem.name = "result_item";
-				listitem.className = "tooltip";
-				listitem.innerHTML = data_request[i]["title"];
-				var tooltip = document.createElement("p");
-				tooltip.className = "tooltiptext";
-				tooltip.innerHTML = data_request[i]["description"];
-				listitem.appendChild(tooltip);
-				// Add to table on click
-				listitem.addEventListener("click", function () {
-					var ind = Number(this.id.split("_")[1]);
-					getPageLanguage(ind, (key_en, i) => {
-						addToTable(key_en, i);
-					});
-				});
-				resultslist.appendChild(listitem);
-			}
+			var attr_val = items[i].extendedProps[attr];
 		}
-	}
-	// Send request to the server asynchronously
-	request.send();
-}
-
-
-// Select language for request
-function selectLang(evt) {
-	evt.preventDefault();
-	var lang = evt.target.innerHTML;
-	selectedlangbtn.innerHTML = lang;
-}
-
-
-// Get EN page key (used to access DBpedia)
-function getPageLanguage(ind, callback) {
-	var request = new XMLHttpRequest();
-	var lang = selectedlangbtn.innerHTML.toLowerCase();
-	var key = data_request[ind]["key"];
-	var url = "https://api.wikimedia.org/core/v1/wikipedia/" + lang + "/page/" + key + "/links/language";
-	request.open('GET', url, true);
-	
-	// Once request has loaded...
-	request.onload = function() {
-		var data = JSON.parse(this.response);
-		var key_en = "";
-		for (var i = 0 ; i < data.length ; i++) {
-			if (data[i]["code"] == "en") {
-				key_en = data[i]["key"];
-			}
-		}
-		if (lang == "en") {
-			key_en = key;
-		}
-		callback(key_en, ind);
-	}
-	// Send request to the server asynchronously
-	request.send();
-}
-
-
-// Add page info to table (get info from DBpedia request)
-function addToTable(key_en, ind) {
-	var request = new XMLHttpRequest();
-	var lang = selectedlangbtn.innerHTML.toLowerCase();
-	//var url = "https://api.wikimedia.org/core/v1/wikipedia/fr/page/" + key; // wikipedia source, key in FR
-	var url = "https://dbpedia.org/data/" + key_en + ".json"; // dbpedia parsed data, key in EN
-	request.open('GET', url, true);
-	
-	// Once request has loaded...
-	request.onload = function() {
-		var data = JSON.parse(this.response);
-		var data = data["http://dbpedia.org/resource/" + key_en];
-		var startdate = "";
-		var enddate = "";
-		var title = data_request[ind]["title"];
-		var descr = data_request[ind]["description"];
-		var subject = "unknown";
-		var type = "";
-		var country = lang;
-		var link = "https://" + lang + ".wikipedia.org/wiki/" + data_request[ind]["key"];
-		
-		// Get dates
-		if (data["http://dbpedia.org/ontology/date"]) {
-			startdate = data["http://dbpedia.org/ontology/date"][0].value;
-			if (data["http://dbpedia.org/ontology/date"].length > 1) {
-				enddate = data["http://dbpedia.org/ontology/date"][1].value;
-			}
-		}
-		if (data["http://dbpedia.org/ontology/birthYear"]) {
-			var date = data["http://dbpedia.org/ontology/birthYear"][0].value;
-			if (date != "") {
-				startdate = date;
-			}
-		}
-		if (data["http://dbpedia.org/ontology/deathYear"]) {
-			var date = data["http://dbpedia.org/ontology/deathYear"][0].value;
-			if (date != "") {
-				enddate = date;
-			}
-		}
-		if (data["http://dbpedia.org/property/birthDate"]) {
-			var dates = data["http://dbpedia.org/property/birthDate"];
-			var i = 0;
-			while (i < dates.length & dates[i].value == "") {
-				i++;
-			}
-			if (i < dates.length) {
-				startdate = dates[i].value;
-			}
-		}
-		if (data["http://dbpedia.org/property/deathDate"]) {
-			var dates = data["http://dbpedia.org/property/deathDate"];
-			var i = 0;
-			while (i < dates.length & dates[i].value == "") {
-				i++;
-			}
-			if (i < dates.length) {
-				enddate = dates[i].value;
-			}
-		}
-		if (data["http://www.w3.org/2000/01/rdf-schema#label"]) {
-			// names in other lang
-		}
-		
-		// Get subject
-		if (data["http://dbpedia.org/property/wikiPageUsesTemplate"]) {
-			var props = data["http://dbpedia.org/property/wikiPageUsesTemplate"];
-			var subject0 = "";
-			for (var i = 0; i < props.length; i++) {
-				var subj = props[i].value.split("Template:Infobox_");
-				if (subj.length > 1) {
-					subject0 = subject0 + ", " + subj[1];
+		for (var j = 0 ; j < columns.length ; j++) {
+			if (col_ranges[j] <= start_time & end_time <= col_ranges[j+1]) {
+				if (Object.keys(tabcontents[col_names[j]]).includes(attr_val)) {
+					tabcontents[col_names[j]][attr_val] = tabcontents[col_names[j]][attr_val] + Number(items[i].extendedProps.day_ratio);
+				} else {
+					tabcontents[col_names[j]][attr_val] = Number(items[i].extendedProps.day_ratio);
+				}
+				if (!rows.includes(attr_val)) {
+					rows.push(attr_val);
 				}
 			}
-			if (subject0 != "") {
-				subject = subject0.slice(2, subject0.length);
-			}
 		}
-		
-		// Fill the table
-		var itemcontents = [
-			startdate,
-			enddate,
-			title, //"<a target='_blank' href='" + link + "'>" + breaklines(title, 20) + "</a>",
-			descr,
-			subject,
-			country,
-			"<a target='_blank' href='" + link + "'>" + "<i class='fa fa-external-link w3-hover-opacity w3-xlarge w3-padding-small' style='cursor: pointer'></i>" + "</a>",
-			"<i class='fa fa-times w3-hover-opacity w3-xlarge w3-padding-small' style='cursor: pointer'></i>"
-		];
+	}
+	// add total of each column
+	attr_tot = "TOTAL";
+	rows.push(attr_tot);
+	for (var j = 0 ; j < columns.length ; j++) {
+		var attrs = Object.keys(tabcontents[col_names[j]]);
+		var val_tot = 0;
+		for (var i = 0 ; i < attrs.length ; i++) {
+			val_tot = val_tot + tabcontents[col_names[j]][attrs[i]];
+		}
+		tabcontents[col_names[j]][attr_tot] = val_tot;
+	}
+	console.log(columns, col_names, col_ranges, rows)
+	console.log(tabcontents)
+
+	// fill table header
+	var tabrow = document.createElement("tr");
+	var tabitem = document.createElement("th");
+	tabitem.innerHTML = "Intitulés";
+	tabrow.appendChild(tabitem);
+	for (var i = 0 ; i < columns.length ; i++) {
+		var tabitem = document.createElement("th");
+		tabitem.innerHTML = col_names[i];
+		tabrow.appendChild(tabitem);
+	}
+	resultstable.appendChild(tabrow);
+	// fill table content
+	for (var i = 0 ; i < rows.length ; i++) {
 		var tabrow = document.createElement("tr");
-		// tabrow.setAttribute("dataid", id);
-		for (var i = 0 ; i < itemcontents.length ; i++) {
+		var tabitem = document.createElement("td");
+		tabitem.innerHTML = rows[i];
+		tabrow.appendChild(tabitem);
+		for (var j = 0 ; j < columns.length ; j++) {
 			var tabitem = document.createElement("td");
-			if (i == 6) {
-				tabitem.innerHTML = itemcontents[i]; // link, not editable
-			} else if (i == 7) {
-				tabitem.innerHTML = itemcontents[i]; // delete row, not editable
-				// Delete row on click
-				tabitem.addEventListener("click", function () {
-					// Delete row
-					var i_row = this.parentNode.rowIndex;
-					resultstable.deleteRow(i_row);
-				});
+			if (tabcontents[col_names[j]][rows[i]]) {
+				var cellcontent = tabcontents[col_names[j]][rows[i]].toFixed(1);
 			} else {
-				tabitem.innerHTML = itemcontents[i];
-				tabitem.setAttribute("contenteditable", "");
+				var cellcontent = "-";
 			}
+			tabitem.innerHTML = cellcontent;
+			//tabitem.setAttribute("contenteditable", "");
 			tabrow.appendChild(tabitem);
 		}
 		resultstable.appendChild(tabrow);
 	}
-	// Send request to the server asynchronously
-	request.send();
-	
-	// resultstable.empty();
-	// var apiUrl = api + "%27" + searchBar.value.replace(/[\s]/g, '_') + "%27";
 }
+
 
 
 // Clear the table
-function clearTable(evt) {
-	var numrows = resultstable.rows.length - 1;
+function clearTable(resultstable) {
+	var numrows = resultstable.rows.length;
 	for (i = 0; i < numrows; i++) {
-		resultstable.deleteRow(1);
+		resultstable.deleteRow(0);
 	}
 }
 
 
-// Add items from the table
-function addTableItems(evt) {
-	additemsbtn.disabled = "disabled";
-	additemsbtn.style.cursor = "wait";
 
-	// Update group colors in existing timeline data
-	if (groups) {
-		groups.forEach(function (group) {
-			for (var i = 0; i < data_timeline.length; i++) {
-				if (data_timeline[i]["start date"] == "group" & data_timeline[i]["subject"] == group.id) {
-					console.log(group)
-					data_timeline[i]["color"] = group.color;
-				}
-			}
-		});
-	}
-
-	// Timeline data to add
-	data_timeline_add = [];
-	for (i = 1; i < resultstable.rows.length; i++) {
-		var cells = resultstable.rows.item(i).cells;
-		// Append to timeline data to add
-		if (data_timeline_add.length > 0) {
-			var i0 = data_timeline_add.length - 1;
-			var id = data_timeline_add[i0]["id"] + 1;
-		} else {
-			var id = 1;
-		}
-		data_timeline_add.push({
-			"id": id,
-			"start date": cells[0].innerHTML,
-			"end date": cells[1].innerHTML,
-			"title": cells[2].innerHTML,
-			"description": cells[3].innerHTML,
-			"country": cells[5].innerHTML,
-			"type": "",
-			"subject": cells[4].innerHTML,
-			"wikipedia link": cells[6].childNodes[0].href,
-			"color": ""
-		});
-	}
-
-	// Timeline data
-	data_timeline = [...data_timeline, ...data_timeline_add];
-
-	// Timeline groups
-	var groupids = [];
-	// if (groups) {
-		// groupids = groups.getIds();
-	// }
-	data_timeline = setTimelineGroups(data_timeline, groupids);
-	
-	// Timeline countries
-	var countryids = [];
-	// if (countries) {
-		// countryids = countries.getIds();
-	// }
-	setTimelineCountries(data_timeline, countryids);
-	
-	// Create the timeline
-	createTimeline(data_timeline);
-	
-	additemsbtn.disabled = "";
-	additemsbtn.style.cursor = "pointer";
-	confirmmsg.style.display = "block";
-	setTimeout(() => {
-		confirmmsg.style.display = "none";
-	}, 3000);
+// Fill all tables
+function refreshTables() {
+	refreshTable("title", "table_projects");
+	refreshTable("task", "table_tasks");
 }
-
