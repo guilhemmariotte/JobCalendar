@@ -26,15 +26,6 @@ const descrinput = document.getElementById("descr_input");
 const startrangeinput = document.getElementById("startrange_input");
 const endrangeinput = document.getElementById("endrange_input");
 
-
-const requesttext = document.getElementById("txt_request");
-const selectedlangbtn = document.getElementById("selected_lang");
-const resultslist = document.getElementById("results_list");
-const resultsmsg = document.getElementById("results_msg");
-const submitbtn = document.getElementById("submit_request");
-const additemsbtn = document.getElementById("add_items");
-const confirmmsg = document.getElementById("add_confirm");
-
 //additemform.addEventListener("DOMContentLoaded", setDate);
 additembtn.addEventListener("click", addItem);
 removeitembtn.addEventListener("click", removeItem);

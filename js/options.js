@@ -35,62 +35,6 @@ function openTab(evt, tabId) {
 
 //-----------------------------------------------------------------------------------
 // Options
-function refreshTimeline() {
-	const enableGroupsBtn = document.getElementById("enable_groups");
-	if (enableGroupsBtn.checked) {
-		timeline.setGroups(null);
-		timeline.setGroups(groups);
-	} else {
-		timeline.setGroups(groups);
-		timeline.setGroups(null);
-	}
-}
-
-function enableGroups(evt) {
-	if (evt.currentTarget.checked) {
-		timeline.setGroups(groups);
-	} else {
-		timeline.setGroups(null);
-	}
-}
-
-function enableClusters(evt) {
-	var options = {};
-	if (evt.currentTarget.checked) {
-		var clusterOpts = {
-			cluster: {
-				titleTemplate: "{count} éléments regroupés, double-cliquer pour afficher",
-				showStipes: false,
-				maxItems: 1,
-				clusterCriteria: (firstItem, secondItem) => {
-					if (Math.abs(getYear(firstItem.start) - getYear(secondItem.start)) < 5) {
-						return true;
-					} else {
-						return false;
-					}
-				},
-			},
-		};
-		timeline.setOptions(clusterOpts);
-		//Object.assign(options, defaultOptions, clusterOpts);
-	} else {
-		timeline.setOptions({cluster: false});
-		//Object.assign(options, defaultOptions);
-	}
-	refreshTimeline();
-	//timeline.setOptions(options);
-}
-
-function enableOrdering(evt) { // not used yet
-	if (evt.currentTarget.checked) {
-		timeline.setOptions({order: (firstItem, secondItem) => {
-			// order by rank
-			return firstItem.rank - secondItem.rank;
-		}});
-	} else {
-		timeline.setOptions({order: () => {}});
-	}
-}
 
 function enableEdition(evt) {
 	if (evt.currentTarget.checked) {
@@ -108,14 +52,6 @@ function enablePopup(evt) {
 		calendar.setOption('eventDidMount', function(arg){setTooltip(arg)});
 	} else {
 		calendar.setOption('eventDidMount', function(arg){});
-	}
-}
-
-function enableStack(evt) {
-	if (evt.currentTarget.checked) {
-		timeline.setOptions({stack: true});
-	} else {
-		timeline.setOptions({stack: false});
 	}
 }
 

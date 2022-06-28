@@ -40,14 +40,6 @@ var items = [];
 var selected_date = null;
 var selected_itemid = null;
 var selected_groupid = null;
-
-var data_timeline = [];
-var data_timeline_add = [];
-var data_request = [];
-var timeline = [];
-var countries = [];
-var items_updated = [];
-var defaultOptions = {};
 var droppedfiles = [];
 
 
@@ -421,7 +413,7 @@ function createTimeline(data_calendar, groups) {
 		},
 		//dayMinWidth: 200,
 		headerToolbar: {
-			left: "addEventButton addResourceButton today prev,next",
+			left: "addEventButton addResourceButton prev,next",
 			center: "title",
 			right: "resourceTimeGridDay,timeGridWeek,dayGridMonth,listWeek"
 		},
