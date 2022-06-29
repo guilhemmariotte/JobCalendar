@@ -135,24 +135,29 @@ function loadTimeline() {
 		input.value = null; // clear file path to be able to reload the same file
 	} else if (droppedfiles.length > 0) {
 		timeline_file = droppedfiles[0];
-	} else {
-		timeline_file = filename_default;
 	}
-	Papa.parse(timeline_file, {
-		header: true,
-		download: true,
-		complete: function(results) {
-			
-			// Calendar data
-			data_calendar = results.data;
+	if (timeline_file) { // file loaded or dropped
+		Papa.parse(timeline_file, {
+			header: true,
+			download: true,
+			complete: function(results) {
+				
+				// Calendar data
+				data_calendar = results.data;
+	
+				// Calendar groups
+				groups = setTimelineGroups(data_calendar, []);
+				
+				// Create the Calendar
+				createTimeline(data_calendar, groups);
+			}
+		});
+	} else { // no file, open empty calendar
 
-			// Calendar groups
-			groups = setTimelineGroups(data_calendar, []);
-			
-			// Create the Calendar
-			createTimeline(data_calendar, groups);
-		}
-	});
+		// Create the Calendar
+		createTimeline([], []);
+
+	}
 }
 
 
@@ -368,9 +373,12 @@ function setItemOptions() {
 
 // Set table result time range
 function setDefaultTimeRange(items) {
-	var date_curr = items[items.length - 1].start.split("T")[0];
-	var date = new Date(date_curr);
-	//var date = new Date(); // now
+	if (items.length > 0) {
+		var date_curr = items[items.length - 1].start.split("T")[0];
+		var date = new Date(date_curr);
+	} else {
+		var date = new Date(); // now
+	}
 	var range_start = String(date.getFullYear());
 	var range_end = String(date.getFullYear());
 	document.getElementById("startrange_input").value = range_start;
@@ -391,7 +399,12 @@ function createTimeline(data_calendar, groups) {
 	items = convertTimelineData(data_calendar, groups);
 
 	// Current date
-	var date_curr = items[items.length - 1].start.split("T")[0];
+	if (items.length > 0) {
+		var date_curr = items[items.length - 1].start.split("T")[0];
+	} else {
+		var date = new Date(); // now
+		var date_curr = getISODate(date);
+	}
 	
 	var options = {
 		schedulerLicenseKey: "CC-Attribution-NonCommercial-NoDerivatives",

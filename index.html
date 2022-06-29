@@ -41,6 +41,9 @@
 				
 				<input type="file" id="load" name="timeline_data" accept="csv">
 				<label class="tooltip" for="load"><i class="fa fa-folder-open w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Choisir un fichier (.csv)</p></label>
+
+				<input type="button" id="load_default" name="timeline_data">
+				<label class="tooltip" for="load_default"><i class="fa fa-file w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Créer un nouveau calendrier</p></label>
 				
 				<input type="button" id="save" name="timeline_data">
 				<label class="tooltip" for="save"><i class="fa fa-cloud-download w3-hover-opacity w3-xlarge w3-padding-small"></i><p class="tooltiptext">Enregistrer le calendrier (.csv)</p></label>
@@ -55,6 +58,8 @@
 				<div id="visualization">
 					<span class="no-timeline">
 						Ouvrir ou glisser-déposer un fichier de données depuis votre ordinateur <i class="fa fa-folder-open w3-large w3-padding-small"></i>
+						<br>ou
+						<br>Créer un nouveau calendrier <i class="fa fa-file w3-large w3-padding-small"></i>
 					</span>
 				</div>
 
@@ -212,6 +217,14 @@
 					</div>
 				</form>
 				
+				<div class="w3-container">
+					<h2>Solde congés (tâche = CA ou RTT)</h2>
+					
+					<table id="table_vacations">
+					</table>
+					
+				</div>
+
 				<div class="w3-container">
 					<h2>Temps passés par affaires/projets</h2>
 					

@@ -17,6 +17,11 @@ const input = document.getElementById("load");
 
 input.addEventListener('change', loadTimeline);
 
+// Load default
+const load_default = document.getElementById("load_default");
+
+load_default.addEventListener('click', loadTimeline);
+
 
 // On page load
 //document.addEventListener("DOMContentLoaded", updateTimeline);
