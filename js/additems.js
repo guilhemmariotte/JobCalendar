@@ -116,11 +116,15 @@ function removeItem() {
 // Set new item ID
 function setNewItemId() {
 	var items = calendar.getEvents();
-	var item_ids = [];
-	for (var i = 0; i < items.length; i++) {
-		item_ids.push(items[i].id);
+	if (items.length > 0) {
+		var item_ids = [];
+		for (var i = 0; i < items.length; i++) {
+			item_ids.push(items[i].id);
+		}
+		var itemid = String(Math.max(...item_ids) + 1);
+	} else {
+		var itemid = 0;
 	}
-	var itemid = String(Math.max(...item_ids) + 1);
 	return itemid
 }
 
@@ -187,11 +191,15 @@ function removeResource() {
 // Set new resource ID
 function setNewResourceId() {
 	var groups = calendar.getResources();
-	var group_ids = [];
-	for (var i = 0; i < groups.length; i++) {
-		group_ids.push(groups[i].id);
+	if (groups.length > 0) {
+		var group_ids = [];
+		for (var i = 0; i < groups.length; i++) {
+			group_ids.push(groups[i].id);
+		}
+		var groupid = String(Math.max(...group_ids) + 1);
+	} else {
+		var groupid = 0;
 	}
-	var groupid = String(Math.max(...group_ids) + 1);
 	return groupid
 }
 
