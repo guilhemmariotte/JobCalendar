@@ -514,6 +514,7 @@ tr:nth-child(even) {
 
 /* Tooltip text */
 .tooltip .tooltiptext {
+	z-index: 9999;
 	visibility: hidden;
 	background-color: gray;
 	color: #fff;

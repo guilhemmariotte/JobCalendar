@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="css/w3.css" media="all" type="text/css" />
 		<link rel="stylesheet" href="css/toggle-switchy.css" media="all" type="text/css" />
 		<link rel="stylesheet" href="css/fullcalendar.css" media="all" type="text/css" />
+		<link rel="stylesheet" href="css/chart.css" media="all" type="text/css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<!--[if lte IE 7]>
 			<link rel="stylesheet" href="style_ie.css" />
@@ -36,6 +37,7 @@
 				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Timeline')" id="tab_timeline">Calendrier</button>
 				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Options')" id="tab_options">Options</button>
 				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Add')" id="tab_add">Synthèse</button>
+				<button class="w3-bar-item tablinks w3-button" onclick="openTab(event, 'Tracking')" id="tab_tracking">Suivi</button>
 				
 				<div class="w3-bar-item">|</div>
 				
@@ -64,7 +66,7 @@
 				</div>
 
 				<!-- Add new item form -->
-				<div id="add_item_form" class="w3-modal">
+				<div id="add_item_form" class="w3-modal addform">
 					<div class="w3-modal-content">
 						<div class="w3-container w3-pale-green">
 							<span onclick="reinitForm()" class="w3-button w3-display-topright">&times;</span>
@@ -91,7 +93,9 @@
 							</div>
 							<p>
 								<label class="w3-text-grey">Affaire/Projet interne/Congés</label>
-								<input class="w3-input w3-border" id="project_input" type="text" required>
+								<div class="w3-dropdown-hover" style="width:100%">
+									<input class="w3-input w3-border" id="project_input" type="text" required>
+								</div>
 							</p>
 							<p>
 								<label class="w3-text-grey">Tâche</label>
@@ -110,7 +114,7 @@
 				</div>
 
 				<!-- Add new resource form -->
-				<div id="add_resource_form" class="w3-modal">
+				<div id="add_resource_form" class="w3-modal addform">
 					<div class="w3-modal-content">
 						<div class="w3-container w3-pale-green">
 							<span onclick="reinitForm()" class="w3-button w3-display-topright">&times;</span>
@@ -148,6 +152,13 @@
 								<span class="toggle"><span class="switch"></span></span>
 								<span class="label">Autoriser l'édition les éléments</span>
 							</label>
+
+							</br></br>
+							<label class="toggle-switchy" for="show_all_groups" data-size="sm" data-style="rounded">
+								<input checked type="checkbox" id="show_all_groups" onchange="showAllGroups(event)">
+								<span class="toggle"><span class="switch"></span></span>
+								<span class="label">Afficher tous les groupes en mode "jour"</span>
+							</label>
 							
 							</br></br>
 							<label class="toggle-switchy" for="enable_popup" data-size="sm" data-style="rounded">
@@ -182,6 +193,8 @@
 					2022. Guilhem Mariotte
 					</br>
 					Calender by <a href="https://fullcalendar.io/" target="_blank">fullcalendar.io</a> &#124;
+
+					Graphics by <a href="https://www.chartjs.org/" target="_blank">Chart.js</a> &#124;
 					
 					Style by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> &#124; <a href="https://fontawesome.com/v4.7/icons/" target="_blank">fontawesome.com</a>
 					</p>
@@ -212,7 +225,7 @@
 							</div>
 						</div>
 						<div class="w3-cell-row">
-							<button type="button" id="submit_timerange" class="w3-button w3-cell w3-dark-grey" onclick="refreshTables()">Mettre à jour</button>
+							<button type="button" id="submit_timerange" class="w3-button w3-cell w3-dark-grey" onclick="refreshAll()">Mettre à jour</button>
 						</div>
 					</div>
 				</form>
@@ -228,6 +241,9 @@
 				<div class="w3-container">
 					<h2>Temps passés par affaires/projets</h2>
 					
+					<canvas id="bar_projects" style="width:100%; max-width:700px;"></canvas>
+					<canvas id="line_projects" style="width:100%"></canvas>
+
 					<table id="table_projects">
 					</table>
 					
@@ -236,6 +252,9 @@
 				<div class="w3-container">
 					<h2>Temps passés par tâches</h2>
 					
+					<canvas id="bar_tasks" style="width:100%; max-width:700px;"></canvas>
+					<canvas id="line_tasks" style="width:100%"></canvas>
+
 					<table id="table_tasks">
 					</table>
 					
@@ -246,6 +265,51 @@
 					2022. Guilhem Mariotte
 					</br>
 					Calender by <a href="https://fullcalendar.io/" target="_blank">fullcalendar.io</a> &#124;
+
+					Graphics by <a href="https://www.chartjs.org/" target="_blank">Chart.js</a> &#124;
+					
+					Style by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> &#124; <a href="https://fontawesome.com/v4.7/icons/" target="_blank">fontawesome.com</a>
+					</p>
+				</div>
+				
+			</div>
+
+
+			<!-- Tab content: Suivi -->
+			<!-- ------------------------------------------------------------------------------------------------------ -->
+			<div id="Tracking" class="w3-display-container tabcontent w3-animate-opacity">
+				
+				<form class="w3-container" style="width:60%">
+					<div class="w3-section">
+						<label><b>Suivi d'une affaire/projet</b></label>
+						<div class="w3-cell-row">
+							<div class="w3-dropdown-hover" style="width:100%">
+								<input class="w3-input w3-border" id="selectedproject_input" type="text" value="" placeholder="Sélectionner une affaire/projet" required>
+								<!-- <div class="w3-dropdown-content w3-bar-block w3-card-4" id="projectlist_div">
+									<button class="w3-bar-item w3-button" onclick="selectLang(event)">FR</button>
+								</div> -->
+							</div>
+						</div>
+						<div class="w3-cell-row">
+							<button type="button" id="submit_group" class="w3-button w3-cell w3-dark-grey" onclick="refreshAll()">Mettre à jour</button>
+						</div>
+					</div>
+				</form>
+
+				<div class="w3-container">
+					
+					<table id="list_tracking">
+					</table>
+					
+				</div>
+				
+				<div class="w3-container w3-center w3-small">
+					<p>
+					2022. Guilhem Mariotte
+					</br>
+					Calender by <a href="https://fullcalendar.io/" target="_blank">fullcalendar.io</a> &#124;
+
+					Graphics by <a href="https://www.chartjs.org/" target="_blank">Chart.js</a> &#124;
 					
 					Style by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> &#124; <a href="https://fontawesome.com/v4.7/icons/" target="_blank">fontawesome.com</a>
 					</p>
@@ -257,6 +321,9 @@
 		
 		
 		<script src="js/fullcalendar.js" type="text/javascript">
+		</script>
+
+		<script src="js/chart.js" type="text/javascript">
 		</script>
 		
 		<script src="js/papaparse.js" type="text/javascript">
@@ -271,6 +338,8 @@
 		<script src="js/loadsave.js" type="text/javascript">
 		</script>
 		<script src="js/additems.js" type="text/javascript">
+		</script>
+		<script src="js/synthesis.js" type="text/javascript">
 		</script>
 		
 		

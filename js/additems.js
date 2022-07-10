@@ -21,10 +21,12 @@ const startinput = document.getElementById("start_input");
 const endinput = document.getElementById("end_input");
 const projectinput = document.getElementById("project_input");
 const newprojectinput = document.getElementById("new_project_input");
+const selectedprojectinput = document.getElementById("selectedproject_input");
 const taskinput = document.getElementById("task_input");
 const descrinput = document.getElementById("descr_input");
-const startrangeinput = document.getElementById("startrange_input");
-const endrangeinput = document.getElementById("endrange_input");
+
+// Group inputs (to show hover dropdown list)
+const projectinput_list = [projectinput, selectedprojectinput];
 
 //additemform.addEventListener("DOMContentLoaded", setDate);
 additembtn.addEventListener("click", addItem);
@@ -199,6 +201,7 @@ function setNewResourceId() {
 		var groupid = String(Math.max(...group_ids) + 1);
 	} else {
 		var groupid = 0;
+		//calendar.setOption("filterResourcesWithEvents", true);
 	}
 	return groupid
 }
@@ -211,213 +214,3 @@ function setDate () {
 	}
 }
 
-
-
-//-----------------------------------------------------------------------------------
-// Fill table
-function refreshTable(attr, table_id) {
-
-	// get table container
-	var resultstable = document.getElementById(table_id);
-
-	// clear existing table
-	clearTable(resultstable);
-
-	// get time range: columns
-	var range_start = startrangeinput.value;
-	var range_end = endrangeinput.value;
-	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	var col_names = [];
-	if (range_start.includes("-")) {
-		// sequence of months
-		range_start = new Date(range_start);
-		range_end = new Date(range_end);
-		var num_cols = Math.ceil((range_end.getTime() - range_start.getTime() + 1) / (24*3600*1000*29));
-		var start_year = range_start.getFullYear();
-		var start_month = range_start.getMonth();
-		var columns = [];
-		for (var i = 0 ; i < num_cols ; i++) {
-			var date = new Date(start_year, start_month + i, 1);
-			columns.push(date);
-			col_names.push(months[date.getMonth()] + " " + String(date.getFullYear()));
-		}
-		var date = new Date(start_year, start_month + num_cols, 1);
-		var col_ranges = [...columns, date];
-	} else {
-		// sequence of years
-		range_start = new Date(range_start);
-		range_end = new Date(range_end);
-		var num_cols = Math.ceil((range_end.getTime() - range_start.getTime()  + 1) / (24*3600*1000*365));
-		var start_year = range_start.getFullYear();
-		var columns = [];
-		for (var i = 0 ; i < num_cols ; i++) {
-			var date = new Date(start_year + i, 0, 1);
-			columns.push(date);
-			col_names.push(" " + String(date.getFullYear()));
-		}
-		var date = new Date(start_year + num_cols, 0, 1);
-		var col_ranges = [...columns, date];
-	}
-
-	// get different attributes: rows
-	var items = calendar.getEvents();
-	var rows = [];
-	// var item_rows = [];
-	// var tabcontents = new Array(columns.length).fill([]);
-	// for (var i = 0 ; i < items.length ; i++) {
-	// 	if (items[i][attr]) {
-	// 		var attr_val = items[i][attr];
-	// 	} else {
-	// 		var attr_val = items[i].extendedProps[attr];
-	// 	}
-	// 	if (!rows.includes(attr_val)) {
-	// 		rows.push(attr_val);
-	// 		item_rows.push([i]);
-	// 	} else {
-	// 		for (var j = 0 ; j < rows.length ; j++) {
-	// 			if (rows[j] == attr_val) {
-	// 				item_rows[j].push(i);
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// get the table contents
-	var tabcontents = []
-	for (var j = 0 ; j < columns.length ; j++) {
-		tabcontents[col_names[j]] = [];
-	}
-	if (attr == "vacation") { // special processing for vacation table
-		var vacation_names = ["CA", "RTT"];
-		if (col_names[0][0] == " ") { // sequence of years
-			var vacations_days = [25, 12];
-		} else { // sequence of months
-			var vacations_days = [25/12, 1];
-		}
-		// available vacation
-		for (var i = 0 ; i < vacation_names.length ; i++) {
-			var name_available = vacation_names[i] + " acquis";
-			var name_taken = vacation_names[i] + " pris";
-			var name_remaining = vacation_names[i] + " solde";
-			var val = vacations_days[i];
-			for (var j = 0 ; j < columns.length ; j++) {
-				tabcontents[col_names[j]][name_available] = val;
-				tabcontents[col_names[j]][name_taken] = 0;
-				tabcontents[col_names[j]][name_remaining] = val;
-				val = val + vacations_days[i];
-			}
-			rows.push(name_available);
-			rows.push(name_taken);
-			rows.push(name_remaining);
-		}
-		// vacation taken
-		for (var i = 0 ; i < items.length ; i++) {
-			var start_time = items[i].start;
-			var end_time = items[i].end;
-			var task = items[i].extendedProps.task;
-			for (var k = 0 ; k < vacation_names.length ; k++) {
-				if (vacation_names[k] == task) {
-					var name_taken = vacation_names[k] + " pris";
-					for (var j = 0 ; j < columns.length ; j++) {
-						if (col_ranges[j] <= start_time & end_time <= col_ranges[j+1]) {
-							tabcontents[col_names[j]][name_taken] = tabcontents[col_names[j]][name_taken] + Number(items[i].extendedProps.day_ratio);
-						}
-					}
-				}
-			}
-		}
-		// remaining vacation
-		for (var i = 0 ; i < vacation_names.length ; i++) {
-			var name_taken = vacation_names[i] + " pris";
-			var name_remaining = vacation_names[i] + " solde";
-			var val = 0;
-			for (var j = 0 ; j < columns.length ; j++) {
-				val = val + tabcontents[col_names[j]][name_taken];
-				tabcontents[col_names[j]][name_remaining] = tabcontents[col_names[j]][name_remaining] - val;
-			}
-		}
-	} else { // other tables
-		for (var i = 0 ; i < items.length ; i++) {
-			var start_time = items[i].start;
-			var end_time = items[i].end;
-			if (items[i][attr]) {
-				var attr_val = items[i][attr];
-			} else {
-				var attr_val = items[i].extendedProps[attr];
-			}
-			for (var j = 0 ; j < columns.length ; j++) {
-				if (col_ranges[j] <= start_time & end_time <= col_ranges[j+1]) {
-					if (Object.keys(tabcontents[col_names[j]]).includes(attr_val)) {
-						tabcontents[col_names[j]][attr_val] = tabcontents[col_names[j]][attr_val] + Number(items[i].extendedProps.day_ratio);
-					} else {
-						tabcontents[col_names[j]][attr_val] = Number(items[i].extendedProps.day_ratio);
-					}
-					if (!rows.includes(attr_val)) {
-						rows.push(attr_val);
-					}
-				}
-			}
-		}
-		// add total of each column
-		attr_tot = "TOTAL";
-		rows.push(attr_tot);
-		for (var j = 0 ; j < columns.length ; j++) {
-			var attrs = Object.keys(tabcontents[col_names[j]]);
-			var val_tot = 0;
-			for (var i = 0 ; i < attrs.length ; i++) {
-				val_tot = val_tot + tabcontents[col_names[j]][attrs[i]];
-			}
-			tabcontents[col_names[j]][attr_tot] = val_tot;
-		}
-	}
-
-	// fill table header
-	var tabrow = document.createElement("tr");
-	var tabitem = document.createElement("th");
-	tabitem.innerHTML = "Intitulés";
-	tabrow.appendChild(tabitem);
-	for (var i = 0 ; i < columns.length ; i++) {
-		var tabitem = document.createElement("th");
-		tabitem.innerHTML = col_names[i];
-		tabrow.appendChild(tabitem);
-	}
-	resultstable.appendChild(tabrow);
-	// fill table content
-	for (var i = 0 ; i < rows.length ; i++) {
-		var tabrow = document.createElement("tr");
-		var tabitem = document.createElement("td");
-		tabitem.innerHTML = rows[i];
-		tabrow.appendChild(tabitem);
-		for (var j = 0 ; j < columns.length ; j++) {
-			var tabitem = document.createElement("td");
-			if (tabcontents[col_names[j]][rows[i]]) {
-				var cellcontent = tabcontents[col_names[j]][rows[i]].toFixed(1);
-			} else {
-				var cellcontent = "-";
-			}
-			tabitem.innerHTML = cellcontent;
-			//tabitem.setAttribute("contenteditable", "");
-			tabrow.appendChild(tabitem);
-		}
-		resultstable.appendChild(tabrow);
-	}
-}
-
-
-
-// Clear the table
-function clearTable(resultstable) {
-	var numrows = resultstable.rows.length;
-	for (i = 0; i < numrows; i++) {
-		resultstable.deleteRow(0);
-	}
-}
-
-
-
-// Fill all tables
-function refreshTables() {
-	refreshTable("vacation", "table_vacations");
-	refreshTable("title", "table_projects");
-	refreshTable("task", "table_tasks");
-}

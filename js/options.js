@@ -13,7 +13,7 @@
 
 //-----------------------------------------------------------------------------------
 // Open tabs
-function openTab(evt, tabId) {
+function openTab(evt, tab_id) {
 	// Declare all variables
 	var i, tabcontent, tablinks;
 	// Get all elements with class="tabcontent" and hide them
@@ -27,29 +27,52 @@ function openTab(evt, tabId) {
 		tablinks[i].className = tablinks[i].className.replace(" active", "");
 	}
 	// Show the current tab, and add an "active" class to the button that opened the tab
-	document.getElementById(tabId).style.display = "block";
+	document.getElementById(tab_id).style.display = "block";
 	evt.currentTarget.className += " active";
+}
+
+
+// Expand panel
+function expandPanel(panel_id) {
+	var el = document.getElementById(panel_id);
+	if (el.className.indexOf("w3-show") == -1) {
+	  	el.className += " w3-show";
+	} else {
+	  	el.className = el.className.replace(" w3-show", "");
+	}
 }
 
 
 
 //-----------------------------------------------------------------------------------
 // Options
-
 function enableEdition(evt) {
 	if (evt.currentTarget.checked) {
-		calendar.setOption('editable', true);
-		calendar.setOption('selectable', true);
+		calendar.setOption("editable", true);
+		calendar.setOption("selectable", true);
 	} else {
-		calendar.setOption('editable', false);
-		calendar.setOption('selectable', false);
+		calendar.setOption("editable", false);
+		calendar.setOption("selectable", false);
+	}
+	calendar.render();
+}
+
+function showAllGroups(evt) {
+	if (evt.currentTarget.checked) {
+		calendar.setOption("filterResourcesWithEvents", false);
+	} else {
+		calendar.setOption("filterResourcesWithEvents", true);
 	}
 	calendar.render();
 }
 
 function enablePopup(evt) {
 	if (evt.currentTarget.checked) {
-		calendar.setOption('eventDidMount', function(arg){setTooltip(arg)});
+		calendar.setOption('eventDidMount', function(arg){
+			if (arg.event.id != ""){
+				setTooltip(arg);
+			}
+		});
 	} else {
 		calendar.setOption('eventDidMount', function(arg){});
 	}

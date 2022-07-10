@@ -15,7 +15,6 @@ const contentdiv = document.getElementsByName("maincontent")[0];
 const timelinediv = document.getElementById("Timeline");
 const showhidediv = document.getElementById("showhide_div");
 const colordiv = document.getElementById("color_div");
-const showhideCountriesdiv = document.getElementById("showhide_countries_div");
 const navbardiv = document.getElementById("navbar");
 
 // Current page info
@@ -225,6 +224,14 @@ function setGroupOptions(groups) {
 	while (colordiv.hasChildNodes()) {
 		colordiv.removeChild(colordiv.lastChild);
 	}
+	for (var i = 0; i < projectinput_list.length; i++) {
+		var projectlistdiv = document.getElementById("projectlist_" + String(i));
+		if (projectlistdiv) {
+			while (projectlistdiv.hasChildNodes()) {
+				projectlistdiv.removeChild(projectlistdiv.lastChild);
+			}
+		}
+	}
 	
 	// Checkboxes to hide/show groups
 	for (var i = 0; i < groups.length; i++) {
@@ -358,6 +365,37 @@ function setGroupOptions(groups) {
 		groupdiv.insertAdjacentElement("beforeEnd", label);
 		colordiv.appendChild(groupdiv);
 	}
+
+
+	// List of groups
+	for (var j = 0; j < projectinput_list.length; j++) {
+		// parent div
+		var listparent = projectinput_list[j].parentNode;
+		// list container
+		var projectlistdiv = document.createElement("div");
+		projectlistdiv.id = "projectlist_" + String(j);
+		projectlistdiv.className = "w3-dropdown-content w3-bar-block w3-card";
+		projectlistdiv.style.maxHeight = "200px";
+		projectlistdiv.style.overflow = "auto";
+		// list elements
+		for (var i = 0; i < groups.length; i++) {
+			var groupid = groups[i].id;
+			var button = document.createElement("button");
+			//button.type = "button";
+			button.name = "selectbutton " + String(j);
+			button.className = "w3-bar-item w3-button";
+			button.id = "button " + groupid;
+			button.innerHTML = groups[i].title;
+			button.addEventListener("click", function (evt) {
+				evt.preventDefault();
+				var ind = this.name.split(" ")[1];
+				var project = evt.target.innerHTML;
+				projectinput_list[ind].value = project;
+			});
+			projectlistdiv.appendChild(button);
+		}
+		listparent.appendChild(projectlistdiv);
+	}
 }
 
 
@@ -412,12 +450,19 @@ function createTimeline(data_calendar, groups) {
 		editable: true, // enable draggable events
       	droppable: true, // this allows things to be dropped onto the calendar
 		selectable: true,
-		dayMaxEvents: true, // allow the "more" link when too many events
+		dayMaxEvents: 3, // allow the "more" link when too many events
 		height: "100%",
 		aspectRatio: 1.8,
 		scrollTime: "08:00", // undo default 6am scrollTime
 		weekends: false,
 		weekNumbers: true,
+		weekText: "S",
+		expandRows: true,
+		selectMirror: true,
+		showNonCurrentDates: false, // only show current month dates in month view
+		filterResourcesWithEvents: false, // warning, do not show resource on an empty day
+		resourceOrder: "id", // sort by id
+		//unselectCancel: ".addform", // keep background selection, but strange behaviour after the new event is created
 		//hiddenDays: [0, 6], // hide sunday and saturday, same as weekends set to false
 		businessHours: {
 			daysOfWeek: [1, 2, 3, 4, 5], // Monday - Friday
@@ -469,7 +514,8 @@ function createTimeline(data_calendar, groups) {
 			}
 		},
 		eventClassNames:["item-font"],
-		expandRows: true,
+		eventBackgroundColor: hex2rgb("#cccccc", 0.5),
+		eventBorderColor: "#cccccc",
 		resourceAreaHeaderContent: "Affaires/projets/congés",
 		resourceLabelDidMount: function(arg) {
 		  	var resource = arg.resource;
@@ -483,7 +529,10 @@ function createTimeline(data_calendar, groups) {
 		  	});
 		},
 		eventDidMount: function(arg) { // called when the current event page is rendered
-			setTooltip(arg);
+			console.log('eventMount', arg)
+			if (arg.event.id != "") {
+				setTooltip(arg);
+			}
 		},
 		eventClick: function(arg) { // called when an existing event is clicked
 			console.log('eventClick', arg)
@@ -558,7 +607,8 @@ function createTimeline(data_calendar, groups) {
 	
 	// Create a Calendar
 	calendar = new FullCalendar.Calendar(container, options);
-	calendar.setOption('locale', 'fr');
+	calendar.setOption("locale", "fr");
+	calendar.setOption("resourceOrder", "id");
 	calendar.render();
 
 	// Render item options
