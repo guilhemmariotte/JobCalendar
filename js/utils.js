@@ -162,12 +162,13 @@ function buildColormap(num_colors, color_init) {
 			color[channel_seq[j+1]] = chan2;
 			for (var k = 0; k < 3; k++) {
 				if (color[k] == 0) {
-					color[k] = String(channel_val / (num_cycles));
+					color[k] = String(Math.floor(channel_val / num_cycles));
 				} else {
-					color[k] = String(color[k] * channel_val);
+					color[k] = String(Math.floor(color[k] * channel_val));
 				}
 			}
-			var color = "rgb(" + color.join(",") +")";
+			//color = "rgb(" + color.join(",") +")";
+			color = "#" + ((1 << 24) + (Number(color[0]) << 16) + (Number(color[1]) << 8) + Number(color[2])).toString(16).slice(1);
 			color_map.push(color);
 		}
 	}

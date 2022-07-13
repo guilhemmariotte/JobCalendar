@@ -88,22 +88,65 @@ function showAllGroups(evt) {
 
 function enablePopup(evt) {
 	if (evt.currentTarget.checked) {
-		calendar.setOption('eventDidMount', function(arg){
+		calendar.setOption("eventDidMount", function(arg){
 			if (arg.event.id != ""){
 				setTooltip(arg);
 			}
 		});
 	} else {
-		calendar.setOption('eventDidMount', function(arg){});
+		calendar.setOption("eventDidMount", function(arg){});
 	}
 }
 
 function setDateClick(evt) {
-	if (evt.currentTarget.checked) {
-		root_css.style.setProperty("--overflowtype", "visible");
+	if (evt.currentTarget.value == "1") {
+		calendar.setOption("dateClick", function(arg){
+			var date = getISODate(arg.date);
+			calendar.changeView("timeGridWeek", date);
+		});
+	} else if (evt.currentTarget.value == "2") {
+		calendar.setOption("dateClick", function(arg){
+			var date = getISODate(arg.date);
+			calendar.changeView("resourceTimeGridDay", date);
+		});
 	} else {
-		root_css.style.setProperty("--overflowtype", "hidden");
+		calendar.setOption("dateClick", function(arg){
+			document.getElementById("add_item_form").style.display = "block";
+			document.getElementById("date_input").value = getISODate(arg.date);
+			if (arg.date.getHours() > 8) {
+				document.getElementById("start_input").value = getISOTime(arg.date);
+			}
+			if (arg.resource) {
+				document.getElementById("project_input").value = arg.resource.title;
+			}
+		});
 	}
+}
+
+function setWeekDays(evt) {
+	var el = evt.currentTarget;
+	// add weekday to the list in calendar options
+	var weekday_id = Number(el.name.split(" ")[1]);
+	//var calendar_hidden_days = calendar.getOption("hiddenDays");
+	if (calendar_hidden_days.includes(weekday_id)) {
+		calendar_hidden_days = calendar_hidden_days.filter(function(val,ind,arr){return val != weekday_id});
+	} else {
+		calendar_hidden_days.push(weekday_id);
+	}
+	calendar.setOption("hiddenDays", calendar_hidden_days);
+	// switch colors
+	if (el.className.indexOf("w3-blue") == -1) {
+		el.className = el.className.replace(" w3-gray", " w3-blue");
+	} else {
+		el.className = el.className.replace(" w3-blue", " w3-gray");
+	}
+}
+
+function changeStartHour(evt) {
+	var hour = evt.currentTarget.value;
+	//var hour = evt.currentTarget.value.toFixed(0);
+	//hour = addLeadingZeros(hour) + ":00";
+	calendar.setOption("scrollTime", hour);
 }
 
 function changeFontsize(evt) {

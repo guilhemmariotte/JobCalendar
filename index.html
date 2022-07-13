@@ -153,23 +153,47 @@
 								<span class="label">Autoriser l'édition les éléments</span>
 							</label>
 
-							</br></br>
+							<br><br>
 							<label class="toggle-switchy" for="show_all_groups" data-size="sm" data-style="rounded">
 								<input checked type="checkbox" id="show_all_groups" onchange="showAllGroups(event)">
 								<span class="toggle"><span class="switch"></span></span>
 								<span class="label">Afficher tous les groupes en mode "jour"</span>
 							</label>
 							
-							</br></br>
+							<br><br>
 							<label class="toggle-switchy" for="enable_popup" data-size="sm" data-style="rounded">
 								<input checked type="checkbox" id="enable_popup" onchange="enablePopup(event)">
 								<span class="toggle"><span class="switch"></span></span>
 								<span class="label">Afficher la description des éléments (tooltips)</span>
 							</label>
+
+							<br><br>
+							<label for="set_week_days">Jours de semaine à afficher :</label>
+							<div class="w3-container w3-cell" id="set_week_days">
+								<button class="w3-button w3-blue w3-hover-blue" name="weekday 1" onclick="setWeekDays(event)">L</button>
+								<button class="w3-button w3-blue w3-hover-blue" name="weekday 2" onclick="setWeekDays(event)">M</button>
+								<button class="w3-button w3-blue w3-hover-blue" name="weekday 3" onclick="setWeekDays(event)">M</button>
+								<button class="w3-button w3-blue w3-hover-blue" name="weekday 4" onclick="setWeekDays(event)">J</button>
+								<button class="w3-button w3-blue w3-hover-blue" name="weekday 5" onclick="setWeekDays(event)">V</button>
+								<button class="w3-button w3-gray w3-hover-blue" name="weekday 6" onclick="setWeekDays(event)">S</button>
+								<button class="w3-button w3-gray w3-hover-blue" name="weekday 0" onclick="setWeekDays(event)">D</button>
+							</div>
+
+							<br><br>
+							<label for="set_date_click">Au click sur une date en mode "mois" :</label>
+							<select class="w3-select w3-border" id="set_date_click" onchange="setDateClick(event)">
+								<option value="1">Passer en mode "semaine"</option>
+								<option value="2">Passer en mode "jour"</option>
+								<option value="3">Créer une nouvelle tâche</option>
+							</select>
+
+							<br><br>
+							<label for="change_start_hour">Début de la journée (affichage en mode "jour" ou "semaine")</label>
+							<input type="time" class="w3-input w3-border" id="change_start_hour" style="width:60%" value="08:00" onchange="changeStartHour(event)">
 							
-							</br></br>
+							<br><br>
 							<label for="item_fontsize">Taille de la police (px)</label>
-							<input type="number" class="w3-input" id="item_fontsize" style="width:30%" value="12" onchange="changeFontsize(event)">
+							<input type="number" class="w3-input w3-border" id="item_fontsize" style="width:60%" value="12" onchange="changeFontsize(event)">
 							
 						</div>
 					</div>

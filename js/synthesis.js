@@ -411,6 +411,6 @@ function refreshSynthesis() {
 
 	refreshLine("title", "line_projects", "bar", false);
 	refreshBar("title", "bar_projects", false);
-	refreshLine("task", "line_tasks", "bar", false);
-	refreshBar("task", "bar_tasks", false)
+	refreshLine("task", "line_tasks", "bar", true);
+	refreshBar("task", "bar_tasks", true);
 }

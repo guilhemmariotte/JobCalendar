@@ -40,6 +40,7 @@ var selected_date = null;
 var selected_itemid = null;
 var selected_groupid = null;
 var droppedfiles = [];
+var calendar_hidden_days = [0, 6];
 
 
 
@@ -417,7 +418,7 @@ function createCalendar(data_calendar, groups) {
 		height: "100%",
 		aspectRatio: 1.8,
 		scrollTime: "08:00", // undo default 6am scrollTime
-		weekends: false,
+		//weekends: false,
 		weekNumbers: true,
 		weekText: "S ",
 		expandRows: true,
@@ -426,12 +427,12 @@ function createCalendar(data_calendar, groups) {
 		filterResourcesWithEvents: false, // warning, do not show resource on an empty day
 		resourceOrder: "id", // sort by id
 		//unselectCancel: ".addform", // keep background selection, but strange behaviour after the new event is created
-		//hiddenDays: [0, 6], // hide sunday and saturday, same as weekends set to false
-		businessHours: {
-			daysOfWeek: [1, 2, 3, 4, 5], // Monday - Friday
-			startTime: "08:00",
-			endTime: "19:00",
-		},
+		hiddenDays: [0, 6], // hide sunday and saturday, same as weekends set to false
+		// businessHours: {
+		// 	daysOfWeek: [1, 2, 3, 4, 5], // Monday - Friday
+		// 	startTime: "08:00",
+		// 	endTime: "19:00",
+		// },
 		//dayMinWidth: 200,
 		headerToolbar: {
 			left: "addEventButton addResourceButton prev,next",
@@ -523,16 +524,7 @@ function createCalendar(data_calendar, groups) {
 		dateClick: function(arg) { // called when a date is clicked (no existing event clicked)
 			console.log('dateClick', arg)
 			var date = getISODate(arg.date);
-			//calendar.changeView("resourceTimeGridDay", date);
 			calendar.changeView("timeGridWeek", date);
-			// document.getElementById("add_item_form").style.display = "block";
-			// document.getElementById("date_input").value = getISODate(arg.date);
-			// if (arg.date.getHours() > 8) {
-			// 	document.getElementById("start_input").value = getISOTime(arg.date);
-			// }
-			// if (arg.resource) {
-			// 	document.getElementById("project_input").value = arg.resource.title;
-			// }
 		},
 		eventReceive: function(arg) { // called when a proper external event is dropped
 			console.log('eventReceive', arg)

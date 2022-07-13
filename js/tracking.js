@@ -88,8 +88,8 @@ function refreshTracking() {
 			var tabitem = document.createElement("td");
 			tabitem.style.width = "10%";
 			tabitem.style.backgroundColor = color;
-			//tabitem.innerHTML = FullCalendar.formatDate(tabcontents[j][0], {month: "short", day: "numeric", locale: "fr"});
-			tabitem.innerHTML = weekdays[prevday-1] + " " + tabcontents[j][0].getDate();
+			tabitem.innerHTML = FullCalendar.formatDate(tabcontents[j][0], {day: "numeric", weekday: "short", locale: "fr"});
+			//tabitem.innerHTML = weekdays[prevday-1] + " " + tabcontents[j][0].getDate();
 			tabrow.appendChild(tabitem);
 			// ratio tot
 			var tabitem = document.createElement("td");
