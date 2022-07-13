@@ -94,7 +94,7 @@
 							<p>
 								<label class="w3-text-grey">Affaire/Projet interne/Congés</label>
 								<div class="w3-dropdown-hover" style="width:100%">
-									<input class="w3-input w3-border" id="project_input" type="text" required>
+									<input class="w3-input w3-border" id="project_input" type="text" onkeyup="filterEntries(event)" required>
 								</div>
 							</p>
 							<p>
@@ -142,7 +142,7 @@
 				
 				<div class="w3-cell-row w3-row-padding w3-margin-top">
 					
-					<div class="w3-container w3-cell w3-half">
+					<div class="w3-container w3-cell w3-third">
 						<div class="w3-container w3-gray"><h4>Options générales</h4></div>
 						
 						<div class="w3-container w3-padding-16 w3-border">
@@ -164,7 +164,7 @@
 							<label class="toggle-switchy" for="enable_popup" data-size="sm" data-style="rounded">
 								<input checked type="checkbox" id="enable_popup" onchange="enablePopup(event)">
 								<span class="toggle"><span class="switch"></span></span>
-								<span class="label">Afficher la description des éléments</span>
+								<span class="label">Afficher la description des éléments (tooltips)</span>
 							</label>
 							
 							</br></br>
@@ -174,12 +174,14 @@
 						</div>
 					</div>
 					
-					<div class="w3-container w3-cell w3-half">
+					<div class="w3-container w3-cell w3-third">
 						<div class="w3-container w3-gray"><h4>Afficher/masquer des groupes</h4></div>
 						
 						<div class="w3-container w3-padding-16 w3-border" id="showhide_div">
 						</div>
-						
+					</div>
+
+					<div class="w3-container w3-cell w3-third">
 						<div class="w3-container w3-gray"><h4>Couleur des groupes</h4></div>
 						
 						<div class="w3-container w3-padding-16 w3-border" id="color_div">
@@ -225,7 +227,7 @@
 							</div>
 						</div>
 						<div class="w3-cell-row">
-							<button type="button" id="submit_timerange" class="w3-button w3-cell w3-dark-grey" onclick="refreshAll()">Mettre à jour</button>
+							<button type="button" id="refresh_synthesis" class="w3-button w3-cell w3-dark-grey" onclick="refreshSynthesis()">Mettre à jour</button>
 						</div>
 					</div>
 				</form>
@@ -275,7 +277,7 @@
 			</div>
 
 
-			<!-- Tab content: Suivi -->
+			<!-- Tab content: Tracking -->
 			<!-- ------------------------------------------------------------------------------------------------------ -->
 			<div id="Tracking" class="w3-display-container tabcontent w3-animate-opacity">
 				
@@ -284,22 +286,23 @@
 						<label><b>Suivi d'une affaire/projet</b></label>
 						<div class="w3-cell-row">
 							<div class="w3-dropdown-hover" style="width:100%">
-								<input class="w3-input w3-border" id="selectedproject_input" type="text" value="" placeholder="Sélectionner une affaire/projet" required>
+								<input class="w3-input w3-border" id="selectedproject_input" type="text" value="" placeholder="Entrer une affaire/projet" onkeyup="filterEntries(event)" required>
 								<!-- <div class="w3-dropdown-content w3-bar-block w3-card-4" id="projectlist_div">
 									<button class="w3-bar-item w3-button" onclick="selectLang(event)">FR</button>
 								</div> -->
 							</div>
 						</div>
 						<div class="w3-cell-row">
-							<button type="button" id="submit_group" class="w3-button w3-cell w3-dark-grey" onclick="refreshAll()">Mettre à jour</button>
+							<button type="button" id="refresh_tracking" class="w3-button w3-cell w3-dark-grey" onclick="refreshTracking()">Mettre à jour</button>
+							<button type="button" id="expandclose_months" class="w3-button w3-cell w3-dark-grey w3-margin-left" onclick="expandCloseAll()">Tout déplier/replier</button>
 						</div>
 					</div>
 				</form>
 
 				<div class="w3-container">
 					
-					<table id="list_tracking">
-					</table>
+					<div id="tracking_div">
+					</div>
 					
 				</div>
 				
@@ -340,6 +343,8 @@
 		<script src="js/additems.js" type="text/javascript">
 		</script>
 		<script src="js/synthesis.js" type="text/javascript">
+		</script>
+		<script src="js/tracking.js" type="text/javascript">
 		</script>
 		
 		

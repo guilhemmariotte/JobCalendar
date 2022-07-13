@@ -119,8 +119,57 @@ function hex2rgb(color, alpha) {
 	color = color.split("#")[1]
 	var aRgbHex = color.match(/.{1,2}/g);
 	var aRgb = [parseInt(aRgbHex[0], 16), parseInt(aRgbHex[1], 16), parseInt(aRgbHex[2], 16)];
-	var color0 = "rgba(" + [aRgb[0], aRgb[1], aRgb[2], alpha].join(',') +")";
+	var color0 = "rgba(" + [aRgb[0], aRgb[1], aRgb[2], alpha].join(",") +")";
 	return color0;
 }
 
-
+// Build a sequential colormap
+function buildColormap(num_colors, color_init) {
+	var color_map = [];
+	var num_cycles = Math.ceil(num_colors / 3);
+	// get initial color info (max channel and value)
+	color_init = color_init.split("#")[1]
+	var aRgbHex = color_init.match(/.{1,2}/g);
+	var aRgb = [parseInt(aRgbHex[0], 16), parseInt(aRgbHex[1], 16), parseInt(aRgbHex[2], 16)];
+	var channel_val = 0;
+	var init_channel = 0;
+	for (var i = 0; i < aRgb.length; i++) {
+		if (aRgb[i] > channel_val) {
+			channel_val = aRgb[i];
+			init_channel = i;
+		}
+	}
+	// get channel sequence from the initial color
+	if (init_channel == 0) {
+		var channel_seq = [0, 1, 2, 0];
+	} else if (init_channel == 1) {
+		var channel_seq = [1, 2, 0, 1];
+	} else {
+		var channel_seq = [2, 0, 1, 2];
+	}
+	// build colormap
+	for (var i = 0; i < num_cycles; i++) {
+		if (i <= num_cycles / 2) {
+			var chan1 = 1;
+			var chan2 = 2 * i / num_cycles;
+		} else {
+			var chan1 = 2 * (i - num_cycles/2) / num_cycles;
+			var chan2 = 1;
+		}
+		for (var j = 0; j < 3; j++) {
+			var color = new Array(3).fill(0);
+			color[channel_seq[j]] = chan1;
+			color[channel_seq[j+1]] = chan2;
+			for (var k = 0; k < 3; k++) {
+				if (color[k] == 0) {
+					color[k] = String(channel_val / (num_cycles));
+				} else {
+					color[k] = String(color[k] * channel_val);
+				}
+			}
+			var color = "rgb(" + color.join(",") +")";
+			color_map.push(color);
+		}
+	}
+	return color_map
+}

@@ -25,7 +25,7 @@ const selectedprojectinput = document.getElementById("selectedproject_input");
 const taskinput = document.getElementById("task_input");
 const descrinput = document.getElementById("descr_input");
 
-// Group inputs (to show hover dropdown list)
+// List of group inputs (to show hover dropdown list)
 const projectinput_list = [projectinput, selectedprojectinput];
 
 //additemform.addEventListener("DOMContentLoaded", setDate);

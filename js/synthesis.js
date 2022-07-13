@@ -21,12 +21,19 @@ function refreshResults(attr, addtotal) {
 	// get time range: columns
 	var range_start = startrangeinput.value;
 	var range_end = endrangeinput.value;
-	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	// get min date
+	var items = calendar.getEvents();
+	var range_start_min = items[0].start;
+	//var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	var col_names = [];
 	if (range_start.includes("-")) {
 		// sequence of months
 		range_start = new Date(range_start);
 		range_end = new Date(range_end);
+		if (range_start < range_start_min) { // start cannot be before the first date
+			range_start = range_start_min;
+			//startrangeinput.value = getISODate(range_start);
+		}
 		var num_cols = Math.ceil((range_end.getTime() - range_start.getTime() + 1) / (24*3600*1000*29));
 		var start_year = range_start.getFullYear();
 		var start_month = range_start.getMonth();
@@ -34,7 +41,8 @@ function refreshResults(attr, addtotal) {
 		for (var i = 0 ; i < num_cols ; i++) {
 			var date = new Date(start_year, start_month + i, 1);
 			columns.push(date);
-			col_names.push(months[date.getMonth()] + " " + String(date.getFullYear()));
+			col_names.push(FullCalendar.formatDate(date, {month: "short", year: "numeric", locale: "fr"}));
+			//col_names.push(months[date.getMonth()] + " " + String(date.getFullYear()));
 		}
 		var date = new Date(start_year, start_month + num_cols, 1);
 		var col_ranges = [...columns, date];
@@ -42,6 +50,10 @@ function refreshResults(attr, addtotal) {
 		// sequence of years
 		range_start = new Date(range_start);
 		range_end = new Date(range_end);
+		if (Number(range_start.getFullYear()) < Number(range_start_min.getFullYear())) { // start cannot be before the first date
+			range_start = range_start_min;
+			//startrangeinput.value = getISODate(range_start);
+		}
 		var num_cols = Math.ceil((range_end.getTime() - range_start.getTime()  + 1) / (24*3600*1000*365));
 		var start_year = range_start.getFullYear();
 		var columns = [];
@@ -55,7 +67,6 @@ function refreshResults(attr, addtotal) {
 	}
 
 	// get different attributes: rows
-	var items = calendar.getEvents();
 	var rows = [];
 	var row_colors = [];
 	// var item_rows = [];
@@ -80,7 +91,7 @@ function refreshResults(attr, addtotal) {
 
 	// get the table contents
 	var tabcontents = []
-	for (var j = 0 ; j < columns.length ; j++) {
+	for (var j = 0; j < columns.length; j++) {
 		tabcontents[col_names[j]] = [];
 	}
 	if (attr == "vacation") { // special processing for vacation table
@@ -106,7 +117,7 @@ function refreshResults(attr, addtotal) {
 			row_colors.push(...["#cccccc", "#cccccc", "#cccccc"]);
 		}
 		// vacation taken
-		for (var i = 0 ; i < items.length ; i++) {
+		for (var i = 0; i < items.length; i++) {
 			var start_time = items[i].start;
 			var end_time = items[i].end;
 			var task = items[i].extendedProps.task;
@@ -122,11 +133,11 @@ function refreshResults(attr, addtotal) {
 			}
 		}
 		// remaining vacation
-		for (var i = 0 ; i < vacation_names.length ; i++) {
+		for (var i = 0; i < vacation_names.length; i++) {
 			var name_taken = vacation_names[i] + " pris";
 			var name_remaining = vacation_names[i] + " solde";
 			var val = 0;
-			for (var j = 0 ; j < columns.length ; j++) {
+			for (var j = 0; j < columns.length; j++) {
 				val = val + tabcontents[col_names[j]][name_taken];
 				tabcontents[col_names[j]][name_remaining] = tabcontents[col_names[j]][name_remaining] - val;
 			}
@@ -139,7 +150,7 @@ function refreshResults(attr, addtotal) {
 				row_colors.push(groups[i].extendedProps.color);
 			}
 		}
-		for (var i = 0 ; i < items.length ; i++) {
+		for (var i = 0; i < items.length; i++) {
 			var start_time = items[i].start;
 			var end_time = items[i].end;
 			var attr_color = items[i].borderColor;
@@ -148,7 +159,7 @@ function refreshResults(attr, addtotal) {
 			} else {
 				var attr_val = items[i].extendedProps[attr];
 			}
-			for (var j = 0 ; j < columns.length ; j++) {
+			for (var j = 0; j < columns.length; j++) {
 				if (col_ranges[j] <= start_time & end_time <= col_ranges[j+1]) {
 					if (Object.keys(tabcontents[col_names[j]]).includes(attr_val)) {
 						tabcontents[col_names[j]][attr_val] = tabcontents[col_names[j]][attr_val] + Number(items[i].extendedProps.day_ratio);
@@ -167,10 +178,10 @@ function refreshResults(attr, addtotal) {
 			attr_tot = "TOTAL";
 			rows.push(attr_tot);
 			row_colors.push("#000000");
-			for (var j = 0 ; j < columns.length ; j++) {
+			for (var j = 0; j < columns.length; j++) {
 				var attrs = Object.keys(tabcontents[col_names[j]]);
 				var val_tot = 0;
-				for (var i = 0 ; i < attrs.length ; i++) {
+				for (var i = 0; i < attrs.length; i++) {
 					val_tot = val_tot + tabcontents[col_names[j]][attrs[i]];
 				}
 				tabcontents[col_names[j]][attr_tot] = val_tot;
@@ -198,19 +209,19 @@ function refreshTable(attr, table_id) {
 	var tabitem = document.createElement("th");
 	tabitem.innerHTML = "Intitulés";
 	tabrow.appendChild(tabitem);
-	for (var i = 0 ; i < col_names.length ; i++) {
+	for (var i = 0; i < col_names.length; i++) {
 		var tabitem = document.createElement("th");
 		tabitem.innerHTML = col_names[i];
 		tabrow.appendChild(tabitem);
 	}
 	resultstable.appendChild(tabrow);
 	// fill table content
-	for (var i = 0 ; i < rows.length ; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var tabrow = document.createElement("tr");
 		var tabitem = document.createElement("td");
 		tabitem.innerHTML = rows[i];
 		tabrow.appendChild(tabitem);
-		for (var j = 0 ; j < col_names.length ; j++) {
+		for (var j = 0; j < col_names.length; j++) {
 			var tabitem = document.createElement("td");
 			if (tabcontents[col_names[j]][rows[i]]) {
 				var cellcontent = tabcontents[col_names[j]][rows[i]].toFixed(1);
@@ -236,11 +247,16 @@ function clearTable(resultstable) {
 
 
 // Plot the graph (stacked multiline or bar plot)
-function refreshLine(attr, chart_id, plot_type) {
+function refreshLine(attr, chart_id, plot_type, build_colors) {
 	// plot_type = "line" or "bar"
 
 	// get results
 	var [tabcontents, col_names, rows, row_colors] = refreshResults(attr, false);
+
+	// colormap
+	if (build_colors) {
+		row_colors = buildColormap(rows.length, "#ff0000");
+	}
 
 	// clear existing chart
 	clearChart(chart_id);
@@ -249,7 +265,7 @@ function refreshLine(attr, chart_id, plot_type) {
 	var datasets = [];
 	for (var i = 0 ; i < rows.length ; i++) {
 		var data = [];
-		for (var j = 0 ; j < col_names.length ; j++) {
+		for (var j = 0; j < col_names.length; j++) {
 			if (tabcontents[col_names[j]][rows[i]]) {
 				var cellcontent = tabcontents[col_names[j]][rows[i]];
 			} else {
@@ -309,10 +325,15 @@ function refreshLine(attr, chart_id, plot_type) {
 
 
 // Plot the graph (bar plot)
-function refreshBar(attr, chart_id) {
+function refreshBar(attr, chart_id, build_colors) {
 
 	// get results
 	var [tabcontents, col_names, rows, row_colors] = refreshResults(attr, false);
+
+	// colormap
+	if (build_colors) {
+		row_colors = buildColormap(rows.length, "#ff0000");
+	}
 
 	// clear existing chart
 	clearChart(chart_id);
@@ -323,7 +344,7 @@ function refreshBar(attr, chart_id) {
 	var data_color0 = [];
 	for (var i = 0 ; i < rows.length ; i++) {
 		var val = 0;
-		for (var j = 0 ; j < col_names.length ; j++) {
+		for (var j = 0; j < col_names.length; j++) {
 			if (tabcontents[col_names[j]][rows[i]]) {
 				var cellcontent = tabcontents[col_names[j]][rows[i]];
 			} else {
@@ -383,13 +404,13 @@ function clearChart(chart_id) {
 
 
 // Fill all tables and graphics
-function refreshAll() {
+function refreshSynthesis() {
 	refreshTable("vacation", "table_vacations");
 	//refreshTable("title", "table_projects");
 	//refreshTable("task", "table_tasks");
 
-	refreshLine("title", "line_projects", "line");
-	refreshBar("title", "bar_projects");
-	refreshLine("task", "line_tasks", "bar");
-	refreshBar("task", "bar_tasks")
+	refreshLine("title", "line_projects", "bar", false);
+	refreshBar("title", "bar_projects", false);
+	refreshLine("task", "line_tasks", "bar", false);
+	refreshBar("task", "bar_tasks", false)
 }

@@ -38,7 +38,27 @@ function expandPanel(panel_id) {
 	if (el.className.indexOf("w3-show") == -1) {
 	  	el.className += " w3-show";
 	} else {
-	  	el.className = el.className.replace(" w3-show", "");
+	  	el.className = el.className.replace(" w3-show", " w3-hide");
+	}
+}
+
+
+// Filter entries (on key up)
+function filterEntries(evt) {
+	// input value (currently entered)
+	var inputvalue = evt.currentTarget.value.toUpperCase();
+	// parent div
+	var listparent = evt.currentTarget.parentNode;
+	var listdiv = listparent.getElementsByTagName("div")[0];
+	// list elements
+	var buttons = listdiv.getElementsByTagName("button");
+	for (var i = 0; i < buttons.length; i++) {
+		txtvalue = buttons[i].innerHTML;
+		if (txtvalue.toUpperCase().indexOf(inputvalue) > -1) {
+			buttons[i].style.display = "";
+		} else {
+			buttons[i].style.display = "none";
+		}
 	}
 }
 
@@ -78,7 +98,7 @@ function enablePopup(evt) {
 	}
 }
 
-function enableOverflow(evt) {
+function setDateClick(evt) {
 	if (evt.currentTarget.checked) {
 		root_css.style.setProperty("--overflowtype", "visible");
 	} else {

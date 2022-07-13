@@ -49,76 +49,35 @@ var droppedfiles = [];
 
 //-----------------------------------------------------------------------------------
 // Convert from CSV formatted timeline data to a list of items
-function convertTimelineData0(data) {
-	var group_names = [];
-	var data_groups = [];
-	var data_item_groupids = [];
-	var ind = 0;
-	for (var i = 0; i < data.length; i++) {
-		var group_name = data[i]["project"];
-		if (!group_names.includes(group_name)) {
-			group_names.push(group_name);
-			var groupid = String(ind);
-			var group = {
-				id: groupid,
-				title: group_name,
-				eventColor: 'blue'
-			};
-			data_groups.push(group);
-			ind++
-		} else {
-			var groupid = "0";
-			for (var j = 0; j < data_groups.length; j++) {
-				if (data_groups[j]["title"] == group_name) {
-					groupid = data_groups[j]["id"];
-				}
-			}
-		}
-		data_item_groupids.push(groupid);
-	}
-	var data_items = [];
-	for (var i = 0; i < data.length; i++) {
-		var item = {
-			id: String(i),
-			resourceId: data_item_groupids[i],
-			start: data[i]["start_time"],
-			end: data[i]["end_time"],
-			title: data[i]["project"],
-			task: data[i]["task"],
-			description: data[i]["descr"],
-			day_ratio: data[i]["day_ratio"]
-		};
-		data_items.push(item);
-	}
-	return [data_items, data_groups];
-}
-
-function convertTimelineData(data, groups) {
+function convertCalendarData(data, groups) {
 	var items = [];
 	for (var i = 0; i < data.length; i++) {
-		var groupid = "0";
-		var color = "#cccccc";
-		for (var j = 0; j < groups.length; j++) {
-			if (groups[j].title == data[i]["project"]) {
-				groupid = groups[j].id;
-				color = groups[j].color;
+		if (data[i]["start_time"] != "group") {
+			var groupid = "0"; // default
+			var color = "#cccccc";
+			// find the item groupid
+			for (var j = 0; j < groups.length; j++) {
+				if (groups[j].title == data[i]["project"]) {
+					groupid = groups[j].id;
+					color = groups[j].color;
+				}
 			}
+			var color0 = hex2rgb(color, 0.5);
+			var item = {
+				id: String(i),
+				resourceId: groupid,
+				textColor: "#000000",
+				backgroundColor: color0,
+				borderColor: color,
+				start: data[i]["start_time"],
+				end: data[i]["end_time"],
+				title: data[i]["project"],
+				task: data[i]["task"],
+				description: data[i]["descr"],
+				day_ratio: data[i]["day_ratio"]
+			};
+			items.push(item);
 		}
-		var color0 = hex2rgb(color, 0.5);
-		var item = {
-			id: String(i),
-			resourceId: groupid,
-			textColor: "#000000",
-			backgroundColor: color0,
-			borderColor: color,
-			start: data[i]["start_time"],
-			end: data[i]["end_time"],
-			title: data[i]["project"],
-			task: data[i]["task"],
-			description: data[i]["descr"],
-			day_ratio: data[i]["day_ratio"]
-		};
-		items.push(item);
 	}
 	return items
 }
@@ -148,13 +107,13 @@ function loadTimeline() {
 				groups = setTimelineGroups(data_calendar, []);
 				
 				// Create the Calendar
-				createTimeline(data_calendar, groups);
+				createCalendar(data_calendar, groups);
 			}
 		});
 	} else { // no file, open empty calendar
 
 		// Create the Calendar
-		createTimeline([], []);
+		createCalendar([], []);
 
 	}
 }
@@ -412,13 +371,17 @@ function setItemOptions() {
 // Set table result time range
 function setDefaultTimeRange(items) {
 	if (items.length > 0) {
-		var date_curr = items[items.length - 1].start.split("T")[0];
-		var date = new Date(date_curr);
+		console.log(items)
+		var date_start = items[0].start.split("T")[0];
+		var date_start = new Date(date_start);
+		var date_end = items[items.length - 1].start.split("T")[0];
+		var date_end = new Date(date_end);
 	} else {
-		var date = new Date(); // now
+		var date_start = new Date(); // now
+		var date_end = new Date();
 	}
-	var range_start = String(date.getFullYear());
-	var range_end = String(date.getFullYear());
+	var range_start = String(date_start.getFullYear());
+	var range_end = String(date_end.getFullYear());
 	document.getElementById("startrange_input").value = range_start;
 	document.getElementById("endrange_input").value = range_end;
 }
@@ -427,14 +390,14 @@ function setDefaultTimeRange(items) {
 
 //-----------------------------------------------------------------------------------
 // Create the timeline
-function createTimeline(data_calendar, groups) {
+function createCalendar(data_calendar, groups) {
 	// Clear container
 	while (container.hasChildNodes()) {
 		container.removeChild(container.lastChild);
 	}
 	
 	// Calendar data
-	items = convertTimelineData(data_calendar, groups);
+	items = convertCalendarData(data_calendar, groups);
 
 	// Current date
 	if (items.length > 0) {
@@ -456,7 +419,7 @@ function createTimeline(data_calendar, groups) {
 		scrollTime: "08:00", // undo default 6am scrollTime
 		weekends: false,
 		weekNumbers: true,
-		weekText: "S",
+		weekText: "S ",
 		expandRows: true,
 		selectMirror: true,
 		showNonCurrentDates: false, // only show current month dates in month view
@@ -560,7 +523,8 @@ function createTimeline(data_calendar, groups) {
 		dateClick: function(arg) { // called when a date is clicked (no existing event clicked)
 			console.log('dateClick', arg)
 			var date = getISODate(arg.date);
-			calendar.changeView("resourceTimeGridDay", date);
+			//calendar.changeView("resourceTimeGridDay", date);
+			calendar.changeView("timeGridWeek", date);
 			// document.getElementById("add_item_form").style.display = "block";
 			// document.getElementById("date_input").value = getISODate(arg.date);
 			// if (arg.date.getHours() > 8) {
@@ -621,5 +585,14 @@ function createTimeline(data_calendar, groups) {
 	setDefaultTimeRange(items);
 	
 	console.log("Loading calendar complete!");
+	// var cmap = buildColormap(12, "#ff0000");
+	// console.log(cmap)
+	// for (var i = 0; i < cmap.length; i++) {
+	// 	var div = document.createElement("div");
+	// 	div.className = "w3-bar";
+	// 	div.style.height = "50px";
+	// 	div.style.backgroundColor = cmap[i];
+	// 	colordiv.appendChild(div);
+	// }
 }
 
