@@ -32,6 +32,11 @@ const save = document.getElementById("save");
 
 save.addEventListener('click', saveTimeline);
 
+// Export file
+const file_export = document.getElementById("file_export");
+
+file_export.addEventListener('click', exportTimeline);
+
 
 // Drag and drop
 function dragenter(evt) {
@@ -71,7 +76,6 @@ function saveTimeline() {
 		var groups = calendar.getResources();
 		var items = calendar.getEvents();
 		var data_items = [];
-		console.log(groups)
 		for (var i = 0; i < groups.length; i++) {
 			var item = {
 				start_time: "group",
@@ -98,6 +102,28 @@ function saveTimeline() {
 		}
 		var filecontents = Papa.unparse(data_items, {delimiter:";"});
 		var filename = "working_times.csv";
+		savefile(filecontents, filename, 'text/plain;charset=utf-8');
+	}
+}
+
+function exportTimeline() {
+	if (calendar) {
+		var groups = calendar.getResources();
+		var items = calendar.getEvents();
+		var data_items = [];
+		for (var i = 0; i < items.length; i++) {
+			var start_time = getISODate(items[i].start);
+			var item = {
+				date: start_time,
+				affaire: items[i].title,
+				activite: items[i].extendedProps.task,
+				temps_passes: items[i].extendedProps.day_ratio,
+				descr: items[i].extendedProps.description
+			};
+			data_items.push(item);
+		}
+		var filecontents = Papa.unparse(data_items, {delimiter:";"});
+		var filename = "working_times_export.csv";
 		savefile(filecontents, filename, 'text/plain;charset=utf-8');
 	}
 }
