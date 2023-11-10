@@ -130,12 +130,6 @@ function setNewItemId() {
 	return itemid
 }
 
-// Save calendar to the browser local storage
-function saveToLocalStorage() {
-	var data_items = saveCalendarToJSON();
-	window.localStorage.setItem("JobCalendarBackup", JSON.stringify(data_items));
-}
-
 // Reinit values when closing form
 function reinitForm() {
 	// Item form

@@ -89,16 +89,21 @@ function convertCalendarData(data, groups) {
 // Load the calendar when a data file is chosen
 function loadCalendar(data_items) {
 	console.log("load");
-	var timeline_file = null;
+	var calendar_file = null;
 	if (input.files.length > 0) {
-		timeline_file = input.files[0];
-		input.value = null; // clear file path to be able to reload the same file
+		calendar_file = input.files[0];
 	} else if (droppedfiles.length > 0) {
-		timeline_file = droppedfiles[0];
+		calendar_file = droppedfiles[0];
 	}
-	if (timeline_file) { // file loaded or dropped
+	if (data_items) { // data retrieved from local storage backup
+		console.log("backup");
+		// Calendar groups
+		groups = setTimelineGroups(data_items, []);
+		// Create the Calendar
+		createCalendar(data_items, groups);
+	} else if (calendar_file) { // file loaded or dropped
 		console.log("file");
-		Papa.parse(timeline_file, {
+		Papa.parse(calendar_file, {
 			header: true,
 			download: true,
 			complete: function(results) {
@@ -108,14 +113,12 @@ function loadCalendar(data_items) {
 				groups = setTimelineGroups(data_items, []);
 				// Create the Calendar
 				createCalendar(data_items, groups);
+				// Clear file input to be able to reload the same file
+				input.value = null;
+				input.files = null;
+				droppedfiles = [];
 			}
 		});
-	} else if (data_items) { // data retrieved from local storage backup
-		console.log("backup");
-		// Calendar groups
-		groups = setTimelineGroups(data_items, []);
-		// Create the Calendar
-		createCalendar(data_items, groups);
 	} else { // no file, open empty calendar
 		console.log("empty");
 		// Create the Calendar

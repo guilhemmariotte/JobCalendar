@@ -14,27 +14,24 @@
 //-----------------------------------------------------------------------------------
 // Input file
 const input = document.getElementById("load");
-
-input.addEventListener('change', loadCalendar(null));
+input.addEventListener('change', function() {loadCalendar(null)});
 
 // Load default
 const load_default = document.getElementById("load_default");
+load_default.addEventListener('click', function() {loadCalendar(null)});
 
-load_default.addEventListener('click', loadCalendar(null));
-
-
-// On page load
+// Load backup on page load
 document.addEventListener("DOMContentLoaded", loadCalendarFromBackup);
 
+// Confirm message to prevent from leaving, closing, refreshing the page
+window.addEventListener('beforeunload', function(evt) {evt.returnValue = null});
 
 // Save file
 const save = document.getElementById("save");
-
 save.addEventListener('click', saveCalendar);
 
 // Export file
 const file_export = document.getElementById("file_export");
-
 file_export.addEventListener('click', exportCalendar);
 
 
@@ -113,6 +110,12 @@ function saveCalendarToJSON() {
 	} else {
 		return null
 	}
+}
+
+// Save calendar to the browser local storage
+function saveToLocalStorage() {
+	var data_items = saveCalendarToJSON();
+	window.localStorage.setItem("JobCalendarBackup", JSON.stringify(data_items));
 }
 
 function saveCalendar() {
