@@ -15,27 +15,27 @@
 // Input file
 const input = document.getElementById("load");
 
-input.addEventListener('change', loadTimeline);
+input.addEventListener('change', loadCalendar(null));
 
 // Load default
 const load_default = document.getElementById("load_default");
 
-load_default.addEventListener('click', loadTimeline);
+load_default.addEventListener('click', loadCalendar(null));
 
 
 // On page load
-//document.addEventListener("DOMContentLoaded", updateTimeline);
+document.addEventListener("DOMContentLoaded", loadCalendarFromBackup);
 
 
 // Save file
 const save = document.getElementById("save");
 
-save.addEventListener('click', saveTimeline);
+save.addEventListener('click', saveCalendar);
 
 // Export file
 const file_export = document.getElementById("file_export");
 
-file_export.addEventListener('click', exportTimeline);
+file_export.addEventListener('click', exportCalendar);
 
 
 // Drag and drop
@@ -60,7 +60,7 @@ function drop(evt) {
 	var dt = evt.dataTransfer;
 	droppedfiles = [...dt.files];
 	// Load timeline
-	loadTimeline();
+	loadCalendar(null);
 }
 
 timelinediv.addEventListener("dragenter", dragenter, false);
@@ -68,10 +68,19 @@ timelinediv.addEventListener("dragover", dragover, false);
 timelinediv.addEventListener("drop", drop, false);
 
 
+//-----------------------------------------------------------------------------------
+// Upload data
+function loadCalendarFromBackup() {
+	if (window.localStorage["JobCalendarBackup"]) {
+		var data_items = JSON.parse(window.localStorage.getItem("JobCalendarBackup"));
+		loadCalendar(data_items);
+	}
+}
+
 
 //-----------------------------------------------------------------------------------
 // Download data
-function saveTimeline() {
+function saveCalendarToJSON() {
 	if (calendar) {
 		var groups = calendar.getResources();
 		var items = calendar.getEvents();
@@ -100,13 +109,22 @@ function saveTimeline() {
 			};
 			data_items.push(item);
 		}
+		return data_items
+	} else {
+		return null
+	}
+}
+
+function saveCalendar() {
+	if (calendar) {
+		var data_items = saveCalendarToJSON();
 		var filecontents = Papa.unparse(data_items, {delimiter:";"});
 		var filename = "working_times.csv";
 		savefile(filecontents, filename, 'text/plain;charset=utf-8');
 	}
 }
 
-function exportTimeline() {
+function exportCalendar() {
 	if (calendar) {
 		var groups = calendar.getResources();
 		var items = calendar.getEvents();

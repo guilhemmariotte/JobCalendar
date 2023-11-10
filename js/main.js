@@ -86,8 +86,9 @@ function convertCalendarData(data, groups) {
 
 
 //-----------------------------------------------------------------------------------
-// Load the timeline when a data file is chosen
-function loadTimeline() {
+// Load the calendar when a data file is chosen
+function loadCalendar(data_items) {
+	console.log("load");
 	var timeline_file = null;
 	if (input.files.length > 0) {
 		timeline_file = input.files[0];
@@ -96,26 +97,29 @@ function loadTimeline() {
 		timeline_file = droppedfiles[0];
 	}
 	if (timeline_file) { // file loaded or dropped
+		console.log("file");
 		Papa.parse(timeline_file, {
 			header: true,
 			download: true,
 			complete: function(results) {
-				
 				// Calendar data
-				data_calendar = results.data;
-	
+				data_items = results.data;
 				// Calendar groups
-				groups = setTimelineGroups(data_calendar, []);
-				
+				groups = setTimelineGroups(data_items, []);
 				// Create the Calendar
-				createCalendar(data_calendar, groups);
+				createCalendar(data_items, groups);
 			}
 		});
+	} else if (data_items) { // data retrieved from local storage backup
+		console.log("backup");
+		// Calendar groups
+		groups = setTimelineGroups(data_items, []);
+		// Create the Calendar
+		createCalendar(data_items, groups);
 	} else { // no file, open empty calendar
-
+		console.log("empty");
 		// Create the Calendar
 		createCalendar([], []);
-
 	}
 }
 
@@ -124,21 +128,21 @@ function loadTimeline() {
 
 //-----------------------------------------------------------------------------------
 // Set the groups
-function setTimelineGroups(data_calendar, group_names) {
+function setTimelineGroups(data_items, group_names) {
 	// Calendar groups
 	// var default_colors = ['#3CA25B', '#CB7179', '#cad750', '#7850a1', '#a1ca5a', '#f2273b', '#f2ca5a', '#78a1d7', '#a1a15a', '#ca5aca', '#ca783b', '#3b3b5a'];
 	var groups = [];
 	var ind = 0;
-	for (var i = 0; i < data_calendar.length; i++) {
-		var group_name = data_calendar[i]["project"];
-		if (data_calendar[i]["start_time"] != "") {
-			if (data_calendar[i]["start_time"] == "group") { // groups must be at the top in data_calendar
+	for (var i = 0; i < data_items.length; i++) {
+		var group_name = data_items[i]["project"];
+		if (data_items[i]["start_time"] != "") {
+			if (data_items[i]["start_time"] == "group") { // groups must be at the top in data_items
 				if (!group_names.includes(group_name)) {
 					var groupid = String(ind);
 					var group = {
 						id: groupid,
 						title: group_name,
-						color: data_calendar[i]["task"], // group colors are stored in the task column
+						color: data_items[i]["task"], // group colors are stored in the task column
 						visible: true
 					};
 					groups.push(group);
@@ -183,6 +187,9 @@ function setGroupOptions(groups) {
 	}
 	while (colordiv.hasChildNodes()) {
 		colordiv.removeChild(colordiv.lastChild);
+	}
+	if (!projectinput_list) {
+		var projectinput_list = [document.getElementById("project_input"), document.getElementById("selectedproject_input")];
 	}
 	for (var i = 0; i < projectinput_list.length; i++) {
 		var projectlistdiv = document.getElementById("projectlist_" + String(i));
@@ -391,14 +398,14 @@ function setDefaultTimeRange(items) {
 
 //-----------------------------------------------------------------------------------
 // Create the timeline
-function createCalendar(data_calendar, groups) {
+function createCalendar(data_items, groups) {
 	// Clear container
 	while (container.hasChildNodes()) {
 		container.removeChild(container.lastChild);
 	}
 	
 	// Calendar data
-	items = convertCalendarData(data_calendar, groups);
+	items = convertCalendarData(data_items, groups);
 
 	// Current date
 	if (items.length > 0) {
