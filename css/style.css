@@ -503,7 +503,7 @@ tr:nth-child(even) {
 	position: relative;
 	display: inline-block;
 	/* top: 50%; */
-	transform: translate(0%,10%);
+	/* transform: translate(0%,10%); bad idea, causes calendar item to be shifted... */
 	cursor: pointer;
 	overflow: visible;
 }
@@ -514,7 +514,6 @@ tr:nth-child(even) {
 
 /* Tooltip text */
 .tooltip .tooltiptext {
-	z-index: 9999;
 	visibility: hidden;
 	background-color: gray;
 	color: #fff;
@@ -522,7 +521,7 @@ tr:nth-child(even) {
 	padding: 5px 0;
 	border-radius: 6px;
 	position: absolute;
-	z-index: 99999;
+	z-index: 9999;
 	width: 120px;
 	top: 100%;
 	left: 50%;

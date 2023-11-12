@@ -16,6 +16,11 @@ const timelinediv = document.getElementById("Timeline");
 const showhidediv = document.getElementById("showhide_div");
 const colordiv = document.getElementById("color_div");
 const navbardiv = document.getElementById("navbar");
+const projectinput = document.getElementById("project_input");
+const selectedprojectinput = document.getElementById("selectedproject_input");
+
+// List of group inputs (to show hover dropdown list)
+const projectinput_list = [projectinput, selectedprojectinput];
 
 // Current page info
 var currentpath = window.location.href; //window.location.pathname;
@@ -190,9 +195,6 @@ function setGroupOptions(groups) {
 	}
 	while (colordiv.hasChildNodes()) {
 		colordiv.removeChild(colordiv.lastChild);
-	}
-	if (!projectinput_list) {
-		var projectinput_list = [document.getElementById("project_input"), document.getElementById("selectedproject_input")];
 	}
 	for (var i = 0; i < projectinput_list.length; i++) {
 		var projectlistdiv = document.getElementById("projectlist_" + String(i));

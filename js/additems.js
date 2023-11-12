@@ -19,14 +19,9 @@ const removeresourcebtn = document.getElementById("remove_resource_btn");
 const dateinput = document.getElementById("date_input");
 const startinput = document.getElementById("start_input");
 const endinput = document.getElementById("end_input");
-const projectinput = document.getElementById("project_input");
 const newprojectinput = document.getElementById("new_project_input");
-const selectedprojectinput = document.getElementById("selectedproject_input");
 const taskinput = document.getElementById("task_input");
 const descrinput = document.getElementById("descr_input");
-
-// List of group inputs (to show hover dropdown list)
-const projectinput_list = [projectinput, selectedprojectinput];
 
 //additemform.addEventListener("DOMContentLoaded", setDate);
 additembtn.addEventListener("click", addItem);
