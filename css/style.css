@@ -400,7 +400,7 @@ tr:nth-child(even) {
 
 #navbar label
 {
-	transform: translate(0%,10%);
+	transform: translate(0%,10%); /* for icons in the nav bar */
 }
 
 /* Style the tab */
