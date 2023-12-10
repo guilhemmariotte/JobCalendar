@@ -398,18 +398,10 @@ tr:nth-child(even) {
 	/* font-size: 150%; */
 }
 
-#Timeline:hover
+#navbar label
 {
-	/* background-color : #ddddff; */
-	/* border: 4px dashed black; */
+	transform: translate(0%,10%);
 }
-
-#Options
-{
-	/* padding-left : 50px; */
-}
-
-
 
 /* Style the tab */
 .tab {
