@@ -22,7 +22,7 @@ function initDataTable() {
 
 	datatable = new gridjs.Grid({
 		colums: [],
-		pagination: {limit: 50},
+		pagination: {limit: 100},
 		search: true,
 		sort: true,
 		resizable: true,
@@ -93,12 +93,30 @@ function updateDataTable() {
 			resolve();
 		}).then(() => {
 			datatable.updateConfig({
-				pagination: {limit: 50},
+				pagination: {limit: 100},
 				search: true,
 				columns: columns,
 				data: data_items
+			});
+			datatable.plugin.add({
+				id: 'totaltimeplugin',
+				component: totalTimePlugin,
+				position: gridjs.PluginPosition.Footer,
 			});
 			datatable.forceRender(searchtable);
 		});
 	}
 }
+
+// Plugin to show total of day count (sum of day ratios currently visible)
+function totalTimePlugin() {
+	const [total, setTotal] = gridjs.useState(0);
+	const data = gridjs.useSelector((state) => state.data);
+	
+	gridjs.useEffect(() => {
+		if (!data) return;
+		setTotal(data.toArray().reduce((prev, row) => prev + Number(row[6]), 0));
+	}, [data]);
+
+	return gridjs.html(`Total temps : <b>${total}</b> jours`);
+  }
