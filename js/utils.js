@@ -21,6 +21,16 @@ function getISODate(date) {
 	return iso_date
 }
 
+function getFrDate(date) {
+	var iso_date = "";
+	if (date) {
+		if (Object.prototype.toString.call(date) == "[object Date]") {
+			var iso_date = addLeadingZeros(date.getDate()) + "/" + addLeadingZeros(date.getMonth() + 1) + "/" + date.getFullYear();
+		}
+	}
+	return iso_date
+}
+
 function getISOTime(date) {
 	var iso_time = "";
 	if (date) {

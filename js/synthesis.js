@@ -414,3 +414,31 @@ function refreshSynthesis() {
 	refreshLine("task", "line_tasks", "bar", true);
 	refreshBar("task", "bar_tasks", true);
 }
+
+
+// Export data
+function exportData() {
+	if (calendar) {
+		var range_start = new Date(startrangeinput.value);
+		var range_end = new Date(endrangeinput.value);
+		var items = calendar.getEvents();
+		items.sort((x,y) => x.start - y.start); // sort items in ascending start date order
+		var data_items = [];
+		for (var i = 0; i < items.length; i++) {
+			var start_time = items[i].start;
+			if (range_start <= start_time && start_time <= range_end) {
+				var item = {
+					date: getFrDate(start_time),
+					affaire: items[i].title,
+					activite: items[i].extendedProps.task,
+					temps_passes: items[i].extendedProps.day_ratio,
+					descr: items[i].extendedProps.description
+				};
+				data_items.push(item);
+			}
+		}
+		var filecontents = Papa.unparse(data_items, {delimiter:";"});
+		var filename = "working_times " + range_start.toLocaleDateString() + " " + range_end.toLocaleDateString() + ".csv";
+		savefile(filecontents, filename, 'text/plain;charset=utf-8');
+	}
+}

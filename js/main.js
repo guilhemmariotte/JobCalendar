@@ -41,11 +41,15 @@ var root_css = document.querySelector(":root");
 var calendar = [];
 var groups = [];
 var items = [];
+var datatable = {};
 var selected_date = null;
 var selected_itemid = null;
 var selected_groupid = null;
 var droppedfiles = [];
 var calendar_hidden_days = [0, 6];
+
+// Init datatable
+initDataTable();
 
 
 
@@ -587,6 +591,9 @@ function createCalendar(data_items, groups) {
 
 	// Set default time range for synthesis
 	setDefaultTimeRange(items);
+
+	// Update datatable
+	updateDataTable();
 	
 	console.log("Loading calendar complete!");
 	// var cmap = buildColormap(12, "#ff0000");

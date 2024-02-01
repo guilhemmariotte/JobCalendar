@@ -140,6 +140,8 @@ function reinitForm() {
 	addresourceform.style.display = "none";
 	newprojectinput.value = "";
 	selected_groupid = null;
+	// Update datatable
+	updateDataTable();
 	// Save backup
 	saveToLocalStorage();
 }
