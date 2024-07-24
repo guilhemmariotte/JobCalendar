@@ -88,7 +88,7 @@ function saveCalendarToJSON() {
 				end_time: "",
 				project: groups[i].title,
 				task: groups[i].extendedProps.color,
-				descr: "",
+				descr: groups[i].extendedProps.longname,
 				day_ratio: 0
 			};
 			data_items.push(item);

@@ -56,6 +56,7 @@ function addItem() {
 			id: groupid,
 			title: project,
 			color: '#cccccc',
+			longname: '',
 			visible: true
 		};
 		calendar.addResource(group);
@@ -167,6 +168,7 @@ function addResource() {
 			id: groupid,
 			title: project,
 			color: '#cccccc',
+			longname: '',
 			visible: true
 		};
 		calendar.addResource(group);

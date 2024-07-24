@@ -13,8 +13,7 @@
 const container = document.getElementById("visualization");
 const contentdiv = document.getElementsByName("maincontent")[0];
 const timelinediv = document.getElementById("Timeline");
-const showhidediv = document.getElementById("showhide_div");
-const colordiv = document.getElementById("color_div");
+const groupsdiv = document.getElementById("groups_div");
 const navbardiv = document.getElementById("navbar");
 const projectinput = document.getElementById("project_input");
 const selectedprojectinput = document.getElementById("selectedproject_input");
@@ -155,6 +154,7 @@ function setTimelineGroups(data_items, group_names) {
 						id: groupid,
 						title: group_name,
 						color: data_items[i]["task"], // group colors are stored in the task column
+						longname: data_items[i]["descr"], // group long names are stored in the descr column
 						visible: true
 					};
 					groups.push(group);
@@ -168,6 +168,7 @@ function setTimelineGroups(data_items, group_names) {
 						id: groupid,
 						title: group_name,
 						color: '#cccccc',
+						longname: '',
 						visible: true
 					};
 					groups.push(group);
@@ -194,11 +195,8 @@ function setTimelineGroups(data_items, group_names) {
 // Set group options
 function setGroupOptions(groups) {
 	// Clear containers
-	while (showhidediv.hasChildNodes()) {
-		showhidediv.removeChild(showhidediv.lastChild);
-	}
-	while (colordiv.hasChildNodes()) {
-		colordiv.removeChild(colordiv.lastChild);
+	while (groupsdiv.hasChildNodes()) {
+		groupsdiv.removeChild(groupsdiv.lastChild);
 	}
 	for (var i = 0; i < projectinput_list.length; i++) {
 		var projectlistdiv = document.getElementById("projectlist_" + String(i));
@@ -209,15 +207,20 @@ function setGroupOptions(groups) {
 		}
 	}
 	
-	// Checkboxes to hide/show groups
+	// Group properties
 	for (var i = 0; i < groups.length; i++) {
+		var groupdiv = document.createElement("div");
+		groupdiv.className = "w3-cell-row w3-margin-top";
+		// Group title
+		var label = document.createElement("span");
+		label.innerHTML = " " + groups[i].title;
+		// Checkbox to show/hide
 		var groupid = groups[i].id;
 		if (groups[i].visible) {
 			var visible = groups[i].visible;
 		} else {
 			var visible = groups[i].extendedProps.visible;
 		}
-		var groupdiv = document.createElement("div");
 		var checkbox = document.createElement("input");
 		checkbox.type = "checkbox";
 		checkbox.name = "showhide";
@@ -247,16 +250,67 @@ function setGroupOptions(groups) {
 				}
 			}
 		});
-		groupdiv.insertAdjacentElement("afterBegin", checkbox);
-		var label = document.createElement("label");
-		label.innerHTML = " " + groups[i].title;
-		label.for = checkbox.id;
-		groupdiv.insertAdjacentElement("beforeEnd", label);
-		showhidediv.appendChild(groupdiv);
+		// Color picker
+		if (groups[i].color) {
+			var color = groups[i].color;
+		} else {
+			var color = groups[i].extendedProps.color;
+		}
+		var colorpicker = document.createElement("input");
+		colorpicker.type = "color";
+		colorpicker.name = "colorpicker";
+		colorpicker.value = color;
+		colorpicker.className = "classic-color";
+		colorpicker.id = "cp " + groupid;
+		// add event on change function
+		colorpicker.addEventListener("change", function () {
+			var groupid = this.id.split(" ")[1];
+			var color = this.value;
+			var color0 = hex2rgb(color, 0.5);
+			var group = calendar.getResourceById(groupid);
+			group.setExtendedProp("color", color);
+			//group.setProp("eventBackgroundColor", color);
+			//group.setProp("eventBorderColor", color);
+			var items_filtered = group.getEvents();
+			for (var j = 0; j < items_filtered.length; j++) {
+				items_filtered[j].setProp("backgroundColor", color0);
+				items_filtered[j].setProp("borderColor", color);
+			}
+		});
+		// Group long name
+		if (groups[i].longname || groups[i].longname == "") {
+			var longname = groups[i].longname;
+		} else {
+			var longname = groups[i].extendedProps.longname;
+		}
+		var textinput = document.createElement("input");
+		textinput.type = "text";
+		textinput.name = "textinput";
+		textinput.value = longname;
+		textinput.className = "w3-input w3-border";
+		textinput.id = "ti " + groupid;
+		// add event on change function
+		textinput.addEventListener("change", function () {
+			var groupid = this.id.split(" ")[1];
+			var text = this.value;
+			var group = calendar.getResourceById(groupid);
+			group.setExtendedProp("longname", text);
+		});
+		// Append all child elements
+		var els = [checkbox, colorpicker, label, textinput];
+		var dims = [1, 1, 4, 5]; // total width of base 12
+		for (var j = 0; j < els.length; j++) {
+			var el_div = document.createElement("div");
+			el_div.className = `w3-col s${dims[j]} m${dims[j]}`;
+			el_div.appendChild(els[j]);
+			groupdiv.appendChild(el_div);
+		}
+		groupsdiv.appendChild(groupdiv);
 	}
 	
 	// Check/uncheck all
 	var groupdiv = document.createElement("div");
+	groupdiv.className = "w3-cell-row";
 	var checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
 	checkbox.name = "checkall";
@@ -284,62 +338,12 @@ function setGroupOptions(groups) {
 	label.innerHTML = " (tout sélectionner)";
 	label.for = checkbox.id;
 	groupdiv.insertAdjacentElement("beforeEnd", label);
-	showhidediv.appendChild(groupdiv);
+	groupsdiv.appendChild(groupdiv);
 	
 	function triggerEvent(element, eventName) {
 		var event = document.createEvent("HTMLEvents");
 		event.initEvent(eventName, false, true);
 		element.dispatchEvent(event);
-	}
-	
-	
-	// Color picker for groups
-	for (var i = 0; i < groups.length; i++) {
-		var groupid = groups[i].id;
-		if (groups[i].color) {
-			var color = groups[i].color;
-		} else {
-			var color = groups[i].extendedProps.color;
-		}
-		var groupdiv = document.createElement("div");
-		var colorpicker = document.createElement("input");
-		colorpicker.type = "color";
-		colorpicker.name = "colorpicker";
-		colorpicker.value = color;
-		colorpicker.className = "classic-color";
-		colorpicker.id = "cp " + groupid;
-		// set item colors
-		// var color = group.color;
-		// var color0 = hex2rgb(color, 0.5);
-		// var group = calendar.getResourceById(group.id);
-		// group.setExtendedProp("color", color);
-		// var items_filtered = group.getEvents();
-		// for (var j = 0; j < items_filtered.length; j++) {
-		// 	items_filtered[j].setProp("backgroundColor", color0);
-		// 	items_filtered[j].setProp("borderColor", color);
-		// }
-		// add event on change function
-		colorpicker.addEventListener("change", function () {
-			var groupid = this.id.split(" ")[1];
-			var color = this.value;
-			var color0 = hex2rgb(color, 0.5);
-			var group = calendar.getResourceById(groupid);
-			group.setExtendedProp("color", color);
-			//group.setProp("eventBackgroundColor", color);
-			//group.setProp("eventBorderColor", color);
-			var items_filtered = group.getEvents();
-			for (var j = 0; j < items_filtered.length; j++) {
-				items_filtered[j].setProp("backgroundColor", color0);
-				items_filtered[j].setProp("borderColor", color);
-			}
-		});
-		groupdiv.insertAdjacentElement("afterBegin", colorpicker);
-		
-		var label = document.createElement("label");
-		label.innerHTML = " " + groups[i].title;
-		label.for = colorpicker.id;
-		groupdiv.insertAdjacentElement("beforeEnd", label);
-		colordiv.appendChild(groupdiv);
 	}
 
 
@@ -388,7 +392,6 @@ function setItemOptions() {
 // Set table result time range
 function setDefaultTimeRange(items) {
 	if (items.length > 0) {
-		console.log(items)
 		var date_start = items[0].start.split("T")[0];
 		var date_start = new Date(date_start);
 		var date_end = items[items.length - 1].start.split("T")[0];
@@ -603,7 +606,7 @@ function createCalendar(data_items, groups) {
 	// 	div.className = "w3-bar";
 	// 	div.style.height = "50px";
 	// 	div.style.backgroundColor = cmap[i];
-	// 	colordiv.appendChild(div);
+	// 	groupsdiv.appendChild(div);
 	// }
 }
 

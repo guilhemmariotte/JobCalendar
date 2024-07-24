@@ -421,18 +421,27 @@ function exportData() {
 	if (calendar) {
 		var range_start = new Date(startrangeinput.value);
 		var range_end = new Date(endrangeinput.value);
+		// Get items to export
+		var groups = calendar.getResources();
 		var items = calendar.getEvents();
 		items.sort((x,y) => x.start - y.start); // sort items in ascending start date order
 		var data_items = [];
 		for (var i = 0; i < items.length; i++) {
 			var start_time = items[i].start;
 			if (range_start <= start_time && start_time <= range_end) {
+				// Get group long name
+				var longname = "";
+				for (var j = 0; j < groups.length; j++) {
+					if (items[i].title == groups[j].title) {
+						longname = groups[j].extendedProps.longname;
+					}
+				}
 				var item = {
 					date: getFrDate(start_time),
-					affaire: items[i].title,
+					affaire: longname,
 					activite: items[i].extendedProps.task,
 					temps_passes: items[i].extendedProps.day_ratio,
-					descr: items[i].extendedProps.description
+					descr: items[i].title + ' - ' + items[i].extendedProps.description
 				};
 				data_items.push(item);
 			}
