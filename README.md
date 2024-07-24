@@ -10,5 +10,6 @@ JobCalendar is licensed under the terms of the GNU GPL v3 license.
 Dependencies
 ------------
 - [fullcalendar.js](https://github.com/fullcalendar/fullcalendar) for calendar visualization
+- [gridjs.js](https://github.com/grid-js/gridjs) for data table visualization
 - [papaparse.js](https://github.com/mholt/PapaParse) for csv import/export
 - [w3css](https://www.w3schools.com/w3css/default.asp) for style
