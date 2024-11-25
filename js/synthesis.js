@@ -440,7 +440,7 @@ function exportData() {
 					date: getFrDate(start_time),
 					affaire: longname,
 					activite: items[i].extendedProps.task,
-					temps_passes: items[i].extendedProps.day_ratio,
+					temps_passes: String(items[i].extendedProps.day_ratio).replace(".", ","),
 					descr: items[i].title + ' - ' + items[i].extendedProps.description
 				};
 				data_items.push(item);
