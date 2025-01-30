@@ -436,12 +436,21 @@ function exportData() {
 						longname = groups[j].extendedProps.longname;
 					}
 				}
+				// Format activity
+				var activity = items[i].extendedProps.task;
+				if (activity == "r&d") {
+					activity = "R&D";
+				} else if (longname != "") {
+					activity = "Contrat";
+				} else if (items[i].title == "congés") {
+					activity = "Congés";
+				}
 				var item = {
 					date: getFrDate(start_time),
 					affaire: longname,
-					activite: items[i].extendedProps.task,
+					activite: activity,
 					temps_passes: String(items[i].extendedProps.day_ratio).replace(".", ","),
-					descr: items[i].title + ' - ' + items[i].extendedProps.description
+					descr: items[i].title + '-' + items[i].extendedProps.task + ' - ' + items[i].extendedProps.description
 				};
 				data_items.push(item);
 			}
